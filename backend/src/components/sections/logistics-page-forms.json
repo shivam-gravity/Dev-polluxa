@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_sections_logistics_page_forms",
+  "info": {
+    "displayName": "LogisticsPageForms",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "enable": {
+      "type": "boolean"
+    }
+  }
+}

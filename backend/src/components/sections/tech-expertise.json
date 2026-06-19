@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_sections_tech_expertises",
+  "info": {
+    "displayName": "TechExpertise",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "description": {
+      "type": "text"
+    },
+    "title": {
+      "type": "string"
+    },
+    "TechTabs": {
+      "displayName": "TechTabs",
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.tech-tabs"
+    }
+  }
+}

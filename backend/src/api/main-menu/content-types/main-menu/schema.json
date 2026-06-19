@@ -1,0 +1,32 @@
+{
+  "kind": "singleType",
+  "collectionName": "main_menus",
+  "info": {
+    "singularName": "main-menu",
+    "pluralName": "main-menus",
+    "displayName": "MainMenu"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "MainMenuItems": {
+      "type": "dynamiczone",
+      "components": [
+        "menu.dropdown",
+        "menu.menu-button",
+        "menu.menu-link"
+      ],
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    }
+  }
+}

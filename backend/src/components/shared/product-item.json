@@ -1,0 +1,24 @@
+{
+  "collectionName": "components_shared_product_items",
+  "info": {
+    "displayName": "ProductItem",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "media": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.media"
+    },
+    "url": {
+      "type": "string"
+    }
+  }
+}

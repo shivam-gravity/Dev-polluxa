@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_sections_retail_application_forms",
+  "info": {
+    "displayName": "RetailApplicationForm"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    }
+  }
+}

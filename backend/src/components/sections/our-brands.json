@@ -1,0 +1,32 @@
+{
+  "collectionName": "components_sections_our_brands",
+  "info": {
+    "displayName": "OurBrands",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "brands": {
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.feature"
+    },
+    "variant": {
+      "type": "enumeration",
+      "enum": [
+        "primary",
+        "secondary"
+      ],
+      "default": "primary"
+    },
+    "bgColor": {
+      "type": "string"
+    }
+  }
+}

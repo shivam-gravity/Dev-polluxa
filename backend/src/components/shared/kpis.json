@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_elements_kpis",
+  "info": {
+    "displayName": "KPIS",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "description": {
+      "type": "string"
+    },
+    "KPI": {
+      "displayName": "Metrics",
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.metrics"
+    }
+  }
+}

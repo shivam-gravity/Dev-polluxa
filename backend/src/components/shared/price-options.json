@@ -1,0 +1,43 @@
+{
+  "collectionName": "components_shared_price_options",
+  "info": {
+    "displayName": "PriceOptions",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "shortDesc": {
+      "type": "string"
+    },
+    "price": {
+      "type": "string"
+    },
+    "billingCycle": {
+      "type": "string"
+    },
+    "billingNote": {
+      "type": "string"
+    },
+    "currency": {
+      "type": "string"
+    },
+    "button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "links.button-link"
+    },
+    "PriceFeatures": {
+      "type": "component",
+      "repeatable": false,
+      "component": "elements.price-features"
+    },
+    "PriceTransaction": {
+      "type": "component",
+      "repeatable": false,
+      "component": "elements.price-transaction"
+    }
+  }
+}

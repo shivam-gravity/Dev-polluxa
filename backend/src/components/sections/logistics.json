@@ -1,0 +1,32 @@
+{
+  "collectionName": "components_sections_logistics",
+  "info": {
+    "displayName": "Logistics",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "product_collections": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::logistic.logistic"
+    },
+    "description": {
+      "type": "text"
+    },
+    "bgColor": {
+      "type": "string"
+    },
+    "media": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.media"
+    },
+    "subtitle": {
+      "type": "text"
+    }
+  }
+}

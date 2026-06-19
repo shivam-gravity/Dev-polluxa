@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_sections_enhanced_pricing_plans",
+  "info": {
+    "displayName": "Enhanced Pricing Plans",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "PriceOptions": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.price-options"
+    }
+  }
+}

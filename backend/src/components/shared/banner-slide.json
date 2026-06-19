@@ -1,0 +1,30 @@
+{
+  "collectionName": "components_shared_banner_slides",
+  "info": {
+    "displayName": "BannerSlide",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "desktopMedia": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.media",
+      "required": true
+    },
+    "mobileMedia": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.media",
+      "required": true
+    },
+    "title": {
+      "type": "string"
+    },
+    "link": {
+      "type": "component",
+      "repeatable": false,
+      "component": "links.link"
+    }
+  }
+}

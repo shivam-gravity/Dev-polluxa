@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_sections_implementation_bundles",
+  "info": {
+    "displayName": "Implementation Bundles",
+    "description": "Professional implementation/onboarding bundles section with pricing tiers"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "string"
+    },
+    "bundles": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.pricing-tier"
+    }
+  }
+}

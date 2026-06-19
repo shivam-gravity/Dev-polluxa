@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_sections_industries",
+  "info": {
+    "displayName": "Industries",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "industries": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::industry.industry"
+    }
+  }
+}

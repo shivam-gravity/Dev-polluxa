@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_menu_navlinks",
+  "info": {
+    "displayName": "Navlinks",
+    "icon": "link",
+    "description": "Navigation links with title, url, subtitle, and sub links"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    },
+    "subtitle": {
+      "type": "string"
+    },
+    "subLinks": {
+      "type": "component",
+      "repeatable": true,
+      "component": "menu.sub-link-item"
+    }
+  }
+}

@@ -1,0 +1,132 @@
+{
+  "kind": "collectionType",
+  "collectionName": "pages",
+  "info": {
+    "singularName": "page",
+    "pluralName": "pages",
+    "displayName": "Page",
+    "name": "page",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "shortName": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "contentSections": {
+      "type": "dynamiczone",
+      "components": [
+        "sections.hero",
+        "sections.bottom-actions",
+        "sections.large-video",
+        "sections.services",
+        "sections.lead-form",
+        "sections.features",
+        "sections.heading",
+        "sections.clients",
+        "sections.contact-form",
+        "sections.platform",
+        "sections.company",
+        "sections.about-us",
+        "sections.partners",
+        "layout.page-header",
+        "shared.rich-text",
+        "sections.logistics",
+        "sections.retail",
+        "sections.career-form",
+        "sections.innovations",
+        "sections.our-team",
+        "sections.marketing",
+        "sections.ceo-message",
+        "sections.internal-contact-form",
+        "sections.logistics-page-forms",
+        "sections.tech-products",
+        "sections.tech-expertise",
+        "sections.homepage-statistics",
+        "sections.industries",
+        "sections.package",
+        "sections.banner-slider",
+        "sections.faq",
+        "sections.retail-application-form",
+        "sections.our-brands",
+        "sections.featured-products",
+        "sections.success-stories",
+        "sections.schedule-demo",
+        "sections.service-tabs",
+        "sections.cta",
+        "sections.zigzag-cards",
+        "sections.key-stats",
+        "sections.info-grid",
+        "sections.pricing-form",
+        "sections.address-section",
+        "sections.collections",
+        "sections.favorite-categories",
+        "sections.our-services",
+        "sections.special-categories",
+        "sections.hero-shop",
+        "sections.testimonials-shop",
+        "sections.crm-features",
+        "sections.enhanced-pricing-plans",
+        "sections.crm-pricing-plans",
+        "sections.implementation-bundles",
+        "sections.content-with-image",
+        "sections.power-up-addons",
+        "shared.recommended-blogs",
+        "shared.agent-card"
+      ],
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "slug": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      },
+      "type": "string",
+      "regex": "^$|^[a-zA-Z/-]+$",
+      "required": true
+    },
+    "heading": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "string"
+    },
+    "description": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "string"
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "component": "shared.seo"
+    }
+  }
+}

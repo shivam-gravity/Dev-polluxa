@@ -1,0 +1,31 @@
+{
+  "collectionName": "components_menu_explore_sections",
+  "info": {
+    "displayName": "explore-section",
+    "icon": "compass",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "sectionTitle": {
+      "type": "string"
+    },
+    "image": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.media"
+    },
+    "heading": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "links.button-link"
+    }
+  }
+}
+

@@ -1,0 +1,51 @@
+{
+    "kind": "collectionType",
+    "collectionName": "pricing_form_submissions",
+    "info": {
+      "singularName": "pricing-form-submission",
+      "pluralName": "pricing-form-submissions",
+      "displayName": "Pricing Form Submission",
+      "description": ""
+    },
+    "options": {
+      "draftAndPublish": true
+    },
+    "pluginOptions": {},
+    "attributes": {
+      "FirstName": {
+        "type": "string"
+      },
+      "LastName": {
+        "type": "string"
+      },
+      "BusinessEmail": {
+        "type": "string"
+      },
+      "JobTitle": {
+        "type": "string"
+      },
+      "Phone": {
+        "type": "string"
+      },
+      "Country": {
+        "type": "string"
+      },
+      "Comments": {
+        "type": "text"
+      },
+      "Industry": {
+        "type": "enumeration",
+        "enum": [
+          "plm",
+          "marketing",
+          "logistics",
+          "retail",
+          "technology",
+          "others"
+        ]
+      },
+      "Company": {
+        "type": "string"
+      }
+    }
+  }

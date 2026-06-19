@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_sections_banner_sliders",
+  "info": {
+    "displayName": "BannerSlider",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "Slides": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.slider"
+    }
+  }
+}

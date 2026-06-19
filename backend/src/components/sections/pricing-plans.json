@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_sections_pricing_plans",
+  "info": {
+    "displayName": "Pricing Plans",
+    "description": "Pricing plans section"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "subtitle": {
+      "type": "string"
+    },
+    "pricingTiers": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.pricing-tier"
+    }
+  }
+}

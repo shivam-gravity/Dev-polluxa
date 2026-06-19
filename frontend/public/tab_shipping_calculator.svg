@@ -1,0 +1,13 @@
+<svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M1.5 12C1.5 6.20101 6.20101 1.5 12 1.5H32.5V32.5H1.5V12Z" fill="white" stroke="#07B0F5" stroke-width="3"/>
+<path d="M70.5 12C70.5 6.20101 65.799 1.5 60 1.5H39.5V32.5H70.5V12Z" fill="white" stroke="#07B0F5" stroke-width="3"/>
+<path d="M1.5 60C1.5 65.799 6.20101 70.5 12 70.5H32.5V39.5H1.5V60Z" fill="white" stroke="#07B0F5" stroke-width="3"/>
+<path d="M70.5 60C70.5 65.799 65.799 70.5 60 70.5H39.5V39.5H70.5V60Z" fill="white" stroke="#07B0F5" stroke-width="3"/>
+<rect x="47" y="57" width="14" height="2" rx="1" fill="white" stroke="#07B0F5" stroke-width="2"/>
+<rect x="47" y="51" width="14" height="2" rx="1" fill="white" stroke="#07B0F5" stroke-width="2"/>
+<rect x="11" y="17" width="14" height="2" rx="1" fill="white" stroke="#07B0F5" stroke-width="2"/>
+<rect x="17" y="25" width="14" height="2" rx="1" transform="rotate(-90 17 25)" fill="white" stroke="#07B0F5" stroke-width="2"/>
+<rect x="13.7573" y="48.3439" width="14" height="2" rx="1" transform="rotate(45 13.7573 48.3439)" fill="white" stroke="#07B0F5" stroke-width="2"/>
+<rect x="12.3432" y="58.2422" width="14" height="2" rx="1" transform="rotate(-45 12.3432 58.2422)" fill="white" stroke="#07B0F5" stroke-width="2"/>
+<rect x="47" y="17" width="14" height="2" rx="1" fill="white" stroke="#07B0F5" stroke-width="2"/>
+</svg>

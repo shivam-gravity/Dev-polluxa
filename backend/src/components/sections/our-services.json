@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_sections_our_services",
+  "info": {
+    "displayName": "Our Services",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "Card": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.card"
+    }
+  }
+}

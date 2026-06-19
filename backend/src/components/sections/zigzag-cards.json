@@ -1,0 +1,17 @@
+{
+    "collectionName": "components_sections_zigzag_cards",
+    "info": {
+      "displayName": "ZigzagCards"
+    },
+    "options": {},
+    "attributes": {
+      "title": {
+        "type": "string"
+      },
+      "service": {
+        "type": "component",
+        "repeatable": true,
+        "component": "elements.service"
+      }
+    }
+  }

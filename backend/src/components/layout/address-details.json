@@ -1,0 +1,21 @@
+{
+    "collectionName": "components_layout_address_details",
+    "info": {
+      "displayName": "AddressDetails"
+    },
+    "options": {},
+    "attributes": {
+      "name": {
+        "type": "string"
+      },
+      "country": {
+        "type": "string"
+      },
+      "address": {
+        "type": "text"
+      },
+      "mapUrl": {
+        "type": "text"
+      }
+    }
+  }

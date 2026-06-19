@@ -1,0 +1,51 @@
+{
+  "collectionName": "components_elements_plans",
+  "info": {
+    "name": "service",
+    "displayName": "Services plan",
+    "icon": "search-dollar",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "isRecommended": {
+      "type": "boolean"
+    },
+    "icon": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "video": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "Button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "links.button-link"
+    },
+    "subheader": {
+      "type": "text"
+    }
+  }
+}

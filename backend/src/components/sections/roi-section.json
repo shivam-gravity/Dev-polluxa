@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_sections_roi_sections",
+  "info": {
+    "displayName": "ROI Section",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text",
+      "repeatable": false
+    },
+    "KPIS": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.kpis"
+    },
+    "BrandAchievements": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.kpis"
+    }
+  }
+}

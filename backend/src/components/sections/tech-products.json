@@ -1,0 +1,34 @@
+{
+  "collectionName": "components_sections_tech_products",
+  "info": {
+    "displayName": "TechProducts",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "bgColor": {
+      "type": "string"
+    },
+    "variant": {
+      "type": "enumeration",
+      "enum": ["primary", "secondary"],
+      "default": "primary"
+    },
+    "Button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "links.button-link"
+    },
+    "Features": {
+      "type": "component",
+      "repeatable": true,
+      "component": "sections.features"
+    }
+  }
+}

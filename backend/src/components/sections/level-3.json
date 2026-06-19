@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_sections_level_3s",
+  "info": {
+    "displayName": "Level 3",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "url": {
+      "type": "string",
+      "required": true
+    },
+    "active": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    }
+  }
+}

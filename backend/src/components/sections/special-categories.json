@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_sections_special_categories",
+  "info": {
+    "displayName": "Special Categories"
+  },
+  "options": {},
+  "attributes": {
+    "Card": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.card"
+    }
+  }
+}

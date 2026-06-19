@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_sections_internal_contact_forms",
+  "info": {
+    "displayName": "Internal Contact Form",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "ContactDetails": {
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.feature"
+    }
+  }
+}

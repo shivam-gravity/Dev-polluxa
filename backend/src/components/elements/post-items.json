@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_elements_post_items",
+  "info": {
+    "displayName": "PostItems"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "Bullets": {
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.company-bullets"
+    },
+    "media": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.media"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+    "collectionName": "components_sections_address_sections",
+    "info": {
+      "displayName": "Address Section",
+      "description": "A section to display address details"
+    },
+    "options": {},
+    "attributes": {
+      "heading": {
+        "type": "string"
+      },
+      "description": {
+        "type": "text"
+      },
+      "media": {
+        "type": "component",
+        "repeatable": false,
+        "component": "shared.media"
+      },
+      "addressDetails": {
+        "displayName": "AddressDetails",
+        "type": "component",
+        "repeatable": true,
+        "component": "layout.address-details"
+      }
+    }
+  }

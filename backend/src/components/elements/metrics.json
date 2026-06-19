@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_elements_metrics",
+  "info": {
+    "displayName": "Metrics",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "metric": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images", "files", "videos", "audios"]
+    },
+    "metricSuffix": {
+      "type": "string"
+    }
+  }
+}

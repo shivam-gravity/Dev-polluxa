@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_sections_footer_menu_shops",
+  "info": {
+    "displayName": "Footer Menu Shop"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "required": true
+    },
+    "url": {
+      "type": "string",
+      "required": true
+    },
+    "FooterLinks": {
+      "type": "component",
+      "repeatable": true,
+      "component": "links.link",
+      "required": false
+    }
+  }
+}

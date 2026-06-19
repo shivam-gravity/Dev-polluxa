@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_sections_post_informations",
+  "info": {
+    "displayName": "PostInformation",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "header": {
+      "type": "component",
+      "repeatable": false,
+      "component": "sections.heading"
+    },
+    "Features": {
+      "displayName": "PostItems",
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.post-items"
+    },
+    "columns": {
+      "type": "enumeration",
+      "enum": ["threeColumns", "fourColumns"],
+      "required": false
+    }
+  }
+}

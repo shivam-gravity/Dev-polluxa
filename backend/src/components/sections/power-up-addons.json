@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_sections_power_up_addons",
+  "info": {
+    "displayName": "Power-Up Add-Ons",
+    "description": "Add-ons section with integration cards showing pricing and features"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "addOnCards": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.addon-card"
+    }
+  }
+}

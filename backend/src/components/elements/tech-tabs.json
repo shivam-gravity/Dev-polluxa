@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_elements_tech_tabs",
+  "info": {
+    "displayName": "TechTabs"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "feature": {
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.feature"
+    }
+  }
+}

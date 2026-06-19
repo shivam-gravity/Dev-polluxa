@@ -1,0 +1,35 @@
+{
+  "collectionName": "components_sections_pricings",
+  "info": {
+    "name": "Services",
+    "displayName": "Featured Services",
+    "icon": "dollar-sign",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "service": {
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.service"
+    },
+    "heading": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "variant": {
+      "type": "enumeration",
+      "enum": ["primary", "secondary", "tertiary"]
+    },
+    "columns": {
+      "type": "enumeration",
+      "enum": ["threeColumn", "fourColumn"],
+      "default": "threeColumn"
+    }
+  }
+}

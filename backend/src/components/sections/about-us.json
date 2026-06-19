@@ -1,0 +1,24 @@
+{
+  "collectionName": "components_sections_aboutuses",
+  "info": {
+    "displayName": "AboutUs",
+    "icon": "chartCircle"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "video": {
+      "type": "component",
+      "repeatable": false,
+      "component": "sections.large-video"
+    }
+  }
+}

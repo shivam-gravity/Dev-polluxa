@@ -1,0 +1,17 @@
+{
+    "collectionName": "components_shared_images",
+    "info": {
+      "displayName": "Images",
+      "icon": "file-image",
+      "description": "Legacy stub - metadata for orphaned database references"
+    },
+    "options": {},
+    "attributes": {
+      "files": {
+        "type": "media",
+        "multiple": true,
+        "required": false,
+        "allowedTypes": ["images"]
+      }
+    }
+  }

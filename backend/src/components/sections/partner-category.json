@@ -1,0 +1,21 @@
+{
+    "collectionName": "components_sections_partner_categories",
+    "info": {
+      "displayName": "Partner Category",
+      "icon": "apps",
+      "description": ""
+    },
+    "options": {},
+    "attributes": {
+      "categoryName": {
+        "type": "string",
+        "required": true
+      },
+      "partners": {
+        "type": "component",
+        "repeatable": true,
+        "component": "shared.partner-logo",
+        "required": true
+      }
+    }
+  }

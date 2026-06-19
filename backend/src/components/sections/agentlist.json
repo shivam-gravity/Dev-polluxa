@@ -1,0 +1,44 @@
+{
+  "collectionName": "components_sections_agentlists",
+  "info": {
+    "displayName": "Agentlist",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "tittle": {
+      "type": "string"
+    },
+    "subtittle": {
+      "type": "string"
+    },
+    "image": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "heading": {
+      "type": "string"
+    },
+    "bulletspoint": {
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.company-bullets"
+    },
+    "url": {
+      "type": "string"
+    },
+    "text": {
+      "type": "string"
+    },
+    "newTabs": {
+      "type": "boolean"
+    }
+  }
+}

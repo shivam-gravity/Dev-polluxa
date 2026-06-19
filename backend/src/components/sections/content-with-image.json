@@ -1,0 +1,36 @@
+{
+  "collectionName": "components_sections_content_with_images",
+  "info": {
+    "displayName": "Content with Image",
+    "description": "Two-column section with heading, title, description and image (left or right position)"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "required": false
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "media": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "imagePosition": {
+      "type": "enumeration",
+      "enum": [
+        "left",
+        "right"
+      ],
+      "default": "right"
+    }
+  }
+}

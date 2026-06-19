@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_sections_featured_products",
+  "info": {
+    "displayName": "Featured Products"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "ProductItem": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.product-item"
+    }
+  }
+}

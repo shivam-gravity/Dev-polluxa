@@ -1,0 +1,58 @@
+{
+    "collectionName": "components_layout_crm_features",
+    "info": {
+      "displayName": "CRM Features",
+      "description": ""
+    },
+    "options": {},
+    "attributes": {
+      "heading": {
+        "type": "string"
+      },
+      "subtitle": {
+        "type": "string"
+      },
+      "description": {
+        "type": "text"
+      },
+      "feature": {          
+        "displayName": "Feature",
+        "type": "component",        
+        "repeatable": true,
+        "component": "elements.feature"
+      },
+      "title": {
+        "type": "text"
+      },
+      "variant": {
+        "type": "enumeration",
+        "enum": ["primary", "secondary", "subSecondary", "card", "defaultCard"]
+      },
+      "bgVariant": {
+        "type": "enumeration",
+        "enum": ["primary", "secondary"]
+      },
+      "columns": {
+        "type": "enumeration",
+        "enum": ["threeColumn", "fourColumn", "fiveColumn", "sixColumn"]
+      },
+      "bgColor": {
+        "type": "string"
+      },
+      "Button": {
+        "type": "component",
+        "repeatable": false,
+        "component": "links.button-link"
+      },
+      "showFilter": {
+        "type": "boolean",
+        "default": false
+      },
+      "enable": {
+        "type": "boolean"
+      },
+      "titleColor": {
+        "type": "string"
+      }
+    }
+  }

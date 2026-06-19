@@ -1,0 +1,56 @@
+{
+  "kind": "collectionType",
+  "collectionName": "job_types",
+  "info": {
+    "singularName": "job-type",
+    "pluralName": "job-types",
+    "displayName": "Job Type",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "slug": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      },
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "careers": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::career.career",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "inversedBy": "job_types"
+    }
+  }
+}

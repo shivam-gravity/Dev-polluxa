@@ -1,0 +1,58 @@
+{
+  "collectionName": "components_shared_pricing_tiers",
+  "info": {
+    "displayName": "Pricing Tier",
+    "description": "Individual pricing plan card with features, price, and CTA"
+  },
+  "options": {},
+  "attributes": {
+    "planName": {
+      "type": "string",
+      "required": true
+    },
+    "planDescription": {
+      "type": "text",
+      "required": true
+    },
+    "price": {
+      "type": "string",
+      "required": true
+    },
+    "currency": {
+      "type": "string",
+      "default": "$"
+    },
+    "billingCycle": {
+      "type": "string",
+      "default": "/ Month"
+    },
+    "button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "links.button-link",
+      "required": true
+    },
+    "features": {
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.pricing-feature-item"
+    },
+    "isFeatured": {
+      "type": "boolean",
+      "default": false
+    },
+    "featuredBadgeText": {
+      "type": "string",
+      "default": "Most Popular"
+    },
+    "cardStyle": {
+      "type": "enumeration",
+      "enum": [
+        "glass",
+        "solid-primary",
+        "solid-white"
+      ],
+      "default": "glass"
+    }
+  }
+}

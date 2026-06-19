@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_sections_header_links_shops",
+  "info": {
+    "displayName": "Header Links Shop",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "Links": {
+      "type": "component",
+      "repeatable": true,
+      "component": "links.link",
+      "required": true
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "collectionName": "components_sections_marketings",
+  "info": {
+    "displayName": "Marketing",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "product_collections": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::marketing.marketing"
+    },
+    "bgColor": {
+      "type": "string"
+    },
+    "subtitle": {
+      "type": "text"
+    },
+    "media": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.media"
+    }
+  }
+}

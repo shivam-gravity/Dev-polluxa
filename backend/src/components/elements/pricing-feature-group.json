@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_elements_pricing_feature_groups",
+  "info": {
+    "displayName": "Pricing Feature Group"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "required": true
+    },
+    "items": {
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.pricing-feature",
+      "required": true
+    }
+  }
+}

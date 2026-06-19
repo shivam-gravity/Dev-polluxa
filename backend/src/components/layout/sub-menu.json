@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_layout_sub_menus",
+  "info": {
+    "displayName": "SubMenu"
+  },
+  "options": {},
+  "attributes": {
+    "button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "links.button-link"
+    },
+    "subMenuLogo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "layout.logo"
+    }
+  }
+}

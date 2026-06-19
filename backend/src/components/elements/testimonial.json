@@ -1,0 +1,34 @@
+{
+  "collectionName": "components_slices_clients",
+  "info": {
+    "name": "Client",
+    "displayName": "Testimonial",
+    "icon": "user-check",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "picture": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "paragraph": {
+      "type": "text"
+    },
+    "text": {
+      "type": "text",
+      "required": false
+    },
+    "authorName": {
+      "type": "string",
+      "required": false
+    },
+    "authorTitle": {
+      "type": "text"
+    }
+  }
+}

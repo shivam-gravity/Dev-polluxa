@@ -1,0 +1,31 @@
+{
+  "collectionName": "components_sections_companies",
+  "info": {
+    "displayName": "Company",
+    "icon": "cube",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "description": {
+      "type": "text"
+    },
+    "Bullets": {
+      "displayName": "Company Bullets",
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.company-bullets"
+    },
+    "title": {
+      "type": "string"
+    },
+    "media": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.media"
+    },
+    "enable": {
+      "type": "boolean"
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "collectionName": "components_menu_sub_link_items",
+  "info": {
+    "displayName": "Sub Link Item",
+    "icon": "link",
+    "description": "Sub link item with name, url, description, and icon"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "icon": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    }
+  }
+}

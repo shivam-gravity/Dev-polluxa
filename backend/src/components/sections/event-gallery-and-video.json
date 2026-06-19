@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_sections_event_gallery_and_videos",
+  "info": {
+    "displayName": "EventGalleryAndVideo",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "media": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.media"
+    },
+    "video": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.video-embed"
+    },
+    "header": {
+      "type": "component",
+      "repeatable": false,
+      "component": "sections.heading"
+    }
+  }
+}

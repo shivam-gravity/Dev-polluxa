@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_sections_headers_shops",
+  "info": {
+    "displayName": "Header Shop"
+  },
+  "options": {},
+  "attributes": {
+    "HeaderLinks": {
+      "type": "component",
+      "repeatable": false,
+      "component": "sections.header-links-shop"
+    },
+    "HeaderLogo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "layout.logo"
+    }
+  }
+}

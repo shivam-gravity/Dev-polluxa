@@ -1,0 +1,48 @@
+{
+  "collectionName": "components_shared_addon_cards",
+  "info": {
+    "displayName": "Add-On Card",
+    "description": "Individual add-on card with icon, title, description, price and CTA"
+  },
+  "options": {},
+  "attributes": {
+    "icon": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "iconBackgroundColor": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "subtitle": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "price": {
+      "type": "string",
+      "required": true
+    },
+    "currency": {
+      "type": "string",
+      "default": "$"
+    },
+    "priceLabel": {
+      "type": "string",
+      "default": "One-time setup"
+    },
+    "button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "links.button-link"
+    }
+  }
+}

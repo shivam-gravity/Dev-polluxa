@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_shared_agent_cards",
+  "info": {
+    "displayName": "Agent-card"
+  },
+  "options": {},
+  "attributes": {
+    "tittle": {
+      "type": "string"
+    },
+    "subtittle": {
+      "type": "text"
+    },
+    "agent": {
+      "displayName": "Agentlist",
+      "type": "component",
+      "repeatable": true,
+      "component": "sections.agentlist"
+    }
+  }
+}

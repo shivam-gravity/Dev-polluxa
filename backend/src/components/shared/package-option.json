@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_shared_package_options",
+  "info": {
+    "displayName": "PackageOption",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "PackageRow": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.package-row"
+    },
+    "Button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "links.button-link"
+    }
+  }
+}

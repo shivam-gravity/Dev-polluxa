@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_sections_level_2s",
+  "info": {
+    "displayName": "Level 2"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "url": {
+      "type": "string",
+      "required": true
+    },
+    "active": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    },
+    "Level3": {
+      "type": "component",
+      "repeatable": true,
+      "component": "sections.level-3"
+    }
+  }
+}

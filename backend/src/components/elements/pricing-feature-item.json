@@ -1,0 +1,35 @@
+{
+  "collectionName": "components_elements_pricing_feature_items",
+  "info": {
+    "displayName": "Pricing Feature Item",
+    "description": "Individual feature item with icon and enabled/disabled state"
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "string",
+      "required": true
+    },
+    "isEnabled": {
+      "type": "boolean",
+      "default": true
+    },
+    "icon": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "iconType": {
+      "type": "enumeration",
+      "enum": [
+        "checkmark-primary",
+        "checkmark-white",
+        "cross-disabled"
+      ],
+      "default": "checkmark-primary"
+    }
+  }
+}

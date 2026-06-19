@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_elements_transaction_fees",
+  "info": {
+    "displayName": "Transaction Fee",
+    "description": "Transaction fee information"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string"
+    },
+    "media": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.media"
+    }
+  }
+}

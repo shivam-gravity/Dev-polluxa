@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_layout_footer_menus",
+  "info": {
+    "displayName": "FooterMenu",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "Heading": {
+      "type": "string"
+    },
+    "FooterLinks": {
+      "type": "component",
+      "repeatable": true,
+      "component": "links.link"
+    },
+    "slug": {
+      "type": "string"
+    }
+  }
+}

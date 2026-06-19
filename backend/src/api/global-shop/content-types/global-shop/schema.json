@@ -1,0 +1,39 @@
+{
+  "kind": "singleType",
+  "collectionName": "global_shops",
+  "info": {
+    "singularName": "global-shop",
+    "pluralName": "global-shops",
+    "displayName": "Global Shop"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "Footer": {
+      "type": "component",
+      "repeatable": false,
+      "component": "sections.footer-shop",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "Header": {
+      "type": "component",
+      "repeatable": false,
+      "component": "sections.header-shop",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_sections_testimonials_shop",
+  "info": {
+    "displayName": "Testimonials Shop",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {    
+    "Testimonial": {
+    "type": "component",
+    "repeatable": true,
+    "component": "elements.testimonial"
+  }}
+}

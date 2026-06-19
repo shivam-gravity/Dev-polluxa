@@ -1,0 +1,22 @@
+{
+    "collectionName": "components_sections_success_stories",
+    "info": {
+      "displayName": "Success Stories",
+      "description": ""
+    },
+    "options": {},
+    "attributes": {
+      "title": {
+        "type": "string"
+      },
+      "description": {
+        "type": "text"
+      },
+      "StoryItem": {
+        "displayName": "StoryItem",
+        "type": "component",
+        "repeatable": true,
+        "component": "shared.story-item"
+      }
+    }
+  }

@@ -1,0 +1,18 @@
+{
+    "collectionName": "components_sections_schedule_demos",
+    "info": {
+      "displayName": "Schedule Demo"
+    },
+    "options": {},
+    "attributes": {
+      "title": {
+        "type": "string"
+      },
+      "description": {
+        "type": "text"
+      },
+      "calendlyDataUrl": {
+        "type": "string"
+      }
+    }
+  }

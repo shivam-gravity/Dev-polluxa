@@ -1,0 +1,46 @@
+{
+  "collectionName": "components_sections_contact_forms",
+  "info": {
+    "displayName": "Contact Form",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "title": {
+      "type": "string"
+    },
+    "ContactDetails": {
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.feature"
+    },
+    "Button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "links.button"
+    },
+    "media": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.media"
+    },
+    "marketingEmail": {
+      "type": "string"
+    },
+    "logisticsEmail": {
+      "type": "string"
+    },
+    "retailEmail": {
+      "type": "string"
+    },
+    "enable": {
+      "type": "boolean"
+    }
+  }
+}

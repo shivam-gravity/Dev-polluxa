@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_sections_platforms",
+  "info": {
+    "displayName": "Platform",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "Heading": {
+      "type": "component",
+      "repeatable": false,
+      "component": "sections.heading"
+    },
+    "Button": {
+      "type": "component",
+      "repeatable": true,
+      "component": "links.button-link"
+    },
+    "PlatformList": {
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.feature"
+    }
+  }
+}

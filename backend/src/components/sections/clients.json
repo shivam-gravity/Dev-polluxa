@@ -1,0 +1,29 @@
+{
+  "collectionName": "components_sections_clients",
+  "info": {
+    "displayName": "Clients",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string"
+    },
+    "Client": {
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.feature"
+    },
+    "subtitle": {
+      "type": "string"
+    },
+    "Button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "links.button-link"
+    },
+    "enable": {
+      "type": "boolean"
+    }
+  }
+}

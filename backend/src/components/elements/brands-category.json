@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_elements_brands_categories",
+  "info": {
+    "displayName": "BrandsCategory",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "Brand": {
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.brand"
+    }
+  }
+}

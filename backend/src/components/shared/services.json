@@ -1,0 +1,35 @@
+{
+    "collectionName": "components_shared_services",
+    "info": {
+      "displayName": "services",
+      "description": ""
+    },
+    "options": {},
+    "attributes": {
+      "name": {
+        "type": "string"
+      },
+      "title": {
+        "type": "string"
+      },
+      "description": {
+        "type": "text"
+      },
+      "picture": {
+        "type": "media",
+        "multiple": false,
+        "required": false,
+        "allowedTypes": [
+          "images",
+          "files",
+          "videos",
+          "audios"
+        ]
+      },
+      "clientLogo": {
+        "type": "component",
+        "repeatable": true,
+        "component": "shared.media"
+      }
+    }
+  }

@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_sections_career_forms",
+  "info": {
+    "displayName": "Career Form",
+    "icon": "crown",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "Button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "links.button-link"
+    },
+    "CareersEmail": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_sections_packages",
+  "info": {
+    "displayName": "Package",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "bgColor": {
+      "type": "string"
+    },
+    "enable": {
+      "type": "boolean"
+    },
+    "PackageOption": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.package-option"
+    }
+  }
+}

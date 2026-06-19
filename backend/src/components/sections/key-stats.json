@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_sections_key_stats",
+  "info": {
+    "displayName": "KeyStats"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "keys": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.faq-option"
+    },
+    "variant": {
+      "type": "enumeration",
+      "enum": ["vertical", "horizontal"],
+      "default": "vertical"
+    }
+  }
+}

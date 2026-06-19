@@ -1,0 +1,46 @@
+{
+  "collectionName": "components_menu_dropdowns",
+  "info": {
+    "displayName": "dropdown",
+    "icon": "arrowDown",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    },
+    "navigations": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::navigation.navigation"
+    },
+    "exploreSection": {
+      "type": "component",
+      "repeatable": false,
+      "component": "menu.explore-section"
+    },
+    "description": {
+      "type": "text"
+    },
+    "Button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "links.button-link"
+    },
+    "media": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.media"
+    },
+    "subtitle": {
+      "type": "string"
+    },
+    "footNote": {
+      "type": "text"
+    }
+  }
+}

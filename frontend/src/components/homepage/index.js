@@ -1,0 +1,11 @@
+export { default as Hero } from "./Hero";
+export { default as Clients } from "./Clients";
+export { default as Features } from "./Features";
+export { default as FeaturedServices } from "./FeaturedServices";
+export { default as Company } from "./Company";
+export { default as Innovations } from "./Innovations";
+export { default as Testimonials } from "./Testimonials";
+export { default as Statistics } from "./Statistics";
+export { default as HomeFacts } from "./HomeFacts";
+export { default as Industries } from "./Industries";
+export { default as SuccessStory } from "./SuccessStory";

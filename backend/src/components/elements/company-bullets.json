@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_elements_company_bullets",
+  "info": {
+    "displayName": "Bullets",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "Bullet": {
+      "type": "text"
+    }
+  }
+}

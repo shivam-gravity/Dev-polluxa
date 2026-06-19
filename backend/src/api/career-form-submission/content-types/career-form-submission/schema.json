@@ -1,0 +1,66 @@
+{
+  "kind": "collectionType",
+  "collectionName": "career_form_submissions",
+  "info": {
+    "singularName": "career-form-submission",
+    "pluralName": "career-form-submissions",
+    "displayName": "Career Form Submission",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Name": {
+      "type": "string"
+    },
+    "PhoneNumber": {
+      "type": "string"
+    },
+    "Email": {
+      "type": "email"
+    },
+    "Nationality": {
+      "type": "string"
+    },
+    "Experience": {
+      "type": "string"
+    },
+    "GraduationYear": {
+      "type": "string"
+    },
+    "resume": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "files"
+      ]
+    },
+    "CurrentPosition": {
+      "type": "string"
+    },
+    "CurrentCompany": {
+      "type": "string"
+    },
+    "HighestDegree": {
+      "type": "string"
+    },
+    "Location": {
+      "type": "string"
+    },
+    "Major": {
+      "type": "string"
+    },
+    "DOB": {
+      "type": "string"
+    },
+    "MaritalStatus": {
+      "type": "string"
+    },
+    "Gender": {
+      "type": "string"
+    }
+  }
+}

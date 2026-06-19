@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_elements_price_transactions",
+  "info": {
+    "displayName": "PriceTransaction",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "TransactionFee": {
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.transaction-fee"
+    }
+  }
+}

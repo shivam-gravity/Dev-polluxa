@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_elements_price_feature_containers",
+  "info": {
+    "displayName": "PriceFeatureContainer",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "PriceFeatureOptions": {
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.price-feature-options"
+    }
+  }
+}

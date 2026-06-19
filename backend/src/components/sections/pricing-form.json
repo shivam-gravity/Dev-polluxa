@@ -1,0 +1,37 @@
+{
+    "collectionName": "components_sections_pricing_forms",
+    "info": {
+      "displayName": "PricingForm",
+      "description": ""
+    },
+    "options": {},
+    "attributes": {
+      "title": {
+        "type": "string"
+      },
+      "subtitle": {
+        "type": "string"
+      },
+      "subHeading": {
+        "type": "string"
+      },
+      "description": {
+        "type": "text"
+      },
+      "buttons": {
+        "type": "component",
+        "repeatable": false,
+        "component": "links.button-link"
+      },
+      "Bullets": {
+        "type": "component",
+        "repeatable": true,
+        "component": "elements.company-bullets"
+      },
+      "FormDetails": {
+        "type": "component",
+        "repeatable": false,
+        "component": "elements.feature"
+      }
+    }
+  }

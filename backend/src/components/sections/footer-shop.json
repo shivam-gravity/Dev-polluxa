@@ -1,0 +1,36 @@
+{
+  "collectionName": "components_sections_footers_shops",
+  "info": {
+    "displayName": "Footer Shop"
+  },
+  "options": {},
+  "attributes": {
+    "FooterMenuShop": {
+      "type": "component",
+      "repeatable": true,
+      "component": "sections.footer-menu-shop"
+    },
+    "FooterLogo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "layout.logo"
+    },
+    "SocialLinks": {
+      "type": "component",
+      "repeatable": true,
+      "component": "links.social-link"
+    },
+    "copyright": {
+      "type": "string"
+    },
+    "address": {
+      "type": "text"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    }
+  }
+}

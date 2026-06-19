@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "retail_application_form_submissions",
+  "info": {
+    "singularName": "retail-application-form-submission",
+    "pluralName": "retail-application-form-submissions",
+    "displayName": "Retail Application Form Submission",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "FirstName": {
+      "type": "string",
+      "required": true
+    },
+    "BrandName": {
+      "type": "string"
+    },
+    "Country": {
+      "type": "string"
+    },
+    "ProductType": {
+      "type": "string"
+    },
+    "QualityCertification": {
+      "type": "boolean"
+    },
+    "PhoneNumber": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+    "collectionName": "components_shared_story_items",
+    "info": {
+      "displayName": "StoryItem",
+      "description": ""
+    },
+    "options": {},
+    "attributes": {
+      "title": {
+        "type": "string"
+      },
+      "description": {
+        "type": "text"
+      },
+      "media": {
+        "type": "component",
+        "repeatable": false,
+        "component": "shared.media"
+      },
+      "contenttype": {
+        "type": "enumeration",
+        "enum": [
+          "caseStudy"
+        ]
+      },
+      "url": {
+        "type": "string"
+      },
+      "logo": {
+        "type": "component",
+        "repeatable": false,
+        "component": "shared.media"
+      }
+    }
+  }

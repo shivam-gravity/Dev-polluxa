@@ -1,0 +1,79 @@
+{
+  "kind": "collectionType",
+  "collectionName": "crms",
+  "info": {
+    "singularName": "crm",
+    "pluralName": "crms",
+    "displayName": "CRM",
+    "description": "CRM portal content and configuration"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "slug": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      },
+      "required": true
+    },
+    "media": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.media",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "blocks": {
+      "type": "dynamiczone",
+      "components": [
+        "sections.hero",
+        "sections.feature-list",
+        "sections.features",
+        "sections.bottom-actions",
+        "sections.crm-pricing-plans",
+        "sections.power-up-addons",
+        "sections.content-with-image",
+        "sections.implementation-bundles",
+        "sections.crm-features",
+        "sections.faq",
+        "shared.seo",
+        "shared.agent-card"
+      ],
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    }
+  }
+}

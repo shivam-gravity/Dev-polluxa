@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_sections_hero_shops",
+  "info": {
+    "displayName": "Hero Shop",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "BannerSlide": {
+      "displayName": "BannerSlide",
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.banner-slide"
+    }
+  }
+}

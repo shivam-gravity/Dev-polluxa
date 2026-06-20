@@ -1,327 +1,502 @@
-﻿import { useEffect } from 'react';
-import { ArrowRight } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { ArrowRight, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { fetchAPI } from '../lib/api';
+
+const SCROLL_THRESHOLD = 80;
+
+const NAV_ITEMS = [
+  { id: 'overview',     label: 'Overview' },
+  { id: 'features',     label: 'Features' },
+  { id: 'b2b',          label: 'B2B' },
+  { id: 'd2c',          label: 'D2C' },
+  { id: 'integrations', label: 'Integrations' },
+  { id: 'faq',          label: 'FAQ' },
+];
+
+const COMMERCE_FEATURES = [
+  {
+    icon: '🏪',
+    tag: 'STOREFRONT',
+    title: 'Build Your Online Storefront',
+    description: 'Build a high-performance online store tailored to your brand, with smooth navigation and optimized conversion flows that drive revenue.',
+    color: 'var(--cyan)',
+    link: 'https://www.polluxa.com/en/commerce/storefront',
+  },
+  {
+    icon: '💳',
+    tag: 'PAYMENTS',
+    title: 'Enable Seamless & Secure Payments',
+    description: 'Enable secure and effortless transactions with integrated payment gateways supporting multiple trusted payment methods and multi-currency checkout.',
+    color: 'var(--mint)',
+    link: 'https://www.polluxa.com/en/commerce/payments',
+  },
+  {
+    icon: '📦',
+    tag: 'INVENTORY',
+    title: 'Real-time Inventory & Order Control',
+    description: 'Track stock in real time, automate order flow, and streamline fulfilment with a unified inventory and order management system — zero stockouts.',
+    color: 'var(--violet)',
+    link: 'https://www.polluxa.com/en/commerce/inventory',
+  },
+  {
+    icon: '🚚',
+    tag: 'SHIPPING',
+    title: 'Streamlined Delivery & Fulfillment',
+    description: 'Simplify fulfilment through integrated logistics partners, offering reliable delivery, real-time tracking, and flexible shipping options globally.',
+    color: 'var(--gold)',
+    link: 'https://www.polluxa.com/en/commerce/shipping',
+  },
+  {
+    icon: '📊',
+    tag: 'ANALYTICS',
+    title: 'Measure Sales & Customer Insights',
+    description: 'Monitor key metrics, understand customer behavior, and make informed decisions with actionable performance insights and funnel analytics.',
+    color: 'var(--magenta)',
+    link: 'https://www.polluxa.com/en/commerce/analytics',
+  },
+  {
+    icon: '🤝',
+    tag: 'CRM',
+    title: 'Manage Customers & Engagement',
+    description: 'Manage customer interactions, centralize data, and personalize engagement to build stronger, long-lasting relationships and maximize lifetime value.',
+    color: 'var(--blue-deep)',
+    link: 'https://www.polluxa.com/en/commerce/crm',
+  },
+];
+
+const FaqAccordion = ({ items = [] }) => {
+  const [open, setOpen] = useState(null);
+  if (!items.length) return null;
+  return (
+    <section id="faq" className="section section-alt animate-on-scroll">
+      <div className="container" style={{ maxWidth: '800px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+          <span style={{ textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: '600', color: 'var(--color-accent-teal)' }}>FAQ</span>
+          <h2 style={{ marginTop: '0.5rem' }}>Common questions</h2>
+        </div>
+        {items.map((item, i) => (
+          <div key={i} style={{ borderBottom: '1px solid var(--color-border)' }}>
+            <button
+              onClick={() => setOpen(open === i ? null : i)}
+              style={{ width: '100%', textAlign: 'left', padding: '1.25rem 0', background: 'none', border: 'none', cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem' }}
+            >
+              <span style={{ fontWeight: '600', color: 'var(--color-text-primary)', fontSize: '1rem' }}>{item.question}</span>
+              <ChevronDown size={18} style={{ flexShrink: 0, color: 'var(--color-text-secondary)', transform: open === i ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+            </button>
+            {open === i && (
+              <p style={{ color: 'var(--color-text-secondary)', paddingBottom: '1.25rem', margin: 0, lineHeight: '1.7' }}>{item.answer}</p>
+            )}
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+};
 
 const Commerce = () => {
+  const [activeSection, setActiveSection] = useState('overview');
+  const [page, setPage] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [scrolled, setScrolled] = useState(false);
+
+  /* fetch page content */
   useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.05 });
-
-    document.querySelectorAll('.animate-on-scroll').forEach((el) => {
-      observer.observe(el);
+    fetchAPI('/api/commerces', { 'filters[slug][$eq]': 'overview' }).then((res) => {
+      const attrs = res?.data?.[0]?.attributes ?? null;
+      setPage(attrs);
+      setLoading(false);
     });
-
-    return () => observer.disconnect();
   }, []);
+
+  /* scroll-merge: toggle scrolled state and mark topnav */
+  useEffect(() => {
+    const topnav = document.querySelector('.topnav');
+    const onScroll = () => {
+      const isScrolled = window.scrollY > SCROLL_THRESHOLD;
+      setScrolled(isScrolled);
+      if (topnav) {
+        if (isScrolled) {
+          topnav.setAttribute('data-subnav', 'commerce');
+        } else {
+          topnav.removeAttribute('data-subnav');
+        }
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      if (topnav) topnav.removeAttribute('data-subnav');
+    };
+  }, []);
+
+  /* scroll-spy */
+  useEffect(() => {
+    const observers = NAV_ITEMS.map(({ id }) => {
+      const el = document.getElementById(id);
+      if (!el) return null;
+      const obs = new IntersectionObserver(
+        ([entry]) => { if (entry.isIntersecting) setActiveSection(id); },
+        { threshold: 0.25, rootMargin: '-10% 0px -60% 0px' }
+      );
+      obs.observe(el);
+      return obs;
+    });
+    return () => observers.forEach((obs) => obs?.disconnect());
+  }, []);
+
+  /* animate-on-scroll */
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+      },
+      { threshold: 0.05 }
+    );
+    document.querySelectorAll('.animate-on-scroll').forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [loading]);
+
+  const navLinkStyle = (id) => ({
+    display: 'inline-flex',
+    alignItems: 'center',
+    padding: '0 0.25rem',
+    height: '100%',
+    fontSize: '0.875rem',
+    fontWeight: activeSection === id ? '600' : '500',
+    color: activeSection === id ? 'var(--color-primary)' : 'var(--color-text-secondary)',
+    textDecoration: 'none',
+    transition: 'color 0.15s ease',
+    borderBottom: activeSection === id ? '2px solid var(--color-primary)' : '2px solid transparent',
+    cursor: 'pointer',
+    whiteSpace: 'nowrap',
+  });
+
+  /* pull arrays from API; fall back to [] so maps never crash */
+  const trustBadges     = page?.trust_badges      ?? [];
+  const metrics         = page?.metrics           ?? [];
+  const productShowcase = page?.product_showcase  ?? [];
+  const featuresGrid    = page?.features_grid     ?? [];
+  const d2c             = page?.d2c_section       ?? {};
+  const b2b             = page?.b2b_section       ?? {};
+  const integrations    = page?.integrations_list ?? [];
+  const faq             = page?.faq               ?? [];
+
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '60vh', color: 'var(--color-text-secondary)' }}>
+        Loading…
+      </div>
+    );
+  }
+
+  /* Sub-nav bar + scroll-merge into topnav */
+  const subNavBar = (
+    <div
+      className="page-subnav"
+      style={{
+        position: 'sticky',
+        top: scrolled ? '-100px' : '64px',
+        zIndex: 30,
+        background: scrolled ? 'transparent' : 'rgba(6,10,24,0.85)',
+        backdropFilter: scrolled ? 'none' : 'saturate(160%) blur(14px)',
+        borderBottom: scrolled ? 'none' : '1px solid var(--line)',
+        height: scrolled ? 0 : '48px',
+        overflow: 'hidden',
+        transition: 'height 0.25s ease, top 0.25s ease',
+        pointerEvents: scrolled ? 'none' : 'auto',
+      }}
+    >
+      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 28px', display: 'flex', alignItems: 'center', gap: '1.5rem', height: '48px' }}>
+        <Link to="/commerce" style={{ fontWeight: '800', fontSize: '11px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--muted)', textDecoration: 'none', flexShrink: 0 }}>Commerce</Link>
+        <nav style={{ display: 'flex', alignItems: 'stretch', gap: '1.5rem', height: '100%' }}>
+          {NAV_ITEMS.map(({ id, label }) => (
+            <a key={id} href={`#${id}`} style={navLinkStyle(id)}>{label}</a>
+          ))}
+        </nav>
+      </div>
+    </div>
+  );
 
   return (
     <div className="commerce-page">
-      {/* Breadcrumbs & Tabs */}
-      <div style={{ background: 'var(--panel-2)', borderBottom: '1px solid var(--color-border)', padding: '0.75rem 0' }}>
-        <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
-          <div style={{ fontSize: '0.875rem', color: 'var(--color-text-secondary)' }}>
-            <Link to="/commerce" style={{ fontWeight: '600' }}>Commerce</Link> / <span>Overview</span>
-          </div>
-          <div style={{ display: 'flex', gap: '1.5rem', fontSize: '0.875rem', fontWeight: '500' }}>
-            <a href="#features" style={{ color: 'var(--color-text-secondary)' }}>Features</a>
-            <a href="#b2b" style={{ color: 'var(--color-text-secondary)' }}>B2B</a>
-            <a href="#d2c" style={{ color: 'var(--color-text-secondary)' }}>D2C</a>
-            <a href="#integrations" style={{ color: 'var(--color-text-secondary)' }}>Integrations</a>
-          </div>
-        </div>
-      </div>
 
-      {/* Hero Section */}
-      <section className="section section-light" style={{ paddingBottom: '3rem' }}>
-        <div className="background-orbs">
-          <div className="orb orb-1"></div>
-          <div className="orb orb-3"></div>
-        </div>
+      {subNavBar}
 
-        <div className="container" style={{ textAlign: 'center', maxWidth: '900px' }}>
-          <span style={{ textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: '600', color: 'var(--accent-color)' }}>Commerce</span>
-          <h1 className="gradient-text" style={{ fontSize: '3.75rem', fontWeight: '800', lineHeight: '1.1', marginTop: '0.5rem' }}>
-            The future of <em>Commerce Today.</em>
-          </h1>
-          <p style={{ fontSize: '1.25rem', marginBottom: '2.5rem', color: 'var(--color-text-secondary)', marginTop: '1.5rem' }}>
-            Polluxa Commerce is a unified platform that powers D2C, B2B portals, and marketplace syndication — with AI agents that recover abandoned carts, reprice dynamically, and manage returns automatically.
-          </p>
-          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '4rem' }}>
-            <Link to="/contact" className="btn btn-primary" style={{ padding: '1rem 2rem', fontSize: '1.125rem' }}>
-              Book a live demo <ArrowRight size={18} className="btn-icon" />
-            </Link>
-            <a href="#features" className="btn btn-secondary" style={{ padding: '1rem 2rem', fontSize: '1.125rem' }}>
-              See features
-            </a>
+      {/* Inline topnav sub-nav (shown inside topnav when scrolled) */}
+      {scrolled && (
+        <div
+          className="topnav-subnav-inline"
+          style={{
+            position: 'fixed',
+            top: 0, left: 0, right: 0,
+            height: '64px', zIndex: 55,
+            display: 'flex', alignItems: 'center',
+            padding: '0 28px', gap: '1.5rem',
+            pointerEvents: 'none',
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontWeight: '800', fontSize: '24px', letterSpacing: '-0.5px', color: '#fff', opacity: 0 }}>
+            <span style={{ width: '30px', height: '30px' }} />
+            Polluxa
           </div>
-
-          {/* Trust Badges */}
-          <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', flexWrap: 'wrap', color: 'var(--color-text-secondary)', fontSize: '0.95rem', fontWeight: '600' }}>
-            <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>✓ 2000+ Customers</span>
-            <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>✓ PCI DSS · ISO 27001</span>
-            <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>✓ 99% Uptime</span>
+          <div style={{ display: 'flex', alignItems: 'center', height: '64px', pointerEvents: 'auto' }}>
+            <span style={{ fontWeight: '800', fontSize: '11px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--muted)', marginRight: '1.5rem' }}>Commerce</span>
+            {NAV_ITEMS.map(({ id, label }) => (
+              <a
+                key={id}
+                href={`#${id}`}
+                style={{
+                  display: 'inline-flex', alignItems: 'center',
+                  height: '64px', padding: '0 0.75rem',
+                  fontSize: '14px', fontWeight: activeSection === id ? '600' : '500',
+                  color: activeSection === id ? '#fff' : 'var(--muted)',
+                  textDecoration: 'none',
+                  borderBottom: activeSection === id ? '2px solid var(--cyan)' : '2px solid transparent',
+                  transition: 'color 0.15s ease',
+                  whiteSpace: 'nowrap',
+                }}
+              >{label}</a>
+            ))}
           </div>
         </div>
-      </section>
+      )}
 
-      {/* Key Metrics */}
-      <section className="section section-alt" style={{ padding: '3rem 0' }}>
-        <div className="container">
-          <div className="grid-4" style={{ textAlign: 'center' }}>
-            <div>
-              <h3 style={{ fontSize: '2.5rem', color: 'var(--primary-color)', marginBottom: '0.25rem' }}>99%</h3>
-              <p style={{ color: 'var(--muted)', fontWeight: '500' }}>Uptime guaranteed</p>
-            </div>
-            <div>
-              <h3 style={{ fontSize: '2.5rem', color: 'var(--primary-color)', marginBottom: '0.25rem' }}>30%</h3>
-              <p style={{ color: 'var(--muted)', fontWeight: '500' }}>Y-o-Y growth for customers</p>
-            </div>
-            <div>
-              <h3 style={{ fontSize: '2.5rem', color: 'var(--primary-color)', marginBottom: '0.25rem' }}>29%</h3>
-              <p style={{ color: 'var(--muted)', fontWeight: '500' }}>Increase in digital revenue</p>
-            </div>
-            <div>
-              <h3 style={{ fontSize: '2.5rem', color: 'var(--primary-color)', marginBottom: '0.25rem' }}>27%</h3>
-              <p style={{ color: 'var(--muted)', fontWeight: '500' }}>Process automation lift</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* ── Main Content ── */}
+      <main>
 
-      {/* Product Showcase */}
-      <section className="section section-alt animate-on-scroll" style={{ padding: '4rem 0' }}>
-        <div className="container">
-          <div style={{ background: 'var(--panel)', border: '1px solid var(--color-border)', borderRadius: '1rem', padding: '2.5rem', boxShadow: 'var(--shadow-md)' }}>
-            <div style={{ borderBottom: '1px solid var(--color-border)', paddingBottom: '1rem', marginBottom: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ fontWeight: 'bold', color: 'var(--color-primary)' }}>Storefront · studio.polluxa</span>
-              <span style={{ background: '#dcfce7', color: '#16a34a', padding: '0.25rem 0.75rem', borderRadius: '999px', fontSize: '0.75rem', fontWeight: 'bold' }}>Active Channel Synchronization</span>
+          {/* Overview / Hero */}
+          <section id="overview" className="section section-light" style={{ paddingBottom: '3rem' }}>
+            <div className="background-orbs">
+              <div className="orb orb-1"></div>
+              <div className="orb orb-3"></div>
             </div>
-            <div className="grid-4">
-              <div style={{ padding: '1rem', background: 'var(--panel-2)', borderRadius: '0.5rem', borderLeft: '4px solid #3b82f6', boxShadow: 'var(--shadow-sm)' }}>
-                <span style={{ fontSize: '0.75rem', color: 'var(--muted)', fontWeight: 'bold', display: 'block' }}>D2C</span>
-                <strong>Linen Co-ord · ₹4,499</strong>
-                <span style={{ display: 'block', fontSize: '0.85rem', color: '#16a34a', marginTop: '0.25rem', fontWeight: '500' }}>✓ 42 in stock</span>
+            <div className="container" style={{ textAlign: 'center', maxWidth: '900px' }}>
+              <span style={{ textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: '600', color: 'var(--accent-color)' }}>
+                {page?.hero_label}
+              </span>
+              <h1 className="gradient-text" style={{ fontSize: '3.75rem', fontWeight: '800', lineHeight: '1.1', marginTop: '0.5rem' }}>
+                {page?.hero_title}
+              </h1>
+              <p style={{ fontSize: '1.25rem', marginBottom: '2.5rem', color: 'var(--color-text-secondary)', marginTop: '1.5rem' }}>
+                {page?.hero_description}
+              </p>
+              <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '4rem' }}>
+                <Link to={page?.cta_primary_url ?? '/contact'} className="btn btn-primary" style={{ padding: '1rem 2rem', fontSize: '1.125rem' }}>
+                  {page?.cta_primary_label} <ArrowRight size={18} className="btn-icon" />
+                </Link>
+                <a href={page?.cta_secondary_url ?? '#features'} className="btn btn-secondary" style={{ padding: '1rem 2rem', fontSize: '1.125rem' }}>
+                  {page?.cta_secondary_label}
+                </a>
               </div>
-              <div style={{ padding: '1rem', background: 'var(--panel-2)', borderRadius: '0.5rem', borderLeft: '4px solid #10b981', boxShadow: 'var(--shadow-sm)' }}>
-                <span style={{ fontSize: '0.75rem', color: 'var(--muted)', fontWeight: 'bold', display: 'block' }}>B2B</span>
-                <strong>Bulk PO · 240 units · Brand Z</strong>
-                <span style={{ display: 'block', fontSize: '0.85rem', color: 'var(--muted)', marginTop: '0.25rem', fontWeight: '500' }}>Net 30 payment terms</span>
-              </div>
-              <div style={{ padding: '1rem', background: 'var(--panel-2)', borderRadius: '0.5rem', borderLeft: '4px solid #f59e0b', boxShadow: 'var(--shadow-sm)' }}>
-                <span style={{ fontSize: '0.75rem', color: 'var(--muted)', fontWeight: 'bold', display: 'block' }}>MARKETPLACE</span>
-                <strong>Amazon, Flipkart, Myntra</strong>
-                <span style={{ display: 'block', fontSize: '0.85rem', color: '#10b981', marginTop: '0.25rem', fontWeight: '500' }}>✓ Synced in real-time</span>
-              </div>
-              <div style={{ padding: '1rem', background: 'var(--panel-2)', borderRadius: '0.5rem', borderLeft: '4px solid #8b5cf6', boxShadow: 'var(--shadow-sm)' }}>
-                <span style={{ fontSize: '0.75rem', color: 'var(--muted)', fontWeight: 'bold', display: 'block' }}>AGENT</span>
-                <strong>Pricing Agent · raised 14 SKUs</strong>
-                <span style={{ display: 'block', fontSize: '0.85rem', color: '#8b5cf6', fontWeight: 'bold', marginTop: '0.25rem' }}>+6% margin | +₹38K/day</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* Features Grid Section */}
-      <section id="features" className="section section-light animate-on-scroll">
-        <div className="container">
-          <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-            <span style={{ textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: '600', color: 'var(--color-accent-teal)' }}>Features</span>
-            <h2>Everything to sell — <em>with agents in every loop.</em></h2>
-          </div>
-
-          <div className="grid-3">
-            <div className="card">
-              <div className="card-icon">🛒</div>
-              <h4>Headless storefront</h4>
-              <p style={{ fontSize: '0.95rem', color: 'var(--color-text-secondary)', margin: 0 }}>
-                Pixel-perfect, blazing-fast PWA storefronts. Themeable, localized, AB-tested by an agent that reads conversion signals continuously.
-              </p>
-            </div>
-
-            <div className="card">
-              <div className="card-icon">📚</div>
-              <h4>One catalog, every channel</h4>
-              <p style={{ fontSize: '0.95rem', color: 'var(--color-text-secondary)', margin: 0 }}>
-                Master your products once. Push to D2C, B2B, marketplaces, retail POS — translated, priced and merchandised per channel automatically.
-              </p>
-            </div>
-
-            <div className="card">
-              <div className="card-icon">🤝</div>
-              <h4>B2B portals built in</h4>
-              <p style={{ fontSize: '0.95rem', color: 'var(--color-text-secondary)', margin: 0 }}>
-                Tiered pricing, quote-to-order, credit limits, account hierarchies, draft carts. Your wholesale buyers feel like they own the storefront.
-              </p>
-            </div>
-
-            <div className="card">
-              <div className="card-icon">💳</div>
-              <h4>Checkout that converts</h4>
-              <p style={{ fontSize: '0.95rem', color: 'var(--color-text-secondary)', margin: 0 }}>
-                One-click, multi-payment, multi-currency. Cart-abandonment agent recovers carts via WhatsApp, email and SMS within minutes.
-              </p>
-            </div>
-
-            <div className="card">
-              <div className="card-icon">📦</div>
-              <h4>Order orchestration</h4>
-              <p style={{ fontSize: '0.95rem', color: 'var(--color-text-secondary)', margin: 0 }}>
-                Split, route, hold, partially fulfill. Plays nicely with Polluxa WMS and Logistics — or your own external legacy tools.
-              </p>
-            </div>
-
-            <div className="card">
-              <div className="card-icon">↩️</div>
-              <h4>Returns that don't bleed</h4>
-              <p style={{ fontSize: '0.95rem', color: 'var(--color-text-secondary)', margin: 0 }}>
-                Self-serve return portal. Returns agent decides refund, replacement, store credit based on the specific margins and policies you set.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* D2C Section */}
-      <section id="d2c" className="section section-alt animate-on-scroll">
-        <div className="container">
-          <div className="grid-2" style={{ alignItems: 'center' }}>
-            <div>
-              <span style={{ fontSize: '0.875rem', fontWeight: 'bold', color: 'var(--color-accent-teal)', textTransform: 'uppercase' }}>D2C Commerce</span>
-              <h2 style={{ marginTop: '0.5rem' }}>Your brand, your storefront, your agents.</h2>
-              <p style={{ color: 'var(--color-text-secondary)', margin: '1.5rem 0' }}>
-                Launch a category-defining D2C brand in weeks. Polluxa Commerce ships with conversion-optimized themes, an AI merchandising agent, and automation sequences built to scale.
-              </p>
-              <ul style={{ listStyle: 'none', padding: 0, color: 'var(--color-text-primary)' }}>
-                <li style={{ marginBottom: '0.5rem', display: 'flex', gap: '0.5rem' }}>✓ AI merchandiser places hero SKUs and automatically hides out-of-stock items.</li>
-                <li style={{ marginBottom: '0.5rem', display: 'flex', gap: '0.5rem' }}>✓ Cart-abandon agent recovers checkout drops via WhatsApp + email.</li>
-                <li style={{ marginBottom: '0.5rem', display: 'flex', gap: '0.5rem' }}>✓ Loyalty, referrals, and gift cards built natively into the unified backend.</li>
-                <li style={{ marginBottom: '0.5rem', display: 'flex', gap: '0.5rem' }}>✓ Editorial blocks for rich storytelling seamlessly embedded alongside shopping.</li>
-              </ul>
-            </div>
-            {/* Dashboard Visualization */}
-            <div style={{ background: 'var(--panel)', border: '1px solid var(--color-border)', borderRadius: '1rem', padding: '2rem', boxShadow: 'var(--shadow-md)' }}>
-              <h4 style={{ marginBottom: '1.5rem', borderBottom: '1px solid var(--color-border)', paddingBottom: '0.5rem' }}>D2C Dashboard · last 24h</h4>
-              <div className="grid-2" style={{ gap: '1.5rem' }}>
-                <div style={{ background: 'var(--panel-2)', padding: '1rem', borderRadius: '0.5rem' }}>
-                  <span style={{ fontSize: '0.75rem', color: 'var(--muted)', display: 'block' }}>Sessions</span>
-                  <strong style={{ fontSize: '1.5rem' }}>42,180</strong>
-                  <span style={{ color: '#16a34a', display: 'block', fontSize: '0.8rem' }}>+14% vs yesterday</span>
+              {/* Trust Badges */}
+              {trustBadges.length > 0 && (
+                <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', flexWrap: 'wrap', color: 'var(--color-text-secondary)', fontSize: '0.95rem', fontWeight: '600' }}>
+                  {trustBadges.map((badge, i) => (
+                    <span key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>{badge}</span>
+                  ))}
                 </div>
-                <div style={{ background: 'var(--panel-2)', padding: '1rem', borderRadius: '0.5rem' }}>
-                  <span style={{ fontSize: '0.75rem', color: 'var(--muted)', display: 'block' }}>Conversion</span>
-                  <strong style={{ fontSize: '1.5rem' }}>3.42%</strong>
-                  <span style={{ color: '#16a34a', display: 'block', fontSize: '0.8rem' }}>+0.4 pts</span>
-                </div>
-                <div style={{ background: 'var(--panel-2)', padding: '1rem', borderRadius: '0.5rem' }}>
-                  <span style={{ fontSize: '0.75rem', color: 'var(--muted)', display: 'block' }}>AOV</span>
-                  <strong style={{ fontSize: '1.5rem' }}>₹2,840</strong>
-                  <span style={{ color: '#16a34a', display: 'block', fontSize: '0.8rem' }}>+6% growth</span>
-                </div>
-                <div style={{ background: 'var(--panel-2)', padding: '1rem', borderRadius: '0.5rem' }}>
-                  <span style={{ fontSize: '0.75rem', color: 'var(--muted)', display: 'block' }}>Recovered Carts</span>
-                  <strong style={{ fontSize: '1.5rem' }}>218</strong>
-                  <span style={{ color: '#16a34a', display: 'block', fontSize: '0.8rem', fontWeight: 'bold' }}>₹4.8L recovered</span>
+              )}
+            </div>
+          </section>
+
+          {/* Key Metrics */}
+          {metrics.length > 0 && (
+            <section className="section section-alt" style={{ padding: '3rem 0' }}>
+              <div className="container">
+                <div className="grid-4" style={{ textAlign: 'center' }}>
+                  {metrics.map((m, i) => (
+                    <div key={i}>
+                      <h3 style={{ fontSize: '2.5rem', color: 'var(--primary-color)', marginBottom: '0.25rem' }}>{m.value}</h3>
+                      <p style={{ color: 'var(--muted)', fontWeight: '500' }}>{m.label}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
+            </section>
+          )}
 
-      {/* B2B Section */}
-      <section id="b2b" className="section section-light animate-on-scroll">
-        <div className="container">
-          <div className="grid-2" style={{ alignItems: 'center' }}>
-            <div style={{ order: 2 }}>
-              <span style={{ fontSize: '0.875rem', fontWeight: 'bold', color: 'var(--color-accent-teal)', textTransform: 'uppercase' }}>B2B Commerce</span>
-              <h2 style={{ marginTop: '0.5rem' }}>The B2B portal your distributors actually use.</h2>
-              <p style={{ color: 'var(--color-text-secondary)', margin: '1.5rem 0' }}>
-                Negotiated price lists, MOQs, credit terms, buyer hierarchies, sample requests, RFQ-to-order, custom catalogs per account — all out of the box. No more spreadsheet ordering.
-              </p>
-              <ul style={{ listStyle: 'none', padding: 0, color: 'var(--color-text-primary)' }}>
-                <li style={{ marginBottom: '0.5rem', display: 'flex', gap: '0.5rem' }}>✓ Tiered pricing & custom promotions per distributor account.</li>
-                <li style={{ marginBottom: '0.5rem', display: 'flex', gap: '0.5rem' }}>✓ Quote-to-order with built-in internal/external approval workflows.</li>
-                <li style={{ marginBottom: '0.5rem', display: 'flex', gap: '0.5rem' }}>✓ Credit limits and Net-30/60/90 terms enforced live on checkout.</li>
-                <li style={{ marginBottom: '0.5rem', display: 'flex', gap: '0.5rem' }}>✓ Quick re-order from past order history, completed in two clicks.</li>
-              </ul>
-            </div>
-            {/* B2B Portal Visual */}
-            <div style={{ background: 'var(--panel-2)', border: '1px solid var(--color-border)', borderRadius: '1rem', padding: '2rem', order: 1, boxShadow: 'var(--shadow-md)' }}>
-              <h4 style={{ marginBottom: '1.5rem', borderBottom: '1px solid var(--color-border)', paddingBottom: '0.5rem' }}>B2B Portal · Buyer · Distributor Group X</h4>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <div style={{ background: 'var(--panel)', padding: '0.75rem 1rem', borderRadius: '0.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', boxShadow: 'var(--shadow-sm)' }}>
-                  <span>PO: Quarterly Order · 1,840 units</span>
-                  <span style={{ background: '#fef08a', color: '#854d0e', fontSize: '0.75rem', padding: '0.15rem 0.5rem', borderRadius: '4px', fontWeight: 'bold' }}>draft</span>
-                </div>
-                <div style={{ background: 'var(--panel)', padding: '0.75rem 1rem', borderRadius: '0.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', boxShadow: 'var(--shadow-sm)' }}>
-                  <span>RFQ: Custom Packs · 2 SKUs</span>
-                  <span style={{ background: '#fee2e2', color: '#991b1b', fontSize: '0.75rem', padding: '0.15rem 0.5rem', borderRadius: '4px', fontWeight: 'bold' }}>awaiting price</span>
-                </div>
-                <div style={{ background: 'var(--panel)', padding: '0.75rem 1rem', borderRadius: '0.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', boxShadow: 'var(--shadow-sm)' }}>
-                  <span>Credit: Available · Net 30 terms</span>
-                  <span style={{ fontWeight: 'bold', color: '#16a34a' }}>₹38L of ₹50L</span>
-                </div>
-                <div style={{ background: 'var(--panel)', padding: '0.75rem 1rem', borderRadius: '0.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', boxShadow: 'var(--shadow-sm)' }}>
-                  <span>Re-order: Same as Q3 Order</span>
-                  <button className="btn btn-primary" style={{ padding: '0.25rem 0.75rem', fontSize: '0.8rem', borderRadius: '4px' }}>₹14L · Reorder</button>
+          {/* Product Showcase */}
+          {productShowcase.length > 0 && (
+            <section className="section section-alt animate-on-scroll" style={{ padding: '4rem 0' }}>
+              <div className="container">
+                <div style={{ background: 'var(--panel)', border: '1px solid var(--color-border)', borderRadius: '1rem', padding: '2.5rem', boxShadow: 'var(--shadow-md)' }}>
+                  <div style={{ borderBottom: '1px solid var(--color-border)', paddingBottom: '1rem', marginBottom: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontWeight: 'bold', color: 'var(--color-primary)' }}>Storefront · studio.polluxa</span>
+                    <span style={{ background: '#dcfce7', color: '#16a34a', padding: '0.25rem 0.75rem', borderRadius: '999px', fontSize: '0.75rem', fontWeight: 'bold' }}>Active Channel Synchronization</span>
+                  </div>
+                  <div className="grid-4">
+                    {productShowcase.map((item, i) => (
+                      <div key={i} style={{ padding: '1rem', background: 'var(--panel-2)', borderRadius: '0.5rem', borderLeft: `4px solid ${item.color}`, boxShadow: 'var(--shadow-sm)' }}>
+                        <span style={{ fontSize: '0.75rem', color: 'var(--muted)', fontWeight: 'bold', display: 'block' }}>{item.type}</span>
+                        <strong>{item.title}</strong>
+                        <span style={{ display: 'block', fontSize: '0.85rem', color: item.detail_color ?? 'var(--muted)', marginTop: '0.25rem', fontWeight: item.detail_color ? 'bold' : '500' }}>
+                          {item.detail}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
+            </section>
+          )}
+
+          {/* Features Section — static scraped data always visible */}
+          <section id="features" className="section section-light animate-on-scroll">
+            <div className="container">
+              <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+                <span style={{ textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: '600', color: 'var(--cyan)' }}>Features</span>
+                <h2 style={{ marginTop: '0.5rem' }}>E-commerce <em>Encompassed</em></h2>
+                <p style={{ maxWidth: '680px', margin: '1rem auto 0', color: 'var(--muted)' }}>
+                  Polluxa E-commerce links your value chain, people, systems, and procedures to maximize product performance and go-to-market.
+                </p>
+              </div>
+              <div className="grid-3">
+                {COMMERCE_FEATURES.map((f, i) => (
+                  <a key={i} href={f.link} target="_blank" rel="noopener noreferrer" className="crm-feat-card">
+                    <div className="crm-feat-icon" style={{ background: f.color + '1a', color: f.color }}>
+                      {f.icon}
+                    </div>
+                    <span className="crm-feat-tag" style={{ color: f.color }}>{f.tag}</span>
+                    <h4 className="crm-feat-title">{f.title}</h4>
+                    <p className="crm-feat-desc">{f.description}</p>
+                  </a>
+                ))}
+              </div>
             </div>
-          </div>
-        </div>
-      </section>
+          </section>
 
-      {/* Integrations Section */}
-      <section id="integrations" className="section section-alt animate-on-scroll">
-        <div className="container">
-          <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-            <span style={{ textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: '600', color: 'var(--color-accent-teal)' }}>Integrations</span>
-            <h2>Plays well with <em>your stack.</em></h2>
-            <p style={{ maxWidth: '600px', margin: '0.5rem auto 0', color: 'var(--color-text-secondary)' }}>
-              Pre-built connectors for marketplaces, payments, shipping, ERP, and taxes. Open API + webhooks for everything else.
-            </p>
-          </div>
+          {/* D2C Section */}
+          {d2c.title && (
+            <section id="d2c" className="section section-alt animate-on-scroll">
+              <div className="container">
+                <div className="grid-2" style={{ alignItems: 'center' }}>
+                  <div>
+                    <span style={{ fontSize: '0.875rem', fontWeight: 'bold', color: 'var(--color-accent-teal)', textTransform: 'uppercase' }}>
+                      {d2c.label}
+                    </span>
+                    <h2 style={{ marginTop: '0.5rem' }}>{d2c.title}</h2>
+                    <p style={{ color: 'var(--color-text-secondary)', margin: '1.5rem 0' }}>{d2c.description}</p>
+                    <ul style={{ listStyle: 'none', padding: 0, color: 'var(--color-text-primary)' }}>
+                      {(d2c.bullets ?? []).map((b, i) => (
+                        <li key={i} style={{ marginBottom: '0.5rem', display: 'flex', gap: '0.5rem' }}>✓ {b}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  {/* D2C Dashboard */}
+                  <div style={{ background: 'var(--panel)', border: '1px solid var(--color-border)', borderRadius: '1rem', padding: '2rem', boxShadow: 'var(--shadow-md)' }}>
+                    <h4 style={{ marginBottom: '1.5rem', borderBottom: '1px solid var(--color-border)', paddingBottom: '0.5rem' }}>
+                      {d2c.dashboard_title}
+                    </h4>
+                    <div className="grid-2" style={{ gap: '1.5rem' }}>
+                      {(d2c.dashboard ?? []).map((stat, i) => (
+                        <div key={i} style={{ background: 'var(--panel-2)', padding: '1rem', borderRadius: '0.5rem' }}>
+                          <span style={{ fontSize: '0.75rem', color: 'var(--muted)', display: 'block' }}>{stat.label}</span>
+                          <strong style={{ fontSize: '1.5rem' }}>{stat.value}</strong>
+                          <span style={{ color: stat.trend_color, display: 'block', fontSize: '0.8rem', fontWeight: '500' }}>{stat.trend}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          )}
 
-          <div className="grid-6" style={{ gap: '2rem', textAlign: 'center', fontWeight: 'bold', color: 'var(--muted)' }}>
-            <div style={{ background: 'var(--panel)', padding: '1.5rem 1rem', borderRadius: '0.5rem', border: '1px solid var(--color-border)', boxShadow: 'var(--shadow-sm)' }}>Amazon</div>
-            <div style={{ background: 'var(--panel)', padding: '1.5rem 1rem', borderRadius: '0.5rem', border: '1px solid var(--color-border)', boxShadow: 'var(--shadow-sm)' }}>Flipkart</div>
-            <div style={{ background: 'var(--panel)', padding: '1.5rem 1rem', borderRadius: '0.5rem', border: '1px solid var(--color-border)', boxShadow: 'var(--shadow-sm)' }}>Myntra</div>
-            <div style={{ background: 'var(--panel)', padding: '1.5rem 1rem', borderRadius: '0.5rem', border: '1px solid var(--color-border)', boxShadow: 'var(--shadow-sm)' }}>Shopify</div>
-            <div style={{ background: 'var(--panel)', padding: '1.5rem 1rem', borderRadius: '0.5rem', border: '1px solid var(--color-border)', boxShadow: 'var(--shadow-sm)' }}>SAP</div>
-            <div style={{ background: 'var(--panel)', padding: '1.5rem 1rem', borderRadius: '0.5rem', border: '1px solid var(--color-border)', boxShadow: 'var(--shadow-sm)' }}>Oracle</div>
-            <div style={{ background: 'var(--panel)', padding: '1.5rem 1rem', borderRadius: '0.5rem', border: '1px solid var(--color-border)', boxShadow: 'var(--shadow-sm)' }}>Stripe</div>
-            <div style={{ background: 'var(--panel)', padding: '1.5rem 1rem', borderRadius: '0.5rem', border: '1px solid var(--color-border)', boxShadow: 'var(--shadow-sm)' }}>Razorpay</div>
-            <div style={{ background: 'var(--panel)', padding: '1.5rem 1rem', borderRadius: '0.5rem', border: '1px solid var(--color-border)', boxShadow: 'var(--shadow-sm)' }}>PayTabs</div>
-            <div style={{ background: 'var(--panel)', padding: '1.5rem 1rem', borderRadius: '0.5rem', border: '1px solid var(--color-border)', boxShadow: 'var(--shadow-sm)' }}>Shiprocket</div>
-            <div style={{ background: 'var(--panel)', padding: '1.5rem 1rem', borderRadius: '0.5rem', border: '1px solid var(--color-border)', boxShadow: 'var(--shadow-sm)' }}>Avalara</div>
-            <div style={{ background: 'var(--panel)', padding: '1.5rem 1rem', borderRadius: '0.5rem', border: '1px solid var(--color-border)', boxShadow: 'var(--shadow-sm)' }}>Klaviyo</div>
-          </div>
-        </div>
-      </section>
+          {/* B2B Section */}
+          {b2b.title && (
+            <section id="b2b" className="section section-light animate-on-scroll">
+              <div className="container">
+                <div className="grid-2" style={{ alignItems: 'center' }}>
+                  <div style={{ order: 2 }}>
+                    <span style={{ fontSize: '0.875rem', fontWeight: 'bold', color: 'var(--color-accent-teal)', textTransform: 'uppercase' }}>
+                      {b2b.label}
+                    </span>
+                    <h2 style={{ marginTop: '0.5rem' }}>{b2b.title}</h2>
+                    <p style={{ color: 'var(--color-text-secondary)', margin: '1.5rem 0' }}>{b2b.description}</p>
+                    <ul style={{ listStyle: 'none', padding: 0, color: 'var(--color-text-primary)' }}>
+                      {(b2b.bullets ?? []).map((b, i) => (
+                        <li key={i} style={{ marginBottom: '0.5rem', display: 'flex', gap: '0.5rem' }}>✓ {b}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  {/* B2B Portal */}
+                  <div style={{ background: 'var(--panel-2)', border: '1px solid var(--color-border)', borderRadius: '1rem', padding: '2rem', order: 1, boxShadow: 'var(--shadow-md)' }}>
+                    <h4 style={{ marginBottom: '1.5rem', borderBottom: '1px solid var(--color-border)', paddingBottom: '0.5rem' }}>
+                      {b2b.portal_title}
+                    </h4>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                      {(b2b.portal_items ?? []).map((item, i) => (
+                        <div key={i} style={{ background: 'var(--panel)', padding: '0.75rem 1rem', borderRadius: '0.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', boxShadow: 'var(--shadow-sm)' }}>
+                          <span>{item.label}</span>
+                          {item.type === 'badge' && (
+                            <span style={{ background: item.status_bg, color: item.status_color, fontSize: '0.75rem', padding: '0.15rem 0.5rem', borderRadius: '4px', fontWeight: 'bold' }}>
+                              {item.status}
+                            </span>
+                          )}
+                          {item.type === 'value' && (
+                            <span style={{ fontWeight: 'bold', color: item.value_color }}>{item.value}</span>
+                          )}
+                          {item.type === 'button' && (
+                            <button className="btn btn-primary" style={{ padding: '0.25rem 0.75rem', fontSize: '0.8rem', borderRadius: '4px' }}>
+                              {item.action_label}
+                            </button>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          )}
 
-      {/* Final CTA Section */}
-      <section className="section section-light animate-on-scroll" style={{ borderTop: '1px solid var(--color-border)' }}>
-        <div className="container" style={{ textAlign: 'center', maxWidth: '800px' }}>
-          <h2>Ready to sell, with agents on your side?</h2>
-          <p style={{ color: 'var(--color-text-secondary)', marginBottom: '2.5rem' }}>
-            Book a 30-minute call with a Polluxa Commerce architect. We will show you the platform running live on data that mirrors your brand.
-          </p>
-          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
-            <Link to="/contact" className="btn btn-primary" style={{ padding: '1rem 2rem', fontSize: '1.125rem' }}>
-              Book a live demo <ArrowRight size={18} className="btn-icon" />
-            </Link>
-            <Link to="/customers" className="btn btn-secondary" style={{ padding: '1rem 2rem', fontSize: '1.125rem' }}>
-              Read customer stories
-            </Link>
-          </div>
-        </div>
-      </section>
+          {/* Integrations */}
+          {integrations.length > 0 && (
+            <section id="integrations" className="section section-alt animate-on-scroll">
+              <div className="container">
+                <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+                  <span style={{ textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: '600', color: 'var(--color-accent-teal)' }}>Integrations</span>
+                  <h2>Plays well with <em>your stack.</em></h2>
+                  <p style={{ maxWidth: '600px', margin: '0.5rem auto 0', color: 'var(--color-text-secondary)' }}>
+                    Pre-built connectors for marketplaces, payments, shipping, ERP, and taxes. Open API + webhooks for everything else.
+                  </p>
+                </div>
+                <div className="grid-6" style={{ gap: '2rem', textAlign: 'center', fontWeight: 'bold', color: 'var(--muted)' }}>
+                  {integrations.map((name, i) => (
+                    <div key={i} style={{ background: 'var(--panel)', padding: '1.5rem 1rem', borderRadius: '0.5rem', border: '1px solid var(--color-border)', boxShadow: 'var(--shadow-sm)' }}>
+                      {name}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+          )}
+
+          <FaqAccordion items={faq} />
+
+          {/* Final CTA */}
+          <section className="section section-light animate-on-scroll" style={{ borderTop: '1px solid var(--color-border)' }}>
+            <div className="container" style={{ textAlign: 'center', maxWidth: '800px' }}>
+              <h2>Ready to sell, with agents on your side?</h2>
+              <p style={{ color: 'var(--color-text-secondary)', marginBottom: '2.5rem' }}>
+                Book a 30-minute call with a Polluxa Commerce architect. We will show you the platform running live on data that mirrors your brand.
+              </p>
+              <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
+                <Link to={page?.cta_primary_url ?? '/contact'} className="btn btn-primary" style={{ padding: '1rem 2rem', fontSize: '1.125rem' }}>
+                  {page?.cta_primary_label ?? 'Book a live demo'} <ArrowRight size={18} className="btn-icon" />
+                </Link>
+                <Link to="/customers" className="btn btn-secondary" style={{ padding: '1rem 2rem', fontSize: '1.125rem' }}>
+                  Read customer stories
+                </Link>
+              </div>
+            </div>
+          </section>
+
+      </main>
     </div>
   );
 };

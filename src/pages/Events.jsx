@@ -1,55 +1,60 @@
+import { useState, useEffect } from 'react';
 import { ArrowRight, MapPin, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { fetchAPI } from '../lib/api';
 
-const upcoming = [
-  {
-    name: 'Global AI Show Riyadh – Exhibit',
-    date: 'June 28–29, 2026',
-    location: 'Riyadh, Saudi Arabia',
-    type: 'Exhibition',
-    desc: 'Polluxa exhibits at the Global AI Show in Riyadh — showcasing our agentic enterprise platform and AI-driven solutions for retail, commerce, and supply chain.',
-  },
-  {
-    name: 'Online Retailer Conference & Expo 2026',
-    date: 'July 21–22, 2026',
-    location: 'ICC Sydney, Darling Harbour, Sydney, Australia',
-    type: 'Conference & Expo',
-    desc: "Australia's leading retail technology conference. Meet the Polluxa team to learn how we're powering the next generation of omnichannel commerce operations.",
-  },
-  {
-    name: 'Seamless Saudi Arabia 2026',
-    date: 'November 8–9, 2026',
-    location: 'Riyadh Front, Riyadh',
-    type: 'Conference',
-    badge: 'Featured',
-    desc: 'The Middle East\'s leading payments and commerce event. Polluxa will be on the show floor demonstrating our full enterprise platform for retail and fintech audiences.',
-  },
-  {
-    name: 'GITEX Global 2026',
-    date: 'December 6–10, 2026',
-    location: 'Expo City Dubai / Dubai Exhibition Centre, Dubai, UAE',
-    type: 'Exhibition',
-    badge: 'Featured',
-    desc: "The world's largest tech show. Polluxa will have a dedicated stand at GITEX Global 2026 — come see our full agentic enterprise suite live on the show floor.",
-  },
-];
+const Events = () => {
+  const [upcoming, setUpcoming] = useState([]);
+  const [past, setPast] = useState([]);
+  useEffect(() => {
+    async function loadEvents() {
+      try {
+        const response = await fetchAPI('/api/events', {
+          populate: '*',
+          sort: 'StartDate:asc',
+        });
+        if (response && response.data && response.data.length > 0) {
+          const now = new Date();
+          const apiUpcoming = [];
+          const apiPast = [];
 
-const past = [
-  { name: 'Seamless Middle East 2026', date: 'May 11–13, 2026', location: 'Dubai World Trade Centre, Dubai, UAE' },
-  { name: 'Retail Asia Summit – Malaysia 2026', date: 'April 14–15, 2026', location: 'Kuala Lumpur, Malaysia' },
-  { name: 'Exhibit at LEAP 2026', date: 'April 12–15, 2026', location: 'Riyadh Front Exhibition & Conference Center, Riyadh, Saudi Arabia' },
-  { name: 'eTail Asia 2026', date: 'March 23–24, 2026', location: 'Equarius Hotel, Sentosa, Singapore' },
-  { name: 'NRF 2026 — National Retail Federation', date: 'January 12–14, 2026', location: 'New York, USA' },
-  { name: 'GITEX Global 2025', date: 'October 14–18, 2025', location: 'Dubai, UAE' },
-  { name: 'Polluxa World 2025', date: 'September 20–21, 2025', location: 'Bangalore, India' },
-  { name: 'Seamless Middle East 2025', date: 'May 14–15, 2025', location: 'Dubai, UAE' },
-  { name: 'IMAGES Retail India Forum 2025', date: 'April 10, 2025', location: 'New Delhi, India' },
-  { name: 'Tech in Asia Singapore 2025', date: 'March 6–7, 2025', location: 'Singapore' },
-  { name: 'LEAP 2025', date: 'February 9–12, 2025', location: 'Riyadh, Saudi Arabia' },
-  { name: 'eTail Asia 2025', date: 'March, 2025', location: 'Singapore' },
-];
+          response.data.forEach(item => {
+            const startDate = new Date(item.attributes.StartDate);
+            const endDate = new Date(item.attributes.EndDate);
+            
+            // Format dates
+            const startStr = startDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+            const endStr = endDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+            const dateStr = startStr === endStr ? startStr : `${startDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}–${endDate.getDate()}, ${endDate.getFullYear()}`;
 
-const Events = () => (
+            const eventObj = {
+              name: item.attributes.title,
+              date: dateStr,
+              location: item.attributes.location,
+              type: 'Event',
+              desc: item.attributes.description,
+              slug: item.attributes.slug,
+              badge: null
+            };
+
+            if (endDate >= now || startDate >= now) {
+              apiUpcoming.push(eventObj);
+            } else {
+              apiPast.push(eventObj);
+            }
+          });
+          
+          if (apiUpcoming.length > 0) setUpcoming(apiUpcoming);
+          if (apiPast.length > 0) setPast(apiPast.reverse()); // latest past events first
+        }
+      } catch (error) {
+        console.error('Failed to load events', error);
+      }
+    }
+    loadEvents();
+  }, []);
+
+  return (
   <div className="events-page">
     <section className="section section-light" style={{ paddingBottom: '4rem' }}>
       <div className="container" style={{ maxWidth: '800px', textAlign: 'center' }}>
@@ -140,6 +145,7 @@ const Events = () => (
       </div>
     </section>
   </div>
-);
+  );
+};
 
 export default Events;

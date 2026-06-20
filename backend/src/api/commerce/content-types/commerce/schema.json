@@ -18,38 +18,94 @@
   "attributes": {
     "title": {
       "type": "string",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
+      "pluginOptions": { "i18n": { "localized": true } }
     },
     "slug": {
       "type": "string",
-      "pluginOptions": {
-        "i18n": {
-          "localized": false
-        }
-      },
-      "required": true
+      "required": true,
+      "pluginOptions": { "i18n": { "localized": false } }
     },
     "description": {
       "type": "text",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "hero_label": {
+      "type": "string",
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "hero_title": {
+      "type": "string",
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "hero_description": {
+      "type": "text",
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "cta_primary_label": {
+      "type": "string",
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "cta_primary_url": {
+      "type": "string",
+      "pluginOptions": { "i18n": { "localized": false } }
+    },
+    "cta_secondary_label": {
+      "type": "string",
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "cta_secondary_url": {
+      "type": "string",
+      "pluginOptions": { "i18n": { "localized": false } }
+    },
+    "trust_badges": {
+      "type": "json",
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "metrics": {
+      "type": "json",
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "product_showcase": {
+      "type": "json",
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "features_grid": {
+      "type": "json",
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "d2c_section": {
+      "type": "json",
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "b2b_section": {
+      "type": "json",
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "integrations_list": {
+      "type": "json",
+      "pluginOptions": { "i18n": { "localized": false } }
+    },
+    "ecommerce_features": {
+      "type": "json",
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "faq": {
+      "type": "json",
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "demo_headline": {
+      "type": "string",
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "demo_description": {
+      "type": "text",
+      "pluginOptions": { "i18n": { "localized": true } }
     },
     "media": {
       "type": "component",
       "repeatable": false,
       "component": "shared.media",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
+      "pluginOptions": { "i18n": { "localized": true } }
     },
     "blocks": {
       "type": "dynamiczone",
@@ -66,21 +122,13 @@
         "sections.faq",
         "shared.seo"
       ],
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
+      "pluginOptions": { "i18n": { "localized": true } }
     },
     "seo": {
       "type": "component",
       "repeatable": false,
       "component": "shared.seo",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
+      "pluginOptions": { "i18n": { "localized": true } }
     }
   }
 }

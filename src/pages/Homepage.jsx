@@ -1,6 +1,7 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
+import { fetchAPI } from '../lib/api';
 
 /* ── Unsplash image helpers ─────────────────────────── */
 const UNS = (id, w = 800, h = 420) =>
@@ -129,6 +130,22 @@ function useCounters() {
 const Homepage = () => {
   useScrollReveal();
   useCounters();
+
+  const [articleCount, setArticleCount] = useState(null);
+
+  useEffect(() => {
+    async function loadStats() {
+      try {
+        const response = await fetchAPI('/api/articles');
+        if (response && response.meta && response.meta.pagination) {
+          setArticleCount(response.meta.pagination.total);
+        }
+      } catch (err) {
+        // ignore
+      }
+    }
+    loadStats();
+  }, []);
 
   return (
     <>
@@ -352,7 +369,9 @@ const Homepage = () => {
                   <div style={{ padding: '1.125rem 1.375rem', flex: 1, display: 'flex', flexDirection: 'column' }}>
                     <span style={{ fontSize: '0.7rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--cyan)', marginBottom: '0.375rem' }}>{type}</span>
                     <h4 style={{ color: 'var(--ink)', marginBottom: '0.5rem', fontSize: '0.9375rem', lineHeight: '1.4' }}>{title}</h4>
-                    <p style={{ fontSize: '0.8125rem', color: 'var(--muted)', lineHeight: '1.6', flex: 1 }}>{desc}</p>
+                    <p style={{ fontSize: '0.8125rem', color: 'var(--muted)', lineHeight: '1.6', flex: 1 }}>
+                      {type === 'Blog' && articleCount ? `Explore our collection of ${articleCount}+ articles and learn how to streamline processes, boost collaboration, and enhance efficiency.` : desc}
+                    </p>
                     <span style={{ marginTop: '0.875rem', fontSize: '0.8125rem', fontWeight: '700', color: 'var(--cyan)', display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
                       Explore <ArrowRight size={13} />
                     </span>

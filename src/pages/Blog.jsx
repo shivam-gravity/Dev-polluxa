@@ -1,34 +1,42 @@
+import { useState, useEffect } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
-const posts = [
-  { title: 'What is CRM? and How its Helpful for Business?', category: 'Product', date: 'Apr 15, 2025', read: '5 min read', desc: 'A complete guide to Customer Relationship Management — what it is, how it works, and why modern businesses can\'t scale without a CRM platform built for their team.' },
-  { title: 'What is PLM? A complete Guide to Product Lifecycle Management', category: 'Product', date: 'Apr 10, 2025', read: '6 min read', desc: 'From concept to shelf: understand how PLM software helps brands reduce time-to-market, streamline vendor management, and improve product quality across the supply chain.' },
-  { title: 'The Future of Influencer Marketing: Trends to Watch', category: 'Industry', date: 'Mar 28, 2025', read: '4 min read', desc: 'As creator commerce grows, the influencer-brand relationship is being reinvented. Here are the key shifts brands need to prepare for in 2025 and beyond.' },
-  { title: 'Why Digital Location Management Matters More than Ever', category: 'Industry', date: 'Mar 20, 2025', read: '5 min read', desc: 'Customers expect accurate business info everywhere — Google, Maps, directories. Discover why location data consistency is now a critical competitive advantage.' },
-  { title: 'Autonomous Logistics Intelligence: The Future of Modern Fulfillment', category: 'Engineering', date: 'Mar 12, 2025', read: '7 min read', desc: 'AI-driven logistics platforms are replacing manual dispatching. Explore how autonomous intelligence improves route decisions, reduces cost, and speeds up last-mile delivery.' },
-  { title: 'Enterprise Commerce Trends 2025', category: 'Industry', date: 'Feb 25, 2025', read: '6 min read', desc: '2025 marks a turning point for enterprise commerce — agentic AI, unified platforms, and real-time inventory are setting the new standard for omnichannel retailers.' },
-  { title: '2025 Trends: Creator Commerce', category: 'Industry', date: 'Feb 15, 2025', read: '4 min read', desc: 'Creators are building billion-dollar brands. We unpack the 2025 creator commerce trends shaping how brands collaborate with influencers, manage drops, and drive DTC revenue.' },
-  { title: 'Top 5 Benefits of Agentic AI for Retailers!', category: 'Product', date: 'Feb 5, 2025', read: '5 min read', desc: 'Agentic AI doesn\'t just automate tasks — it reasons, plans, and executes end-to-end. Here are the five biggest gains enterprise retailers see when they deploy agentic systems.' },
-  { title: 'Understanding the Basics of Commerce', category: 'Product', date: 'Jan 28, 2025', read: '4 min read', desc: 'What does modern commerce actually mean for enterprises? A breakdown of unified commerce fundamentals — from inventory to checkout to post-purchase — and how to get started.' },
-  { title: 'Top Commerce Platforms for Enterprises in 2025', category: 'Industry', date: 'Jan 20, 2025', read: '6 min read', desc: 'We reviewed 12 enterprise commerce platforms. Here\'s how they stack up on scalability, integrations, AI features, and total cost of ownership for mid-market and enterprise buyers.' },
-  { title: 'Agentic AI: The Future of Work is Here', category: 'Engineering', date: 'Jan 10, 2025', read: '8 min read', desc: 'Agentic AI is no longer a research concept — it\'s live in enterprise systems today. Learn what sets agentic AI apart from traditional automation and why it changes everything.' },
-  { title: 'Top 5 Benefits of CRM for Businesses in 2025', category: 'Product', date: 'Dec 20, 2024', read: '5 min read', desc: 'From pipeline management to automated follow-ups, here are the five CRM capabilities that are delivering the most measurable ROI for businesses of all sizes in 2025.' },
-  { title: 'What is Reverse Logistics? A Complete Guide', category: 'Industry', date: 'Dec 12, 2024', read: '6 min read', desc: 'Returns management is now a competitive differentiator. This guide covers the full reverse logistics lifecycle — from customer return to restocking — and how to do it profitably.' },
-  { title: 'How to Build a Successful DTC Brand in 2025', category: 'Industry', date: 'Dec 5, 2024', read: '7 min read', desc: 'Direct-to-consumer brands that win in 2025 combine creator partnerships, first-party data, and tech stacks built for speed. Here\'s the blueprint.' },
-  { title: 'Warehouse Management: The Complete Guide', category: 'Product', date: 'Nov 25, 2024', read: '8 min read', desc: 'A comprehensive walkthrough of modern warehouse management — from inbound to fulfilment — including how scan-based WMS drives 99% accuracy at enterprise scale.' },
-  { title: 'What is BOPIS and Why it Matters for Retail?', category: 'Industry', date: 'Nov 15, 2024', read: '4 min read', desc: 'Buy Online, Pick Up In Store (BOPIS) is now expected by shoppers — not just a nice-to-have. Learn how to implement it operationally and what it takes to do it well.' },
-  { title: '5 Strategies to Scale Your eCommerce Brand', category: 'Industry', date: 'Nov 5, 2024', read: '5 min read', desc: 'Growing an eCommerce business past $10M requires more than more ad spend. Here are the five operational and tech strategies that actually move the needle at scale.' },
-  { title: 'The Rise of the Multi-Channel Seller', category: 'Industry', date: 'Oct 22, 2024', read: '5 min read', desc: 'Selling across Amazon, Shopify, social commerce, and your own website creates complexity — unless you unify on one platform. Learn how multi-channel sellers are winning.' },
-  { title: 'AI in Supply Chain: What to Expect in 2025', category: 'Engineering', date: 'Oct 12, 2024', read: '7 min read', desc: 'AI is being applied across forecasting, routing, risk detection, and supplier negotiation. Here\'s the supply chain AI landscape heading into 2025 and which use cases are ready.' },
-  { title: 'Building a Winning Vendor Management Strategy', category: 'Product', date: 'Oct 5, 2024', read: '5 min read', desc: 'Your vendor ecosystem is a competitive asset. Learn how enterprise PLM-integrated vendor portals cut lead times and improve product quality at source.' },
-  { title: 'Omnichannel Commerce: From Buzzword to Blueprint', category: 'Industry', date: 'Sep 20, 2024', read: '6 min read', desc: 'Omnichannel isn\'t about being everywhere — it\'s about unified data and seamless experience. Here\'s the practical blueprint for building it without starting from scratch.' },
-  { title: 'How Polluxa Helped a D2C Brand 10x Its Operations', category: 'Case Study', date: 'Sep 10, 2024', read: '6 min read', desc: 'A leading fashion-first D2C brand consolidated WMS, logistics, and CRM onto Polluxa — and doubled fulfilment capacity within 90 days. Here\'s the story.' },
-];
+import { fetchAPI } from '../lib/api';
 
 const categories = ['All', 'Product', 'Industry', 'Engineering', 'Case Study'];
 
-const Blog = () => (
+const Blog = () => {
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadPosts() {
+      try {
+        const response = await fetchAPI('/api/articles', {
+          populate: '*',
+          sort: 'publishedAt:desc',
+        });
+        if (response && response.data && response.data.length > 0) {
+          const apiPosts = response.data.map(item => ({
+            title: item.attributes.title,
+            category: item.attributes.category?.data?.attributes?.name || 'General',
+            date: new Date(item.attributes.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+            read: '5 min read',
+            desc: item.attributes.description,
+            slug: item.attributes.slug,
+          }));
+          setPosts(apiPosts);
+        }
+      } catch (error) {
+        console.error('Failed to load posts', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadPosts();
+  }, []);
+
+  return (
   <div className="blog-page">
     <section className="section section-light" style={{ paddingBottom: '4rem' }}>
       <div className="container" style={{ maxWidth: '900px', textAlign: 'center' }}>
@@ -79,6 +87,7 @@ const Blog = () => (
       </div>
     </section>
   </div>
-);
+  );
+};
 
 export default Blog;

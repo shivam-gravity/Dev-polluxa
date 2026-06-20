@@ -1,97 +1,41 @@
-import { ArrowRight, FileText, BookOpen } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { ArrowRight, FileText } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
-const caseStudies = [
-  {
-    type: 'Case Study',
-    category: 'Logistics',
-    title: 'How a Global Retailer Streamlined Its Logistics with Polluxa Intelligence',
-    desc: 'This retailer was grappling with disjointed logistics workflows across warehouses, third-party carriers, and last-mile delivery partners. Polluxa unified the entire operation on one platform.',
-    tags: ['Logistics', 'Last-mile', 'WMS'],
-  },
-  {
-    type: 'Case Study',
-    category: 'PLM · Retail',
-    title: 'How Polluxa PLM Simplified Product Lifecycle Management for a Leading Retail Brand',
-    desc: 'A fast-scaling lifestyle retailer operating across the GCC region was facing growing pressure from SKU expansion and fragmented cross-departmental collaboration. Polluxa PLM brought everything together.',
-    tags: ['PLM', 'GCC', 'Retail'],
-  },
-  {
-    type: 'Case Study',
-    category: 'PLM · Manufacturing',
-    title: 'How Polluxa PLM Transformed Product Lifecycle Management in Manufacturing',
-    desc: 'A mid-sized automotive parts supplier in Riyadh faced rising inefficiencies — disconnected tools, delayed engineering change approvals, and audit stress. Polluxa resolved all three.',
-    tags: ['PLM', 'Manufacturing', 'Riyadh'],
-  },
-  {
-    type: 'Case Study',
-    category: 'PLM · Beauty & Compliance',
-    title: 'Global & Homegrown Beauty Brands Company Streamlines Compliance with Polluxa',
-    desc: 'Polluxa was approached by a best-in-class global and homegrown beauty brands company to help them meet strict regulatory guidelines across their multi-brand portfolio.',
-    tags: ['PLM', 'Beauty', 'Compliance'],
-  },
-  {
-    type: 'Case Study',
-    category: 'PLM · Process Efficiency',
-    title: 'Polluxa PLM: Streamlining Technical Errors and Processes',
-    desc: 'Polluxa PLM is a cutting-edge Product Lifecycle Management system designed to streamline product development processes. This analysis examines how one customer eliminated systemic errors at scale.',
-    tags: ['PLM', 'Process', 'Efficiency'],
-  },
-  {
-    type: 'Case Study',
-    category: 'PLM · Accuracy',
-    title: 'Increases Accuracy and Speed with Polluxa PLM',
-    desc: 'An analysis of a Multi-Retail Brand that used Polluxa to dramatically reduce data entry errors and accelerate time-to-market across their full product range.',
-    tags: ['PLM', 'Multi-retail', 'Speed'],
-  },
-  {
-    type: 'Case Study',
-    category: 'PLM · Speed',
-    title: 'Produces Styles 7× Faster with Polluxa PLM',
-    desc: "A customer used to take two weeks to enter styles. With Polluxa PLM, that same work now takes a day and a half — a 7× acceleration across the entire product development cycle.",
-    tags: ['PLM', 'Speed', '7x faster'],
-    highlight: '7× faster',
-  },
-  {
-    type: 'Case Study',
-    category: 'PLM · Fragrance & Compliance',
-    title: 'Global Fragrance Company Streamlines Compliance with Polluxa',
-    desc: 'Polluxa was approached by a well-known perfume manufacturing company to help them meet strict international regulatory guidelines — across ingredients, labelling, and supply chain documentation.',
-    tags: ['PLM', 'Fragrance', 'Compliance'],
-  },
-  {
-    type: 'Case Study',
-    category: 'PLM · Pharma',
-    title: 'The Impact of Product Lifecycle Management (PLM) in the Pharmaceutical Industry',
-    desc: 'The pharmaceutical industry is characterized by its complexity, stringent regulatory requirements, and critical need for innovation. This study explores how PLM reduces compliance burden while accelerating R&D cycles.',
-    tags: ['PLM', 'Pharma', 'Regulatory'],
-  },
-];
-
-const whitepapers = [
-  { title: 'The Future of Agentic Commerce', sub: 'How AI is Transforming the E-Commerce Landscape', tag: 'Commerce' },
-  { title: 'Commerce Anywhere', sub: 'Strategies for Cross-Channel Growth in E-Commerce', tag: 'Commerce' },
-  { title: 'Personalisation at Scale', sub: 'Leveraging Behavioral Data for Customer Retention', tag: 'Commerce' },
-  { title: 'Seamless Integrations', sub: 'Building a Scalable E-Commerce Ecosystem', tag: 'Commerce' },
-  { title: 'Advanced Search in E-Commerce', sub: 'Enhancing User Experience with NLP and AI', tag: 'Commerce' },
-  { title: 'Headless CMS', sub: 'The Backbone of Omnichannel E-Commerce Experiences', tag: 'Commerce' },
-  { title: 'Building Trust Online', sub: 'Security and Transparency in E-Commerce Transactions', tag: 'Commerce' },
-  { title: 'The Role of Advanced Analytics', sub: 'Driving E-Commerce Success', tag: 'Commerce' },
-  { title: 'Sustainability in E-Commerce', sub: 'How Technology Can Drive Ethical Shopping', tag: 'Sustainability' },
-  { title: 'Accelerating Fulfilment', sub: 'Optimizing Supply Chain for Modern E-Commerce', tag: 'Logistics' },
-  { title: 'Enhancing Collaboration Across Supply Chains with PLM', sub: 'Breaking down silos for faster product delivery', tag: 'PLM' },
-  { title: 'Sustainability and PLM: Driving Eco-Friendly Practices', sub: 'Embedding sustainability into the product lifecycle', tag: 'PLM' },
-  { title: 'Implementing a Bill of Information (BOI) Approach with PLM', sub: 'Structured information architecture for complex products', tag: 'PLM' },
-  { title: 'The Role of PLM in Regulatory Compliance', sub: 'Meeting global standards without slowing down development', tag: 'PLM' },
-  { title: 'Digital Transformation in Product Lifecycle Management', sub: 'From legacy systems to intelligent, connected PLM', tag: 'PLM' },
-];
+import { fetchAPI } from '../lib/api';
 
 const tagColor = (tag) => {
   const map = { Commerce: '#0ea5e9', PLM: '#8b5cf6', Logistics: '#10b981', Sustainability: '#16a34a', Pharma: '#f59e0b', Beauty: '#ec4899', Fragrance: '#f97316' };
   return map[tag] || '#6b7280';
 };
 
-const CaseStudies = () => (
+const CaseStudies = () => {
+  const [caseStudies, setCaseStudies] = useState([]);
+
+  useEffect(() => {
+    async function loadCaseStudies() {
+      try {
+        const response = await fetchAPI('/api/case-studies', {
+          populate: '*',
+        });
+        if (response && response.data && response.data.length > 0) {
+          const apiCaseStudies = response.data.map(item => ({
+            type: 'Case Study',
+            category: 'Customer Story',
+            title: item.attributes.title,
+            desc: item.attributes.description,
+            tags: ['Customer', 'Success'],
+            slug: item.attributes.slug,
+          }));
+          setCaseStudies(apiCaseStudies);
+        }
+      } catch (error) {
+        console.error('Failed to load case studies', error);
+      }
+    }
+    loadCaseStudies();
+  }, []);
+
+  return (
   <div className="case-studies-page">
     {/* Hero */}
     <section className="section section-light">
@@ -163,33 +107,6 @@ const CaseStudies = () => (
       </div>
     </section>
 
-    {/* Whitepapers */}
-    <section className="section section-alt">
-      <div className="container">
-        <div style={{ marginBottom: '3rem' }}>
-          <span style={{ textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: '600', color: 'var(--accent-color)', fontSize: '0.875rem' }}>Whitepapers</span>
-          <h2 style={{ marginTop: '0.5rem' }}>Deep dives for <em>enterprise leaders.</em></h2>
-        </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1rem' }}>
-          {whitepapers.map(({ title, sub, tag }) => (
-            <div key={title} className="card" style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start', padding: '1.25rem' }}>
-              <div style={{ flexShrink: 0, width: '40px', height: '40px', borderRadius: '0.5rem', background: tagColor(tag) + '22', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <BookOpen size={18} color={tagColor(tag)} />
-              </div>
-              <div style={{ flex: 1 }}>
-                <span style={{ fontSize: '0.7rem', fontWeight: '700', textTransform: 'uppercase', color: tagColor(tag) }}>{tag}</span>
-                <h4 style={{ fontSize: '0.9375rem', lineHeight: '1.4', margin: '0.2rem 0 0.3rem 0' }}>{title}</h4>
-                <p style={{ fontSize: '0.8125rem', color: 'var(--muted)', margin: '0 0 0.75rem 0', lineHeight: '1.5' }}>{sub}</p>
-                <a href="#" style={{ fontSize: '0.8125rem', fontWeight: '600', color: 'var(--primary-color)', display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
-                  Download <ArrowRight size={13} />
-                </a>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-
     {/* CTA */}
     <section className="section section-light" style={{ borderTop: '1px solid var(--border-color)' }}>
       <div className="container" style={{ textAlign: 'center', maxWidth: '800px' }}>
@@ -208,6 +125,7 @@ const CaseStudies = () => (
       </div>
     </section>
   </div>
-);
+  );
+};
 
 export default CaseStudies;

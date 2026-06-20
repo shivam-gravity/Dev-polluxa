@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Mail, Shield, MessageSquare, Handshake, MapPin } from 'lucide-react';
+import { postAPI } from '../lib/api';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -14,6 +15,7 @@ const Contact = () => {
 
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -45,7 +47,7 @@ const Contact = () => {
     return emailRegex.test(email);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const newErrors = {};
@@ -98,18 +100,28 @@ const Contact = () => {
       return;
     }
 
-    const sanitizedData = {
-      firstName: cleanFirstName,
-      lastName: cleanLastName,
-      email: cleanEmail,
-      company: cleanCompany,
-      industry: formData.industry,
-      interest: formData.interest,
-      message: cleanMessage
-    };
+    setIsSubmitting(true);
 
-    console.log('Secure and sanitized form data submitted:', sanitizedData);
-    setSubmitted(true);
+    try {
+      const response = await postAPI('/api/contact-form-submissions', {
+        FirstName: cleanFirstName,
+        LastName: cleanLastName,
+        PhoneNumber: 'Not provided',
+        Email: cleanEmail,
+        Organization: cleanCompany,
+        Message: `Industry: ${formData.industry}\nInterest: ${formData.interest}\n\n${cleanMessage}`
+      });
+
+      if (!response.error) {
+        setSubmitted(true);
+      } else {
+        setErrors({ submit: 'Failed to submit the form. Please try again later.' });
+      }
+    } catch (err) {
+      setErrors({ submit: 'An unexpected error occurred.' });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -249,8 +261,10 @@ const Contact = () => {
                     {errors.message && <span style={{ color: 'var(--color-warning)', fontSize: '0.75rem', marginTop: '0.25rem', display: 'block' }}>{errors.message}</span>}
                   </div>
 
-                  <button type="submit" className="btn btn-primary" style={{ padding: '1rem', fontWeight: '600', marginTop: '0.5rem' }}>
-                    Send · we'll reach out in 1 day
+                  {errors.submit && <p style={{ color: 'var(--color-warning)', fontSize: '0.875rem', textAlign: 'center' }}>{errors.submit}</p>}
+
+                  <button type="submit" className="btn btn-primary" style={{ width: '100%', padding: '1rem', fontWeight: '600', marginTop: '0.5rem' }} disabled={isSubmitting}>
+                    {isSubmitting ? 'Sending...' : 'Send · we\'ll reach out in 1 day'}
                   </button>
                 </form>
               )}

@@ -1,48 +1,7 @@
+import { useState, useEffect } from 'react';
 import { ArrowRight, MapPin, Briefcase, Clock } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
-const openings = [
-  {
-    title: 'Associate HR',
-    dept: 'HR & People',
-    type: 'Full-time',
-    exp: '2+ years',
-    locations: ['Dubai', 'Netherlands', 'Prague', 'Canada', 'USA'],
-    desc: 'Join our People team to help scale talent operations — from sourcing and onboarding to employee experience across our global offices.',
-  },
-  {
-    title: 'Director of Sales',
-    dept: 'Sales',
-    type: 'Full-time',
-    exp: '10+ years',
-    locations: ['Dubai', 'Netherlands', 'Prague', 'Canada', 'USA'],
-    desc: "Own enterprise revenue targets in your region. Lead a team of AEs to grow Polluxa's customer base across CRM, PLM, WMS, and Commerce.",
-  },
-  {
-    title: 'Digital Marketing Manager',
-    dept: 'Marketing',
-    type: 'Full-time',
-    exp: '5+ years',
-    locations: ['Dubai', 'Netherlands', 'Prague', 'Canada', 'USA'],
-    desc: 'Drive demand generation through paid, organic, and content programs. Own marketing analytics and work closely with sales to optimize pipeline quality.',
-  },
-  {
-    title: 'Business Strategy Analyst',
-    dept: 'Strategy',
-    type: 'Full-time',
-    exp: '6–8 years',
-    locations: ['Dubai', 'Netherlands', 'Prague', 'Canada', 'USA'],
-    desc: 'Partner with leadership on go-to-market strategy, competitive positioning, and growth initiatives. Deep dive into data to surface actionable business insights.',
-  },
-  {
-    title: 'Business Development Manager',
-    dept: 'Business Development',
-    type: 'Full-time',
-    exp: '2+ years',
-    locations: ['Dubai', 'Netherlands', 'Prague', 'Canada', 'USA'],
-    desc: 'Identify and develop new business opportunities — from inbound qualification to partner pipeline and regional market expansion across assigned territories.',
-  },
-];
+import { fetchAPI } from '../lib/api';
 
 const benefits = [
   { icon: '🌍', title: 'Remote-friendly', desc: 'Work from any of our 12 global offices or remotely — with async-first culture across 38 countries.' },
@@ -61,7 +20,37 @@ const deptColors = {
   'Business Development': '#10b981',
 };
 
-const Careers = () => (
+const Careers = () => {
+  const [openings, setOpenings] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadCareers() {
+      try {
+        const response = await fetchAPI('/api/careers', {
+          populate: '*',
+        });
+        if (response && response.data && response.data.length > 0) {
+          const apiCareers = response.data.map(item => ({
+            title: item.attributes.title,
+            dept: item.attributes.job_types?.data?.[0]?.attributes?.name || 'General',
+            type: item.attributes.job_types?.data?.[0]?.attributes?.name || 'Full-time',
+            exp: item.attributes.level || 'Experienced',
+            locations: item.attributes.location ? item.attributes.location.split(',').map(l => l.trim()) : ['Remote'],
+            desc: item.attributes.description,
+          }));
+          setOpenings(apiCareers);
+        }
+      } catch (error) {
+        console.error('Failed to load careers', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadCareers();
+  }, []);
+
+  return (
   <div className="careers-page">
     <section className="section section-light" style={{ paddingBottom: '4rem' }}>
       <div className="container" style={{ maxWidth: '900px', textAlign: 'center' }}>
@@ -172,6 +161,7 @@ const Careers = () => (
       </div>
     </section>
   </div>
-);
+  );
+};
 
 export default Careers;

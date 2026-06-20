@@ -3,6 +3,7 @@
 const crypto = require('crypto');
 const { seed } = require('./seed/seed.js');
 const { seedPages } = require('./seed/seed-pages.js');
+const { seedContent } = require('./seed/seed-content.js');
 
 /* ─────────────────────────────────────────────────────────
    TOKEN SETUP
@@ -122,5 +123,6 @@ module.exports = {
     await setPublicPermissions({ strapi });
     await seed({ strapi });
     await seedPages({ strapi });
+    await seedContent({ strapi });
   },
 };

@@ -37,12 +37,20 @@
       "type": "component",
       "repeatable": false,
       "component": "shared.media",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
+      "pluginOptions": { "i18n": { "localized": true } }
     },
+    "hero_title":       { "type": "string", "pluginOptions": { "i18n": { "localized": true } } },
+    "hero_subtitle":    { "type": "string", "pluginOptions": { "i18n": { "localized": true } } },
+    "hero_description": { "type": "text",   "pluginOptions": { "i18n": { "localized": true } } },
+    "cta_primary_label":   { "type": "string", "pluginOptions": { "i18n": { "localized": true } } },
+    "cta_primary_url":     { "type": "string", "pluginOptions": { "i18n": { "localized": false } } },
+    "cta_secondary_label": { "type": "string", "pluginOptions": { "i18n": { "localized": true } } },
+    "cta_secondary_url":   { "type": "string", "pluginOptions": { "i18n": { "localized": false } } },
+    "features":         { "type": "json", "pluginOptions": { "i18n": { "localized": true } } },
+    "metrics":          { "type": "json", "pluginOptions": { "i18n": { "localized": true } } },
+    "faq":              { "type": "json", "pluginOptions": { "i18n": { "localized": true } } },
+    "demo_headline":    { "type": "string", "pluginOptions": { "i18n": { "localized": true } } },
+    "demo_description": { "type": "text",   "pluginOptions": { "i18n": { "localized": true } } },
     "blocks": {
       "type": "dynamiczone",
       "components": [

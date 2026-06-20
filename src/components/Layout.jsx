@@ -94,19 +94,23 @@ const Layout = () => {
       </main>
 
       {/* FOOTER */}
-      <footer>
-        <div className="foot-inner" style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr 1.2fr 1.2fr', gap: '3rem', alignItems: 'start' }}>
+      <footer className="site-footer">
+        {/* Starfield background */}
+        <div className="footer-stars" aria-hidden="true" />
+
+        <div className="footer-inner">
           {/* Logo */}
-          <div>
-            <div className="logo" style={{ color: '#fff', fontSize: '1.25rem', fontWeight: '800', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <span className="logo-mark"></span> Polluxa
-            </div>
+          <div className="footer-logo-col">
+            <Link to="/" className="footer-logo">
+              <span className="logo-mark" />
+              Polluxa
+            </Link>
           </div>
 
           {/* Products */}
-          <div>
-            <h5>Products</h5>
-            <ul>
+          <div className="footer-col">
+            <h5 className="footer-col-title">Products</h5>
+            <ul className="footer-col-list">
               <li><Link to="/crm">CRM</Link></li>
               <li><Link to="/commerce">Commerce</Link></li>
               <li><Link to="/creator-commerce">Creator Commerce</Link></li>
@@ -117,9 +121,9 @@ const Layout = () => {
           </div>
 
           {/* Industries */}
-          <div>
-            <h5>Industries</h5>
-            <ul>
+          <div className="footer-col">
+            <h5 className="footer-col-title">Industries</h5>
+            <ul className="footer-col-list">
               <li><Link to="/customers">Fashion &amp; Apparel</Link></li>
               <li><Link to="/customers">Outdoor &amp; Sports</Link></li>
               <li><Link to="/customers">Multi Category Retail</Link></li>
@@ -132,36 +136,36 @@ const Layout = () => {
           </div>
 
           {/* Quick Contact */}
-          <div>
-            <h5>Quick Contact</h5>
-            <p style={{ fontSize: '13px', color: '#8a98c0', marginBottom: '1rem', lineHeight: '1.6' }}>
-              Have a question or want a demo? Drop us a message and we'll get back to you within one business day.
-            </p>
-            <form onSubmit={(e) => { e.preventDefault(); window.location.href = '/contact'; }} style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
-              <input
-                type="text"
-                placeholder="Your name"
-                style={{ padding: '0.5rem 0.75rem', borderRadius: '0.375rem', border: '1px solid #2a3450', background: '#111827', color: '#fff', fontSize: '13px' }}
-              />
-              <input
-                type="email"
-                placeholder="Work email"
-                style={{ padding: '0.5rem 0.75rem', borderRadius: '0.375rem', border: '1px solid #2a3450', background: '#111827', color: '#fff', fontSize: '13px' }}
-              />
-              <button
-                type="submit"
-                style={{ padding: '0.55rem 1rem', borderRadius: '0.375rem', background: 'var(--primary-color)', color: '#fff', fontWeight: '700', fontSize: '13px', border: 'none', cursor: 'pointer', letterSpacing: '0.02em' }}
-              >
-                Submit
-              </button>
+          <div className="footer-col footer-contact-col">
+            <h5 className="footer-col-title">Quick Contact</h5>
+            <form
+              className="footer-contact-form"
+              onSubmit={(e) => { e.preventDefault(); window.location.href = '/contact'; }}
+            >
+              <div className="fcf-row">
+                <input type="text"  placeholder="First Name"      className="fcf-input" />
+                <input type="text"  placeholder="Last Name"       className="fcf-input" />
+              </div>
+              <div className="fcf-row">
+                <input type="email" placeholder="Business Email"  className="fcf-input" />
+                <input type="text"  placeholder="Company"         className="fcf-input" />
+              </div>
+              <div className="fcf-row">
+                <input type="tel"   placeholder="Phone"           className="fcf-input" />
+                <input type="text"  placeholder="Country"         className="fcf-input" />
+              </div>
+              <textarea placeholder="Comments" className="fcf-textarea" rows={4} />
+              <div style={{ textAlign: 'right' }}>
+                <button type="submit" className="fcf-submit">Submit</button>
+              </div>
             </form>
           </div>
         </div>
 
         {/* Bottom bar */}
-        <div className="foot-bottom" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem' }}>
-          <span style={{ fontSize: '13px', color: '#8a98c0' }}>© 2025 Pollux, All rights reserved.</span>
-          <nav style={{ display: 'flex', gap: '1.25rem', flexWrap: 'wrap', fontSize: '13px' }}>
+        <div className="footer-bottom">
+          <span className="footer-copy">© 2025 Pollux, All rights reserved.</span>
+          <nav className="footer-bottom-links">
             <Link to="/careers">Careers</Link>
             <Link to="/blog">Blog</Link>
             <Link to="/partners">Partners</Link>
@@ -169,7 +173,7 @@ const Layout = () => {
             <Link to="/case-studies">Case Studies</Link>
             <Link to="/about">About Us</Link>
             <Link to="/events">Events</Link>
-            <Link to="/privacy">Privacy Policy</Link>
+            <Link to="/contact">Privacy</Link>
           </nav>
         </div>
       </footer>

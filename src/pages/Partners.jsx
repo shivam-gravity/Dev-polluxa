@@ -1,26 +1,28 @@
+import { useState, useEffect } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { fetchAPI } from '../lib/api';
 
-const solutionPartners = [
-  'Comviva', 'Web Creator Live', 'HEITS', 'Cabriales Web Studio', 'SimpliRise',
-  'Gravity', 'I-Cube Systems', 'LBM Solutions', 'VELANDIRCH', 'Eliftech',
-  'Fncee Consult', 'Zigiwigi', 'Thoth Studio', 'Growzzy', 'Mapping Metrics',
-  'Market Surgeons', 'ADST', 'Dmgenix', 'N Digitals', 'Spreadify Digital Marketing',
-  'OnvoCore', 'Digital Wom', 'Nextinera', 'Zen Digital Services', 'Global Info Edge',
-  'Online Ads Agency', 'Tara Media Works', 'Cognegiac', 'Infiniserve', 'Digital Deyar',
-  'Niksh Digital', 'RND Digital', 'Promofox Digital', 'adzglobe', 'DBSoftech',
-  'Imborn Digital', 'TweeLabs', 'Adept IT', 'Oye Nishant', 'IJS Infotech',
-  'The Π Lab', 'MINDTEK', 'Scalient Consulting LLP', 'Aharnish Infotech',
-  'Raulo Enterprises', 'Hexile Services', 'Puppy Atlas', 'Rivora Tech',
-  'Geeks IT Services', '1IT',
-];
+const Partners = () => {
+  const [solutionPartners, setSolutionPartners] = useState([]);
 
-const techPartners = [
-  'DigitalOcean', 'Microsoft Azure', 'AWS', 'Google Cloud',
-  'MongoDB', 'Amazon CloudFront', 'OVHcloud', 'Eligere',
-];
+  useEffect(() => {
+    async function loadPartners() {
+      try {
+        const response = await fetchAPI('/api/partners', {
+          populate: '*',
+        });
+        if (response && response.data && response.data.length > 0) {
+          setSolutionPartners(response.data.map(item => item.attributes.title));
+        }
+      } catch (error) {
+        console.error('Failed to load partners', error);
+      }
+    }
+    loadPartners();
+  }, []);
 
-const Partners = () => (
+  return (
   <div className="partners-page">
     {/* Hero */}
     <section className="section section-light" style={{ textAlign: 'center', paddingBottom: '4rem' }}>
@@ -73,26 +75,6 @@ const Partners = () => (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '0.75rem' }}>
           {solutionPartners.map((name) => (
             <div key={name} style={{ background: 'var(--panel)', border: '1px solid var(--line-strong)', borderRadius: '0.5rem', padding: '0.875rem 1rem', fontSize: '0.9rem', fontWeight: '600', color: 'var(--ink)', textAlign: 'center' }}>
-              {name}
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    {/* Technology Partners */}
-    <section className="section section-alt">
-      <div className="container">
-        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-          <span style={{ textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: '600', color: 'var(--accent-color)' }}>Technology Partners</span>
-          <h2 style={{ marginTop: '0.5rem' }}>Built on the best <em>infrastructure.</em></h2>
-          <p style={{ color: 'var(--muted)', maxWidth: '600px', margin: '1rem auto 0' }}>
-            Polluxa runs on and integrates with the world's leading cloud and data infrastructure providers.
-          </p>
-        </div>
-        <div className="grid-4">
-          {techPartners.map((name) => (
-            <div key={name} className="card" style={{ textAlign: 'center', padding: '1.5rem', fontSize: '1rem', fontWeight: '700', color: 'var(--primary-color)' }}>
               {name}
             </div>
           ))}
@@ -153,6 +135,7 @@ const Partners = () => (
       </div>
     </section>
   </div>
-);
+  );
+};
 
 export default Partners;

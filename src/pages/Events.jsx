@@ -90,7 +90,7 @@ const Events = () => {
                   <span style={{ fontSize: '0.8rem', color: 'var(--accent-color)', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{type}</span>
                   <h3 style={{ fontSize: '1.375rem', marginTop: '0.25rem', marginBottom: '0.75rem' }}>{name}</h3>
                   <p style={{ fontSize: '0.95rem', color: 'var(--muted)', lineHeight: '1.6', marginBottom: '1.25rem' }}>{desc}</p>
-                  <Link to="/contact" className="btn btn-secondary" style={{ padding: '0.6rem 1.25rem', fontSize: '0.875rem' }}>Register interest</Link>
+                  <Link to={`/contact?interest=Event+Registration&subject=${encodeURIComponent(name)}`} className="btn btn-secondary" style={{ padding: '0.6rem 1.25rem', fontSize: '0.875rem' }}>Register interest</Link>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', minWidth: '200px' }}>
                   <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-start', color: 'var(--muted)', fontSize: '0.9rem' }}>

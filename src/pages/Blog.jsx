@@ -8,6 +8,7 @@ const categories = ['All', 'Product', 'Industry', 'Engineering', 'Case Study'];
 const Blog = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [activeCategory, setActiveCategory] = useState('All');
 
   useEffect(() => {
     async function loadPosts() {
@@ -36,6 +37,10 @@ const Blog = () => {
     loadPosts();
   }, []);
 
+  const filteredPosts = activeCategory === 'All'
+    ? posts
+    : posts.filter(p => p.category === activeCategory);
+
   return (
   <div className="blog-page">
     <section className="section section-light" style={{ paddingBottom: '4rem' }}>
@@ -49,7 +54,23 @@ const Blog = () => {
         </p>
         <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center', marginTop: '2.5rem', flexWrap: 'wrap' }}>
           {categories.map((cat) => (
-            <button key={cat} style={{ padding: '0.4rem 1.125rem', borderRadius: '999px', border: '1px solid var(--line-strong)', background: cat === 'All' ? 'var(--primary-color)' : 'transparent', color: cat === 'All' ? '#fff' : 'var(--ink)', cursor: 'pointer', fontSize: '0.875rem', fontWeight: '600' }}>{cat}</button>
+            <button
+              key={cat}
+              onClick={() => setActiveCategory(cat)}
+              style={{
+                padding: '0.4rem 1.125rem',
+                borderRadius: '999px',
+                border: '1px solid var(--line-strong)',
+                background: cat === activeCategory ? 'var(--primary-color)' : 'transparent',
+                color: cat === activeCategory ? '#fff' : 'var(--ink)',
+                cursor: 'pointer',
+                fontSize: '0.875rem',
+                fontWeight: '600',
+                transition: 'background 0.2s, color 0.2s',
+              }}
+            >
+              {cat}
+            </button>
           ))}
         </div>
       </div>
@@ -57,22 +78,33 @@ const Blog = () => {
 
     <section className="section section-alt">
       <div className="container">
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: '1.5rem' }}>
-          {posts.map(({ title, category, date, read, desc }) => (
-            <div key={title} className="card" style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ fontSize: '0.75rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--accent-color)', background: 'var(--panel-2)', padding: '0.2rem 0.6rem', borderRadius: '4px' }}>{category}</span>
-                <span style={{ fontSize: '0.75rem', color: 'var(--muted)' }}>{read}</span>
+        {loading ? (
+          <p style={{ textAlign: 'center', color: 'var(--muted)' }}>Loading articles…</p>
+        ) : filteredPosts.length === 0 ? (
+          <p style={{ textAlign: 'center', color: 'var(--muted)' }}>No posts found in this category.</p>
+        ) : (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: '1.5rem' }}>
+            {filteredPosts.map(({ title, category, date, read, desc, slug }) => (
+              <div key={title} className="card" style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span style={{ fontSize: '0.75rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--accent-color)', background: 'var(--panel-2)', padding: '0.2rem 0.6rem', borderRadius: '4px' }}>{category}</span>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--muted)' }}>{read}</span>
+                </div>
+                <h4 style={{ fontSize: '1.0625rem', lineHeight: '1.45', margin: 0 }}>{title}</h4>
+                <p style={{ fontSize: '0.875rem', color: 'var(--muted)', lineHeight: '1.6', flex: 1 }}>{desc}</p>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'auto', paddingTop: '0.75rem', borderTop: '1px solid var(--line-strong)' }}>
+                  <span style={{ fontSize: '0.8rem', color: 'var(--muted)' }}>{date}</span>
+                  <Link
+                    to={slug ? `/blog/${slug}` : '/contact'}
+                    style={{ fontSize: '0.875rem', fontWeight: '600', color: 'var(--primary-color)', display: 'flex', alignItems: 'center', gap: '0.25rem', textDecoration: 'none' }}
+                  >
+                    Read <ArrowRight size={14} />
+                  </Link>
+                </div>
               </div>
-              <h4 style={{ fontSize: '1.0625rem', lineHeight: '1.45', margin: 0 }}>{title}</h4>
-              <p style={{ fontSize: '0.875rem', color: 'var(--muted)', lineHeight: '1.6', flex: 1 }}>{desc}</p>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'auto', paddingTop: '0.75rem', borderTop: '1px solid var(--line-strong)' }}>
-                <span style={{ fontSize: '0.8rem', color: 'var(--muted)' }}>{date}</span>
-                <a href="#" style={{ fontSize: '0.875rem', fontWeight: '600', color: 'var(--primary-color)', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>Read <ArrowRight size={14} /></a>
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </section>
 

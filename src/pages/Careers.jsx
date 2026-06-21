@@ -121,7 +121,11 @@ const Careers = () => {
                 </div>
               </div>
               <div style={{ flexShrink: 0, marginTop: '0.25rem' }}>
-                <Link to="/contact" className="btn btn-primary" style={{ padding: '0.6rem 1.25rem', fontSize: '0.875rem' }}>
+                <Link
+                  to={`/contact?interest=Job+Application&subject=${encodeURIComponent(title)}`}
+                  className="btn btn-primary"
+                  style={{ padding: '0.6rem 1.25rem', fontSize: '0.875rem' }}
+                >
                   Apply <ArrowRight size={14} className="btn-icon" />
                 </Link>
               </div>

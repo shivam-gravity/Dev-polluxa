@@ -83,7 +83,6 @@ const Layout = () => {
 
           {/* Right side */}
           <div className="topnav-right">
-            <span className="lang">العربية</span>
             <Link to="/contact" className="btn-contact">Contact Us</Link>
           </div>
         </div>
@@ -164,7 +163,7 @@ const Layout = () => {
 
         {/* Bottom bar */}
         <div className="footer-bottom">
-          <span className="footer-copy">© 2025 Pollux, All rights reserved.</span>
+          <span className="footer-copy">© 2025 Polluxa, All rights reserved.</span>
           <nav className="footer-bottom-links">
             <Link to="/careers">Careers</Link>
             <Link to="/blog">Blog</Link>
@@ -173,7 +172,7 @@ const Layout = () => {
             <Link to="/case-studies">Case Studies</Link>
             <Link to="/about">About Us</Link>
             <Link to="/events">Events</Link>
-            <Link to="/contact">Privacy</Link>
+            <Link to="/privacy">Privacy</Link>
           </nav>
         </div>
       </footer>

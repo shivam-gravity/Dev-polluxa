@@ -12,8 +12,8 @@ const productImages = {
   commerce:        UNS('1556742049-0cfed4f6a45d'),
   creatorCommerce: UNS('1611162617213-7d7a39e9b1d7'),
   plm:             UNS('1581291518633-83b4ebd1d83e'),
-  logistics:       UNS('1568702846914-96b305d2aaeb'),
-  wms:             UNS('1553413348-d4d2a1df7bba'),
+  logistics:       UNS('1586528116311-ad8dd3c8310d'),   // delivery truck / logistics
+  wms:             UNS('1586528116543-12f8e3e46cbf'),   // warehouse shelves / scanning
 };
 
 const resourceImages = {

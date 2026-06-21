@@ -14,55 +14,13 @@ const NAV_ITEMS = [
   { id: 'faq',          label: 'FAQ' },
 ];
 
-const COMMERCE_FEATURES = [
-  {
-    icon: '🏪',
-    tag: 'STOREFRONT',
-    title: 'Build Your Online Storefront',
-    description: 'Build a high-performance online store tailored to your brand, with smooth navigation and optimized conversion flows that drive revenue.',
-    color: 'var(--cyan)',
-    link: 'https://www.polluxa.com/en/commerce/storefront',
-  },
-  {
-    icon: '💳',
-    tag: 'PAYMENTS',
-    title: 'Enable Seamless & Secure Payments',
-    description: 'Enable secure and effortless transactions with integrated payment gateways supporting multiple trusted payment methods and multi-currency checkout.',
-    color: 'var(--mint)',
-    link: 'https://www.polluxa.com/en/commerce/payments',
-  },
-  {
-    icon: '📦',
-    tag: 'INVENTORY',
-    title: 'Real-time Inventory & Order Control',
-    description: 'Track stock in real time, automate order flow, and streamline fulfilment with a unified inventory and order management system — zero stockouts.',
-    color: 'var(--violet)',
-    link: 'https://www.polluxa.com/en/commerce/inventory',
-  },
-  {
-    icon: '🚚',
-    tag: 'SHIPPING',
-    title: 'Streamlined Delivery & Fulfillment',
-    description: 'Simplify fulfilment through integrated logistics partners, offering reliable delivery, real-time tracking, and flexible shipping options globally.',
-    color: 'var(--gold)',
-    link: 'https://www.polluxa.com/en/commerce/shipping',
-  },
-  {
-    icon: '📊',
-    tag: 'ANALYTICS',
-    title: 'Measure Sales & Customer Insights',
-    description: 'Monitor key metrics, understand customer behavior, and make informed decisions with actionable performance insights and funnel analytics.',
-    color: 'var(--magenta)',
-    link: 'https://www.polluxa.com/en/commerce/analytics',
-  },
-  {
-    icon: '🤝',
-    tag: 'CRM',
-    title: 'Manage Customers & Engagement',
-    description: 'Manage customer interactions, centralize data, and personalize engagement to build stronger, long-lasting relationships and maximize lifetime value.',
-    color: 'var(--blue-deep)',
-    link: 'https://www.polluxa.com/en/commerce/crm',
-  },
+const FEAT_COLORS = [
+  'var(--cyan)',
+  'var(--mint)',
+  'var(--violet)',
+  'var(--gold)',
+  'var(--magenta)',
+  'var(--blue-deep)',
 ];
 
 const FaqAccordion = ({ items = [] }) => {
@@ -175,11 +133,11 @@ const Commerce = () => {
   });
 
   /* pull arrays from API; fall back to [] so maps never crash */
-  const trustBadges     = page?.trust_badges      ?? [];
-  const metrics         = page?.metrics           ?? [];
-  const productShowcase = page?.product_showcase  ?? [];
-  const featuresGrid    = page?.features_grid     ?? [];
-  const d2c             = page?.d2c_section       ?? {};
+  const trustBadges        = page?.trust_badges        ?? [];
+  const metrics            = page?.metrics             ?? [];
+  const productShowcase    = page?.product_showcase    ?? [];
+  const ecommerceFeatures  = page?.ecommerce_features  ?? [];
+  const d2c                = page?.d2c_section         ?? {};
   const b2b             = page?.b2b_section       ?? {};
   const integrations    = page?.integrations_list ?? [];
   const faq             = page?.faq               ?? [];
@@ -344,30 +302,35 @@ const Commerce = () => {
             </section>
           )}
 
-          {/* Features Section — static scraped data always visible */}
-          <section id="features" className="section section-light animate-on-scroll">
-            <div className="container">
-              <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-                <span style={{ textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: '600', color: 'var(--cyan)' }}>Features</span>
-                <h2 style={{ marginTop: '0.5rem' }}>E-commerce <em>Encompassed</em></h2>
-                <p style={{ maxWidth: '680px', margin: '1rem auto 0', color: 'var(--muted)' }}>
-                  Polluxa E-commerce links your value chain, people, systems, and procedures to maximize product performance and go-to-market.
-                </p>
+          {/* Features — data from Strapi ecommerce_features field */}
+          {ecommerceFeatures.length > 0 && (
+            <section id="features" className="section section-light animate-on-scroll">
+              <div className="container">
+                <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+                  <span style={{ textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: '600', color: 'var(--cyan)' }}>Features</span>
+                  <h2 style={{ marginTop: '0.5rem' }}>E-commerce <em>Encompassed</em></h2>
+                  <p style={{ maxWidth: '680px', margin: '1rem auto 0', color: 'var(--muted)' }}>
+                    Polluxa E-commerce links your value chain, people, systems, and procedures to maximize product performance and go-to-market.
+                  </p>
+                </div>
+                <div className="grid-3">
+                  {ecommerceFeatures.map((f, i) => {
+                    const color = FEAT_COLORS[i % FEAT_COLORS.length];
+                    return (
+                      <a key={i} href={f.link_url} target="_blank" rel="noopener noreferrer" className="crm-feat-card">
+                        <div className="crm-feat-icon" style={{ background: color + '1a', color }}>
+                          {f.icon}
+                        </div>
+                        <span className="crm-feat-tag" style={{ color }}>{f.tag}</span>
+                        <h4 className="crm-feat-title">{f.title}</h4>
+                        <p className="crm-feat-desc">{f.description}</p>
+                      </a>
+                    );
+                  })}
+                </div>
               </div>
-              <div className="grid-3">
-                {COMMERCE_FEATURES.map((f, i) => (
-                  <a key={i} href={f.link} target="_blank" rel="noopener noreferrer" className="crm-feat-card">
-                    <div className="crm-feat-icon" style={{ background: f.color + '1a', color: f.color }}>
-                      {f.icon}
-                    </div>
-                    <span className="crm-feat-tag" style={{ color: f.color }}>{f.tag}</span>
-                    <h4 className="crm-feat-title">{f.title}</h4>
-                    <p className="crm-feat-desc">{f.description}</p>
-                  </a>
-                ))}
-              </div>
-            </div>
-          </section>
+            </section>
+          )}
 
           {/* D2C Section */}
           {d2c.title && (

@@ -21,7 +21,11 @@ for (const pg of PAGES) {
     const jsErrors: string[] = [];
     page.on('pageerror', e => jsErrors.push(e.message));
 
-    await page.goto(pg.path, { waitUntil: 'networkidle' });
+    await page.goto(pg.path, { waitUntil: 'domcontentloaded' });
+
+    // Wait for React to mount and the nav to be visible — this is more reliable
+    // than networkidle in Firefox when Strapi responses are slow (>500 ms).
+    await page.waitForSelector('nav.topnav', { state: 'visible', timeout: 15_000 });
 
     // Page must not be blank
     const body = await page.textContent('body');

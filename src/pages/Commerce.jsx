@@ -30,20 +30,20 @@ const FaqAccordion = ({ items = [] }) => {
     <section id="faq" className="section section-alt animate-on-scroll">
       <div className="container" style={{ maxWidth: '800px' }}>
         <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-          <span style={{ textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: '600', color: 'var(--color-accent-teal)' }}>FAQ</span>
+          <span style={{ textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: '600', color: 'var(--mint)' }}>FAQ</span>
           <h2 style={{ marginTop: '0.5rem' }}>Common questions</h2>
         </div>
         {items.map((item, i) => (
-          <div key={i} style={{ borderBottom: '1px solid var(--color-border)' }}>
+          <div key={i} style={{ borderBottom: '1px solid var(--line-strong)' }}>
             <button
               onClick={() => setOpen(open === i ? null : i)}
               style={{ width: '100%', textAlign: 'left', padding: '1.25rem 0', background: 'none', border: 'none', cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem' }}
             >
-              <span style={{ fontWeight: '600', color: 'var(--color-text-primary)', fontSize: '1rem' }}>{item.question}</span>
-              <ChevronDown size={18} style={{ flexShrink: 0, color: 'var(--color-text-secondary)', transform: open === i ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+              <span style={{ fontWeight: '600', color: 'var(--ink)', fontSize: '1rem' }}>{item.question}</span>
+              <ChevronDown size={18} style={{ flexShrink: 0, color: 'var(--muted)', transform: open === i ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
             </button>
             {open === i && (
-              <p style={{ color: 'var(--color-text-secondary)', paddingBottom: '1.25rem', margin: 0, lineHeight: '1.7' }}>{item.answer}</p>
+              <p style={{ color: 'var(--muted)', paddingBottom: '1.25rem', margin: 0, lineHeight: '1.7' }}>{item.answer}</p>
             )}
           </div>
         ))}
@@ -238,7 +238,7 @@ const Commerce = () => {
               <h1 className="gradient-text" style={{ fontSize: '3.75rem', fontWeight: '800', lineHeight: '1.1', marginTop: '0.5rem' }}>
                 {page?.hero_title}
               </h1>
-              <p style={{ fontSize: '1.25rem', marginBottom: '2.5rem', color: 'var(--color-text-secondary)', marginTop: '1.5rem' }}>
+              <p style={{ fontSize: '1.25rem', marginBottom: '2.5rem', color: 'var(--muted)', marginTop: '1.5rem' }}>
                 {page?.hero_description}
               </p>
               <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '4rem' }}>
@@ -252,7 +252,7 @@ const Commerce = () => {
 
               {/* Trust Badges */}
               {trustBadges.length > 0 && (
-                <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', flexWrap: 'wrap', color: 'var(--color-text-secondary)', fontSize: '0.95rem', fontWeight: '600' }}>
+                <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', flexWrap: 'wrap', color: 'var(--muted)', fontSize: '0.95rem', fontWeight: '600' }}>
                   {trustBadges.map((badge, i) => (
                     <span key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>{badge}</span>
                   ))}
@@ -338,20 +338,20 @@ const Commerce = () => {
               <div className="container">
                 <div className="grid-2" style={{ alignItems: 'center' }}>
                   <div>
-                    <span style={{ fontSize: '0.875rem', fontWeight: 'bold', color: 'var(--color-accent-teal)', textTransform: 'uppercase' }}>
+                    <span style={{ fontSize: '0.875rem', fontWeight: 'bold', color: 'var(--mint)', textTransform: 'uppercase' }}>
                       {d2c.label}
                     </span>
                     <h2 style={{ marginTop: '0.5rem' }}>{d2c.title}</h2>
-                    <p style={{ color: 'var(--color-text-secondary)', margin: '1.5rem 0' }}>{d2c.description}</p>
-                    <ul style={{ listStyle: 'none', padding: 0, color: 'var(--color-text-primary)' }}>
+                    <p style={{ color: 'var(--muted)', margin: '1.5rem 0' }}>{d2c.description}</p>
+                    <ul style={{ listStyle: 'none', padding: 0, color: 'var(--ink)' }}>
                       {(d2c.bullets ?? []).map((b, i) => (
                         <li key={i} style={{ marginBottom: '0.5rem', display: 'flex', gap: '0.5rem' }}>✓ {b}</li>
                       ))}
                     </ul>
                   </div>
                   {/* D2C Dashboard */}
-                  <div style={{ background: 'var(--panel)', border: '1px solid var(--color-border)', borderRadius: '1rem', padding: '2rem', boxShadow: 'var(--shadow-md)' }}>
-                    <h4 style={{ marginBottom: '1.5rem', borderBottom: '1px solid var(--color-border)', paddingBottom: '0.5rem' }}>
+                  <div style={{ background: 'var(--panel)', border: '1px solid var(--line-strong)', borderRadius: '1rem', padding: '2rem', boxShadow: 'var(--shadow-md)' }}>
+                    <h4 style={{ marginBottom: '1.5rem', borderBottom: '1px solid var(--line-strong)', paddingBottom: '0.5rem' }}>
                       {d2c.dashboard_title}
                     </h4>
                     <div className="grid-2" style={{ gap: '1.5rem' }}>
@@ -375,12 +375,12 @@ const Commerce = () => {
               <div className="container">
                 <div className="grid-2" style={{ alignItems: 'center' }}>
                   <div style={{ order: 2 }}>
-                    <span style={{ fontSize: '0.875rem', fontWeight: 'bold', color: 'var(--color-accent-teal)', textTransform: 'uppercase' }}>
+                    <span style={{ fontSize: '0.875rem', fontWeight: 'bold', color: 'var(--mint)', textTransform: 'uppercase' }}>
                       {b2b.label}
                     </span>
                     <h2 style={{ marginTop: '0.5rem' }}>{b2b.title}</h2>
-                    <p style={{ color: 'var(--color-text-secondary)', margin: '1.5rem 0' }}>{b2b.description}</p>
-                    <ul style={{ listStyle: 'none', padding: 0, color: 'var(--color-text-primary)' }}>
+                    <p style={{ color: 'var(--muted)', margin: '1.5rem 0' }}>{b2b.description}</p>
+                    <ul style={{ listStyle: 'none', padding: 0, color: 'var(--ink)' }}>
                       {(b2b.bullets ?? []).map((b, i) => (
                         <li key={i} style={{ marginBottom: '0.5rem', display: 'flex', gap: '0.5rem' }}>✓ {b}</li>
                       ))}
@@ -422,9 +422,9 @@ const Commerce = () => {
             <section id="integrations" className="section section-alt animate-on-scroll">
               <div className="container">
                 <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-                  <span style={{ textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: '600', color: 'var(--color-accent-teal)' }}>Integrations</span>
+                  <span style={{ textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: '600', color: 'var(--mint)' }}>Integrations</span>
                   <h2>Plays well with <em>your stack.</em></h2>
-                  <p style={{ maxWidth: '600px', margin: '0.5rem auto 0', color: 'var(--color-text-secondary)' }}>
+                  <p style={{ maxWidth: '600px', margin: '0.5rem auto 0', color: 'var(--muted)' }}>
                     Pre-built connectors for marketplaces, payments, shipping, ERP, and taxes. Open API + webhooks for everything else.
                   </p>
                 </div>
@@ -442,10 +442,10 @@ const Commerce = () => {
           <FaqAccordion items={faq} />
 
           {/* Final CTA */}
-          <section className="section section-light animate-on-scroll" style={{ borderTop: '1px solid var(--color-border)' }}>
+          <section className="section section-light animate-on-scroll" style={{ borderTop: '1px solid var(--line-strong)' }}>
             <div className="container" style={{ textAlign: 'center', maxWidth: '800px' }}>
               <h2>Ready to sell, with agents on your side?</h2>
-              <p style={{ color: 'var(--color-text-secondary)', marginBottom: '2.5rem' }}>
+              <p style={{ color: 'var(--muted)', marginBottom: '2.5rem' }}>
                 Book a 30-minute call with a Polluxa Commerce architect. We will show you the platform running live on data that mirrors your brand.
               </p>
               <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>

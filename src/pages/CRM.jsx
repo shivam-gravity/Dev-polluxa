@@ -12,20 +12,20 @@ const FaqAccordion = ({ items = [] }) => {
     <section id="faq" className="section section-alt animate-on-scroll">
       <div className="container" style={{ maxWidth: '800px' }}>
         <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-          <span style={{ textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: '600', color: 'var(--color-accent-teal)' }}>FAQ</span>
+          <span style={{ textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: '600', color: 'var(--mint)' }}>FAQ</span>
           <h2 style={{ marginTop: '0.5rem' }}>Common questions</h2>
         </div>
         {items.map((item, i) => (
-          <div key={i} style={{ borderBottom: '1px solid var(--color-border)' }}>
+          <div key={i} style={{ borderBottom: '1px solid var(--line-strong)' }}>
             <button
               onClick={() => setOpen(open === i ? null : i)}
               style={{ width: '100%', textAlign: 'left', padding: '1.25rem 0', background: 'none', border: 'none', cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem' }}
             >
-              <span style={{ fontWeight: '600', color: 'var(--color-text-primary)', fontSize: '1rem' }}>{item.question}</span>
-              <ChevronDown size={18} style={{ flexShrink: 0, color: 'var(--color-text-secondary)', transform: open === i ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+              <span style={{ fontWeight: '600', color: 'var(--ink)', fontSize: '1rem' }}>{item.question}</span>
+              <ChevronDown size={18} style={{ flexShrink: 0, color: 'var(--muted)', transform: open === i ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
             </button>
             {open === i && (
-              <p style={{ color: 'var(--color-text-secondary)', paddingBottom: '1.25rem', margin: 0, lineHeight: '1.7' }}>{item.answer}</p>
+              <p style={{ color: 'var(--muted)', paddingBottom: '1.25rem', margin: 0, lineHeight: '1.7' }}>{item.answer}</p>
             )}
           </div>
         ))}
@@ -33,6 +33,7 @@ const FaqAccordion = ({ items = [] }) => {
     </section>
   );
 };
+
 
 /* ── Animated counter for numeric metrics ── */
 const Counter = ({ target, suffix = '' }) => {

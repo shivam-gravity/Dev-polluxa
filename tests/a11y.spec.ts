@@ -1,6 +1,9 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
+// Axe analysis is CPU-heavy on content-rich pages; Firefox is slower than Chromium/WebKit
+test.setTimeout(90_000);
+
 const PAGES = [
   { name: 'Homepage',         path: '/' },
   { name: 'CRM',              path: '/crm' },

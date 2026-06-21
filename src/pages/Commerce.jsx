@@ -156,14 +156,15 @@ const Commerce = () => {
       className="page-subnav"
       style={{
         position: 'sticky',
-        top: scrolled ? '-100px' : '64px',
+        top: '64px', /* fixed — never animates through the topnav */
         zIndex: 30,
-        background: scrolled ? 'transparent' : 'rgba(6,10,24,0.85)',
+        background: 'rgba(6,10,24,0.85)',
         backdropFilter: scrolled ? 'none' : 'saturate(160%) blur(14px)',
         borderBottom: scrolled ? 'none' : '1px solid var(--line)',
-        height: scrolled ? 0 : '48px',
+        height: '48px',
+        opacity: scrolled ? 0 : 1,
         overflow: 'hidden',
-        transition: 'height 0.25s ease, top 0.25s ease',
+        transition: 'opacity 0.2s ease, top 0.25s ease',
         pointerEvents: scrolled ? 'none' : 'auto',
       }}
     >

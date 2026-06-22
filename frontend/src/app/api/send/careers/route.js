@@ -1,9 +1,8 @@
 import { CareersTemplate } from "@/components/email";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.NEXT_RESEND_KEY);
-
 export async function POST(request) {
+  const resend = new Resend(process.env.NEXT_RESEND_KEY);
   try {
     const formData = await request.formData();
     // Extract file data

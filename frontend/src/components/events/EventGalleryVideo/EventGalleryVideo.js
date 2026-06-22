@@ -4,7 +4,7 @@ import { getStrapiMedia } from "@/utils/api-helpers";
 
 export default function EventGalleryVideo({ data }) {
   const { media, video, header } = data;
-  const { heading, description } = header;
+  const { heading, description } = header || {};
 
   return (
     <>

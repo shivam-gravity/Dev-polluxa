@@ -37,6 +37,13 @@ export async function fetchAPI(path, urlParamsObject = {}, options = {}, tag, lo
     return data;
   } catch (error) {
     console.error(error);
+    const code = error?.cause?.code ?? error?.code;
+    if (code === "ECONNREFUSED" || code === "ENOTFOUND" || code === "ETIMEDOUT") {
+      console.warn(
+        `[fetchAPI] Backend unreachable (${code}). Returning null — static params will be skipped and pages rendered dynamically.`
+      );
+      return null;
+    }
     throw new Error(
       `Please check if your server is running and you set all the required tokens.`
     );

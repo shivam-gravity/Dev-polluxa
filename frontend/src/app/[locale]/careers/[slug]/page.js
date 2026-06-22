@@ -83,5 +83,5 @@ export async function generateStaticParams() {
   );
   return response?.data?.map((article) => ({
     slug: article?.attributes?.slug,
-  }));
+  })) ?? [];
 }

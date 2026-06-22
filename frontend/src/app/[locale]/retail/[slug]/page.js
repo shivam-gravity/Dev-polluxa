@@ -34,5 +34,5 @@ export async function generateStaticParams() {
   const articleResponse = await fetchAPI(path, urlParamsObject, options);
   return articleResponse?.data?.map((article) => ({
     slug: article.attributes.slug,
-  }));
+  })) ?? [];
 }

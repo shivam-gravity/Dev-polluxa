@@ -29,7 +29,7 @@ export async function generateStaticParams() {
   if (!articleResponse?.data) return [];
   return articleResponse?.data?.map((article) => ({
     slug: article.attributes.slug,
-  }));
+  })) ?? [];
 }
 
 export async function generateMetadata(props) {

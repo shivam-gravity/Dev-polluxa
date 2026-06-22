@@ -54,5 +54,5 @@ export async function generateStaticParams() {
   if (!response?.data) return [];
   return response?.data?.map((caseStudies) => ({
     slug: caseStudies?.attributes?.slug,
-  }));
+  })) ?? [];
 }

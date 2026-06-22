@@ -13,7 +13,7 @@ const productImages = {
   creatorCommerce: UNS('1611162617213-7d7a39e9b1d7'),
   plm:             UNS('1581291518633-83b4ebd1d83e'),
   logistics:       UNS('1586528116311-ad8dd3c8310d'),   // delivery truck / logistics
-  wms:             UNS('1586528116543-12f8e3e46cbf'),   // warehouse shelves / scanning
+  wms:             UNS('1694885156873-6a0823e14848'),   // warehouse shelves / scanning
 };
 
 const resourceImages = {

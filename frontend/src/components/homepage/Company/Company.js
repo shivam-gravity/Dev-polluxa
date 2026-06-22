@@ -36,7 +36,7 @@ const Company = (props) => {
           <div>
             <ol className="space-y-4 text-left">
               {Bullets?.map((list, index) => (
-                <li className="flex space-x-3 relative space-y-6">
+                <li key={index} className="flex space-x-3 relative space-y-6">
                   <span className="block rounded-full bg-[#0D6EFD] text-white w-[34px] h-[34px] absolute text-center top-6 leading-[34px]">
                     {index + 1}
                   </span>

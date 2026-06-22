@@ -42,9 +42,9 @@ const FeaturedProductsHorizontal = ({ data }) => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {ProductItem?.map((item) => {
             return (
-              <div className="bg-white flex items-center px-8 py-3 hover:bg-[#E2E2E2] transition-colors duration-300 ease-in-out md:py-6">
+              <div key={item?.id} className="bg-white flex items-center px-8 py-3 hover:bg-[#E2E2E2] transition-colors duration-300 ease-in-out md:py-6">
                 {item.url ? (
-                  <Link key={item?.id} href={item?.url} className="">
+                  <Link href={item?.url} className="">
                     <ProductList item={item} />
                   </Link>
                 ) : (

@@ -17,4 +17,6 @@ const Video = forwardRef((props, ref) => {
   );
 });
 
+Video.displayName = "Video";
+
 export default Video;

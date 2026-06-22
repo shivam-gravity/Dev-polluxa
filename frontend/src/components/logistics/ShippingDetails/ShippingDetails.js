@@ -62,9 +62,9 @@ const ShippingDetails = ({ shippingDetails }) => {
       <div className="border-t border-[#D9D9D9]">
         <div className="py-6 text-lg font-semibold">Order History</div>
         <div className="overflow-hidden">
-          {tracking_info.map((info) => {
+          {tracking_info.map((info, index) => {
             return (
-              <ul className="text-left track-y top-level">
+              <ul key={index} className="text-left track-y top-level">
                 <li className="relative my-[48px]">
                   <div className="grid grid-flow-col auto-cols-max items-center">
                     <div className="order-2 md:order-1 hidden md:block">

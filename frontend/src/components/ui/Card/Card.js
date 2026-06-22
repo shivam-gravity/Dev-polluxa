@@ -20,7 +20,8 @@ const Card = ({
 }) => {
   // Below features variant is used on technnology page
   const isFeature = variant === "features";
-  const pathname = variant !== "techPage" ? usePathname() : "";
+  const rawPathname = usePathname();
+  const pathname = variant !== "techPage" ? rawPathname : "";
 
   return (
     <Link

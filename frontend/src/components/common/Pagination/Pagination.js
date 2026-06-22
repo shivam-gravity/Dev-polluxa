@@ -8,7 +8,6 @@ import cx from "classnames";
 export default function Pagination({ currentPage, pageCount }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  if (pageCount <= 1) return null;
 
   const createPageLink = useCallback(
     (page) => {
@@ -39,6 +38,8 @@ export default function Pagination({ currentPage, pageCount }) {
       }),
     [pageCount, createPageLink, currentPage]
   );
+
+  if (pageCount <= 1) return null;
 
   return (
     <div className="flex justify-center items-center space-x-2 my-6">

@@ -94,7 +94,7 @@ const EnhancedFeatures = (props) => {
                 />
               );
               return (
-                <div className="w-full md:w-auto mt-4 drop-shadow-lg bg-white flex items-center">
+                <div key={item?.id} className="w-full md:w-auto mt-4 drop-shadow-lg bg-white flex items-center">
                   {item?.showLink ? (
                     <Link
                       href={item?.url}

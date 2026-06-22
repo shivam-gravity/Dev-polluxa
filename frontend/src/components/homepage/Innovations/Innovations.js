@@ -29,8 +29,8 @@ const Innovations = (props) => {
           className={`flex items-center md:space-y-0 md:space-x-8 justify-center flex-wrap md:flex-nowrap ${fontInter.className}`}
         >
           {feature?.slice(0, 6).map((item) => (
-            <div className="group md:transition-transform duration-300 transform md:hover:scale-110 cursor-default w-40 pb-3 px-2 md:px-0 md:pb-0">
-              <div className="relative md:w-44" key={item?.id}>
+            <div key={item?.id} className="group md:transition-transform duration-300 transform md:hover:scale-110 cursor-default w-40 pb-3 px-2 md:px-0 md:pb-0">
+              <div className="relative md:w-44">
                 <IconPolygonHomePage className="w-full" />
                 <IconPolygonHomePageHover className="absolute w-full top-0 left-0 opacity-0 md:group-hover:opacity-100" />
                 <span className="absolute top-1/2 -translate-y-1/2 left-0 right-0 mx-auto text-center text-base md:text-xl text-white md:w-40 z-20 md:group-hover:text-[#123EAF] px-2 md:px-0">
@@ -44,8 +44,8 @@ const Innovations = (props) => {
           className={`flex items-center md:space-y-0 md:space-x-8 justify-center flex-wrap md:flex-nowrap ${fontInter.className}`}
         >
           {feature?.slice(6, 11).map((item) => (
-            <div className="group md:transition-transform duration-300 transform md:hover:scale-110 cursor-default w-40 pb-3 px-2 md:px-0 md:pb-0">
-              <div className="relative md:w-44" key={item?.id}>
+            <div key={item?.id} className="group md:transition-transform duration-300 transform md:hover:scale-110 cursor-default w-40 pb-3 px-2 md:px-0 md:pb-0">
+              <div className="relative md:w-44">
                 <IconPolygonHomePage className="w-full" />
                 <IconPolygonHomePageHover className="absolute w-full top-0 left-0 opacity-0 md:group-hover:opacity-100" />
                 <span className="absolute top-1/2 -translate-y-1/2 left-0 right-0 mx-auto text-center text-base md:text-xl text-white md:w-40 z-20 md:group-hover:text-[#123EAF] px-2 md:px-0">

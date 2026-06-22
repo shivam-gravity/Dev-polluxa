@@ -40,18 +40,18 @@ export default function Contact({ data }) {
     enable,
   } = data;
 
-  if (enable === false) return;
-
   const [formValues, setFormValues] = useState(formFields);
   const [errorMessage, setErrorMessage] = useState("");
   const [formerror, setFormerror] = useState({});
-  const token = process.env.NEXT_PUBLIC_STRAPI_FORM_SUBMISSION_TOKEN;
-
   const [snackbar, setSnackbar] = useState({
     open: false,
     message: "",
     type: "success",
   });
+
+  const token = process.env.NEXT_PUBLIC_STRAPI_FORM_SUBMISSION_TOKEN;
+
+  if (enable === false) return;
 
   const handleValidation = (e) => {
     const { name, value } = e.target;

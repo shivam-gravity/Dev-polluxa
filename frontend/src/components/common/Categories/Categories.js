@@ -15,6 +15,7 @@ export default function Categories({ categories, params, routeName }) {
           if (category?.attributes?.articles?.data?.length === 0) return null;
           return (
             <Link
+              key={category?.id ?? category?.attributes?.slug}
               href={`/${routeName}/${category?.attributes?.slug}`}
               className={selectedFilter(
                 category?.attributes?.slug,

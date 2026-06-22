@@ -27,6 +27,7 @@ const SnackBar = (props) => {
     return () => {
       clearTimeout(timer);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [snackbar?.open]);
 
   return (

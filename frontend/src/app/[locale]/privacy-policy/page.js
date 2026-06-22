@@ -22,11 +22,11 @@ export default async function PageRoute({ params }) {
   setRequestLocale(locale);
   const page = await getPageBySlug("privacy-policy", locale);
 
-  if (page?.data?.length === 0) return notFound();
+  if (!page?.data?.[0]) return notFound();
   const contentSections = page?.data?.[0]?.attributes?.contentSections;
   return (
     <>
-      {contentSections.map((section, index) =>
+      {contentSections?.map((section, index) =>
         subSectionRenderer(section, index, "privacy-policy")
       )}
     </>

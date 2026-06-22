@@ -29,17 +29,17 @@ export default async function PageRoute({ params }) {
 
   const ShouldDisplayTestimonials = ["contact-us"];
 
-  if (page?.data?.length === 0) return notFound();
+  if (!page?.data?.[0]) return notFound();
   if (page?.data?.[0]?.attributes?.contentSections?.length === 0)
     return ComingSoon();
   const contentSections = page?.data?.[0]?.attributes?.contentSections;
   const testimonialBlock = testimonial?.data?.attributes?.testimonials;
-  const InternalContactForm = contentSections.find(
+  const InternalContactForm = contentSections?.find(
     (item) => item.__component === "sections.internal-contact-form"
   );
   return (
     <>
-      {contentSections.map((section, index) =>
+      {contentSections?.map((section, index) =>
         subSectionRenderer(section, index)
       )}
       {!ShouldDisplayTestimonials.includes(slug) && (

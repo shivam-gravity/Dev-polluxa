@@ -7,7 +7,6 @@ import { getStrapiURL } from "@/utils/api-helpers";
 import { FALLBACK_SEO } from "@/utils/constants";
 import { getGlobal, getMainMenu } from "@/utils/api-loaders";
 import "./globals.css";
-import cx from "classnames";
 import { GoogleAnalyticsTracking } from "@/components/analytics";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
@@ -37,7 +36,7 @@ export async function generateMetadata({ params }) {
   const { locale } = await params;
   const meta = await getGlobal(locale);
 
-  if (!meta.data) return FALLBACK_SEO;
+  if (!meta?.data) return FALLBACK_SEO;
 
   const { metadata, favicon } = meta.data.attributes;
   const { url } = favicon.data.attributes;

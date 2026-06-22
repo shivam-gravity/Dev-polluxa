@@ -4,8 +4,10 @@ import { fetchAPI } from "@/utils/fetch-api";
 const token = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
 
 export async function getGlobal(locale = null) {
-  if (!token)
-    throw new Error("The Strapi API Token environment variable is not set.");
+  if (!token) {
+    console.warn("[api-loaders] NEXT_PUBLIC_STRAPI_API_TOKEN is not set — getGlobal returning null.");
+    return null;
+  }
 
   const path = `/global`;
   const options = { headers: { Authorization: `Bearer ${token}` } };
@@ -38,8 +40,10 @@ export async function getGlobal(locale = null) {
 }
 
 export async function getMainMenu(locale = null) {
-  if (!token)
-    throw new Error("The Strapi API Token environment variable is not set.");
+  if (!token) {
+    console.warn("[api-loaders] NEXT_PUBLIC_STRAPI_API_TOKEN is not set — getMainMenu returning null.");
+    return null;
+  }
 
   const path = `/main-menu`;
   const options = { headers: { Authorization: `Bearer ${token}` } };

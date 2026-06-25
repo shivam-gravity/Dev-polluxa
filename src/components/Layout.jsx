@@ -1,5 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
+import polluxaLogo from '../assets/polluxa-logo.svg';
 
 const products = [
   { to: '/crm',             name: 'CRM',                           desc: 'SaaS-based Sales CRM — manage leads, close deals faster, grow revenue.' },
@@ -12,15 +13,35 @@ const products = [
 
 const Layout = () => {
   const location = useLocation();
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   return (
     <>
+      {/* Deep space nebula aurora */}
+      <div className="nebula-overlay" aria-hidden="true" />
+
+      {/* Shooting stars */}
+      <div className="shoot-wrap" aria-hidden="true">
+        <div className="shoot shoot-1" />
+        <div className="shoot shoot-2" />
+        <div className="shoot shoot-3" />
+        <div className="shoot shoot-4" />
+        <div className="shoot shoot-5" />
+        <div className="shoot shoot-6" />
+      </div>
+
       {/* TOP NAV */}
-      <nav className="topnav">
+      <nav className={`topnav${scrolled ? ' scrolled' : ''}`}>
         <div className="topnav-inner">
           {/* Logo */}
           <Link to="/" className="logo">

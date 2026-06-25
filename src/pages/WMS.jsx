@@ -32,13 +32,42 @@ const FAQ = ({ items = [] }) => {
   );
 };
 
+const FALLBACK_PAGE = {
+  hero_title: 'Unprecedented Growth. Fully Customized.',
+  hero_description: 'Polluxa WMS gives your warehouse team real-time visibility, AI-driven pick optimisation, and seamless integrations with your carriers and ERP — so you can fulfil more orders with the same resources.',
+  cta_primary_url: '/contact',
+  cta_primary_label: 'Book Live Demo',
+  demo_headline: 'See Polluxa WMS in 60 minutes.',
+  demo_description: 'Give us 60 minutes and we will show you the platform running live on data that mirrors your warehouse operations.',
+  metrics: [
+    { value: '99.97%', label: 'Pick accuracy rate' },
+    { value: '35%',    label: 'Reduction in fulfilment cost' },
+    { value: '2×',     label: 'Throughput increase (avg Y1)' },
+    { value: '30 days', label: 'Go-live time' },
+  ],
+  features: [
+    { icon: '📍', title: 'Slotting Optimisation',   subtitle: 'SPACE UTILISATION', description: 'AI assigns each SKU to the optimal bin location based on velocity, size, and pick path efficiency.' },
+    { icon: '🚶', title: 'Wave Planning',            subtitle: 'PICK & PACK',       description: 'Batch and interleave picks by zone, carrier cutoff, and priority to maximise picker productivity.' },
+    { icon: '📡', title: 'Real-Time Floor Tracking', subtitle: 'VISIBILITY',        description: 'Live dashboard of every order, picker, and bin — updated every 30 seconds from your scanners.' },
+    { icon: '🔄', title: 'Returns Processing',       subtitle: 'REVERSE LOGISTICS', description: 'Structured returns workflow with grading, restocking, and customer notification built in.' },
+    { icon: '📦', title: 'Multi-Carrier Dispatch',   subtitle: 'SHIPPING',          description: 'Auto-select the cheapest or fastest carrier per order and print labels in one click.' },
+    { icon: '🔗', title: 'ERP & OMS Integration',   subtitle: 'CONNECTIVITY',      description: 'Bi-directional sync with SAP, Oracle, and your OMS — inventory is always in sync.' },
+  ],
+  faq: [
+    { question: 'Does Polluxa WMS work with RF scanners and barcode hardware?', answer: 'Yes — we support standard RF scanners, barcode printers, and weigh scales out of the box. No proprietary hardware required.' },
+    { question: 'Can it manage multiple warehouses?',                           answer: 'Yes — you can manage unlimited warehouse locations from one control centre, each with its own zones, carriers, and rules.' },
+    { question: 'How long does implementation take?',                           answer: 'Most operations are live in 30 days. Our team handles floor mapping, integration setup, and picker training.' },
+    { question: 'Does it support 3PL operations?',                              answer: 'Yes — 3PL mode adds client-level inventory segregation, billing reports, and branded packing slips.' },
+  ],
+};
+
 const WMS = () => {
   const [page, setPage] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchAPI('/api/wmss', { 'filters[slug][$eq]': 'overview' }).then((res) => {
-      setPage(res?.data?.[0]?.attributes ?? null);
+      setPage(res?.data?.[0]?.attributes ?? FALLBACK_PAGE);
       setLoading(false);
     });
   }, []);

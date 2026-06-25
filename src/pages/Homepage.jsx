@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Bot, Link2, BarChart3, Globe, Zap, ShieldCheck, Rocket, Building2, Users, Plug } from 'lucide-react';
 import { fetchAPI } from '../lib/api';
 
 /* ── Unsplash image helpers ─────────────────────────── */
@@ -36,12 +36,12 @@ const products = [
 ];
 
 const keyFeatures = [
-  { icon: '🤖', title: 'Agentic AI', desc: 'Autonomous agents that reason, plan, and execute across CRM, commerce, and supply chain without human intervention.' },
-  { icon: '🔗', title: 'Unified Platform', desc: 'CRM, Commerce, PLM, Logistics, and WMS on one connected data model — no more siloed systems or costly integrations.' },
-  { icon: '📊', title: 'Real-Time Analytics', desc: 'Live dashboards with AI-powered forecasting, anomaly detection, and actionable recommendations across every module.' },
-  { icon: '🌍', title: 'Global Scale', desc: 'Multi-currency, multi-language, multi-warehouse — built to run across 38 countries and 12 time zones from day one.' },
-  { icon: '⚡', title: 'Fast Go-Live', desc: '100% go-live rate. Enterprise onboarding in weeks, not months, with dedicated migration engineering and support.' },
-  { icon: '🔒', title: 'Enterprise Security', desc: 'SOC 2 compliant, role-based access, audit trails, and data residency options for regulated industries worldwide.' },
+  { Icon: Bot,         title: 'Agentic AI',           desc: 'Autonomous agents that reason, plan, and execute across CRM, commerce, and supply chain without human intervention.' },
+  { Icon: Link2,       title: 'Unified Platform',      desc: 'CRM, Commerce, PLM, Logistics, and WMS on one connected data model — no more siloed systems or costly integrations.' },
+  { Icon: BarChart3,   title: 'Real-Time Analytics',   desc: 'Live dashboards with AI-powered forecasting, anomaly detection, and actionable recommendations across every module.' },
+  { Icon: Globe,       title: 'Global Scale',          desc: 'Multi-currency, multi-language, multi-warehouse — built to run across 38 countries and 12 time zones from day one.' },
+  { Icon: Zap,         title: 'Fast Go-Live',          desc: '100% go-live rate. Enterprise onboarding in weeks, not months, with dedicated migration engineering and support.' },
+  { Icon: ShieldCheck, title: 'Enterprise Security',   desc: 'SOC 2 compliant, role-based access, audit trails, and data residency options for regulated industries worldwide.' },
 ];
 
 const successStories = [
@@ -52,10 +52,10 @@ const successStories = [
 ];
 
 const promises = [
-  { icon: '🚀', title: 'Faster GTM',                      desc: 'With enterprise-grade, scalable technology, Polluxa enables faster deployment, helping your business stay ahead in competitive markets.' },
-  { icon: '🏢', title: 'Enterprise-Ready from Day One',   desc: "Tailored to fit your unique business processes, Polluxa's software streamlines operations and maximizes efficiency." },
-  { icon: '🤝', title: 'Scale with a Trusted SI Network', desc: "Benefit from Polluxa's certified partners with deep expertise in customizing the codebase to meet your specific needs across 38 countries." },
-  { icon: '🔌', title: 'Seamless Integrations',           desc: "Polluxa's flexible architecture ensures easy integration with existing systems, reducing disruption and protecting your technology investments." },
+  { Icon: Rocket,    title: 'Faster GTM',                      desc: 'With enterprise-grade, scalable technology, Polluxa enables faster deployment, helping your business stay ahead in competitive markets.' },
+  { Icon: Building2, title: 'Enterprise-Ready from Day One',   desc: "Tailored to fit your unique business processes, Polluxa's software streamlines operations and maximizes efficiency." },
+  { Icon: Users,     title: 'Scale with a Trusted SI Network', desc: "Benefit from Polluxa's certified partners with deep expertise in customizing the codebase to meet your specific needs across 38 countries." },
+  { Icon: Plug,      title: 'Seamless Integrations',           desc: "Polluxa's flexible architecture ensures easy integration with existing systems, reducing disruption and protecting your technology investments." },
 ];
 
 const resources = [
@@ -126,6 +126,15 @@ function useCounters() {
   }, []);
 }
 
+/* ── Wave divider ───────────────────────────────────── */
+const Wave = ({ color }) => (
+  <div style={{ lineHeight: 0, marginBottom: '-1px', pointerEvents: 'none', userSelect: 'none' }}>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 52" preserveAspectRatio="none" style={{ width: '100%', display: 'block' }}>
+      <path d="M0,26 C360,52 720,0 1080,26 C1260,39 1380,13 1440,26 L1440,52 L0,52 Z" fill={color} />
+    </svg>
+  </div>
+);
+
 /* ── Component ──────────────────────────────────────── */
 const Homepage = () => {
   useScrollReveal();
@@ -153,10 +162,12 @@ const Homepage = () => {
           HERO
       ════════════════════════════════════════ */}
       <section className="hero" style={{ overflow: 'hidden' }}>
-        {/* Animated background blobs */}
+        {/* Animated background blobs + gradient mesh */}
         <div className="hero-blob hero-blob-a"></div>
         <div className="hero-blob hero-blob-b"></div>
         <div className="hero-blob hero-blob-c"></div>
+        <div className="hero-blob hero-blob-d"></div>
+        <div className="hero-mesh-grid" aria-hidden="true"></div>
 
         <div className="hero-inner" style={{ position: 'relative', zIndex: 2 }}>
           <span className="eyebrow"><span className="dot"></span> The complete agentic enterprise platform</span>
@@ -261,6 +272,8 @@ const Homepage = () => {
         </div>
       </section>
 
+      <Wave color="var(--bg-2)" />
+
       {/* ════════════════════════════════════════
           KEY FEATURES
       ════════════════════════════════════════ */}
@@ -272,21 +285,43 @@ const Homepage = () => {
             <p className="section-sub">Built for enterprise scale — intelligent, connected, and ready for the agentic era.</p>
           </div>
 
-          <div className="grid-3" style={{ gap: '1.25rem', marginTop: '3rem' }}>
-            {keyFeatures.map(({ icon, title, desc }, i) => (
-              <div key={title} className={`reveal d${i + 1}`} style={{ background: 'var(--panel)', border: '1px solid var(--line-strong)', borderRadius: '1rem', padding: '1.625rem', display: 'flex', gap: '1rem', alignItems: 'flex-start', transition: 'transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease' }}
-                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 16px 40px rgba(0,0,0,0.3)'; e.currentTarget.style.borderColor = 'rgba(43,182,255,0.35)'; }}
-                onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = ''; e.currentTarget.style.borderColor = ''; }}>
-                <div style={{ fontSize: '1.875rem', lineHeight: 1, flexShrink: 0 }}>{icon}</div>
-                <div>
-                  <h4 style={{ color: 'var(--ink)', marginBottom: '0.4rem', fontSize: '0.9375rem' }}>{title}</h4>
-                  <p style={{ fontSize: '0.85rem', color: 'var(--muted)', lineHeight: '1.65', margin: 0 }}>{desc}</p>
-                </div>
+          <div className="bento-grid">
+            {keyFeatures.map(({ Icon, title, desc }, i) => (
+              <div
+                key={title}
+                className={`card reveal d${i + 1}${i === 0 ? ' bento-large' : ''}`}
+                style={{
+                  padding: i === 0 ? '2rem' : '1.5rem',
+                  display: 'flex', flexDirection: 'column',
+                  transition: 'transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease',
+                }}
+                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 20px 48px rgba(0,0,0,0.35)'; e.currentTarget.style.borderColor = 'rgba(43,182,255,0.4)'; }}
+                onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = ''; e.currentTarget.style.borderColor = ''; }}
+              >
+                {i === 0 ? (
+                  <>
+                    <div className="bento-icon">
+                      <Icon size={32} color="var(--cyan)" strokeWidth={1.5} />
+                    </div>
+                    <h4 style={{ color: 'var(--ink)', marginBottom: '0.75rem', fontSize: '1.3125rem' }}>{title}</h4>
+                    <p style={{ fontSize: '1rem', color: 'var(--muted)', lineHeight: '1.75', margin: 0 }}>{desc}</p>
+                  </>
+                ) : (
+                  <>
+                    <div className="bento-icon-sm">
+                      <Icon size={22} color="var(--cyan)" strokeWidth={1.5} />
+                    </div>
+                    <h4 style={{ color: 'var(--ink)', marginBottom: '0.375rem', fontSize: '0.9375rem' }}>{title}</h4>
+                    <p style={{ fontSize: '0.84rem', color: 'var(--muted)', lineHeight: '1.65', margin: 0 }}>{desc}</p>
+                  </>
+                )}
               </div>
             ))}
           </div>
         </div>
       </section>
+
+      <Wave color="var(--bg)" />
 
       {/* ════════════════════════════════════════
           SUCCESS STORIES
@@ -321,6 +356,8 @@ const Homepage = () => {
         </div>
       </section>
 
+      <Wave color="var(--bg-2)" />
+
       {/* ════════════════════════════════════════
           OUR UNIQUE PROMISE
       ════════════════════════════════════════ */}
@@ -332,21 +369,23 @@ const Homepage = () => {
             <p className="section-sub">Your business is unique, and so should be your software. Polluxa delivers tailored ERP and CRM software solutions to streamline your processes and fuel growth.</p>
           </div>
 
-          <div className="grid-2" style={{ gap: '1.25rem', marginTop: '3rem', maxWidth: '900px', margin: '3rem auto 0' }}>
-            {promises.map(({ icon, title, desc }, i) => (
-              <div key={title} className={`reveal d${i + 1}`} style={{ background: 'var(--panel)', border: '1px solid var(--line-strong)', borderRadius: '1rem', padding: '1.875rem', display: 'flex', gap: '1.25rem', transition: 'transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease' }}
-                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 16px 40px rgba(0,0,0,0.3)'; e.currentTarget.style.borderColor = 'rgba(43,182,255,0.35)'; }}
-                onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = ''; e.currentTarget.style.borderColor = ''; }}>
-                <div style={{ fontSize: '2.25rem', flexShrink: 0, lineHeight: 1 }}>{icon}</div>
-                <div>
-                  <h4 style={{ color: 'var(--ink)', marginBottom: '0.5rem', fontSize: '1rem' }}>{title}</h4>
-                  <p style={{ fontSize: '0.9rem', color: 'var(--muted)', lineHeight: '1.65', margin: 0 }}>{desc}</p>
+          <div className="split-rows">
+            {promises.map(({ Icon, title, desc }, i) => (
+              <div key={title} className={`split-row reveal d${i + 1}${i % 2 === 1 ? ' flip' : ''}`}>
+                <div className="split-icon-box">
+                  <Icon size={32} color="var(--cyan)" strokeWidth={1.5} />
+                </div>
+                <div className="split-body">
+                  <h4>{title}</h4>
+                  <p>{desc}</p>
                 </div>
               </div>
             ))}
           </div>
         </div>
       </section>
+
+      <Wave color="var(--bg)" />
 
       {/* ════════════════════════════════════════
           SHIFT YOUR ORBIT — RESOURCES

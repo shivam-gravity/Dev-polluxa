@@ -32,6 +32,37 @@ const FAQ = ({ items = [] }) => {
   );
 };
 
+const FALLBACK_PAGE = {
+  hero_title: 'Creator Commerce Platform for Influencers & Brands',
+  hero_description: 'Launch, sell, and scale your creator brand — with built-in drop management, audience sync, and fulfilment tools designed for the speed of social commerce.',
+  cta_primary_url: '/contact',
+  cta_primary_label: 'Book Live Demo',
+  cta_secondary_url: '#features',
+  cta_secondary_label: 'See all features',
+  demo_headline: 'Ready to launch your next drop?',
+  demo_description: 'Give us 60 minutes and we will show you how Polluxa Creator Commerce handles everything from waitlist to warehouse.',
+  metrics: [
+    { value: '1,800+', label: 'Creator brands on the platform' },
+    { value: '12.4%',  label: 'Average click-to-cart rate' },
+    { value: '3×',     label: 'Revenue growth in year one' },
+  ],
+  features: [
+    { icon: '🚀', title: 'Drop Management',        description: 'Launch limited-edition drops with waitlists, countdown timers, and pre-sell inventory — all in one workflow.' },
+    { icon: '📲', title: 'Social Commerce Sync',   description: 'Connect Instagram, TikTok Shop, and YouTube to your storefront so followers can buy without leaving the app.' },
+    { icon: '🏪', title: 'Branded Storefront',     description: 'No-code storefront builder with creator-ready themes, custom domain support, and mobile-first checkout.' },
+    { icon: '📦', title: 'Fulfilment on Demand',   description: 'Tap into the Polluxa fulfilment network for print-on-demand, custom packaging, and same-day dispatch.' },
+    { icon: '🤝', title: 'Collab Management',      description: 'Manage brand partnership deals, gifting campaigns, and affiliate payouts all in one place.' },
+    { icon: '📊', title: 'Audience & Sales Intel', description: 'See which content drives sales, which audiences convert, and which products to restock — in real time.' },
+  ],
+  integrations_list: ['Shopify', 'WooCommerce', 'PayPal', 'Salesforce', 'Google Analytics', 'Outlook', 'Gmail', 'Slack'],
+  faq: [
+    { question: 'Do I need a large following to use Polluxa Creator Commerce?', answer: 'No — creators with 10K followers and fast-growing brands both use the platform. Pricing scales with your volume.' },
+    { question: 'Can I sell physical and digital products?',                    answer: 'Yes — the platform supports physical goods, digital downloads, and membership access in the same storefront.' },
+    { question: 'How does the fulfilment integration work?',                    answer: 'Connect your existing 3PL or use the Polluxa network. Orders placed on any channel are automatically routed to the right fulfilment partner.' },
+    { question: 'Is there an app for managing drops on the go?',                answer: 'Yes — the Polluxa mobile app lets you monitor live drop stats, approve orders, and respond to support tickets from your phone.' },
+  ],
+};
+
 const INTEGRATION_ICONS = {
   WooCommerce: '🛒', Shopify: '🏪', Slack: '💬', Salesforce: '☁️',
   'Google Analytics': '📊', Outlook: '📧', PayPal: '💳', Gmail: '📬',
@@ -43,7 +74,7 @@ const CreatorCommerce = () => {
 
   useEffect(() => {
     fetchAPI('/api/creator-commerces', { 'filters[slug][$eq]': 'overview' }).then((res) => {
-      setPage(res?.data?.[0]?.attributes ?? null);
+      setPage(res?.data?.[0]?.attributes ?? FALLBACK_PAGE);
       setLoading(false);
     });
   }, []);

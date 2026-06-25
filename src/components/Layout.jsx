@@ -14,6 +14,7 @@ const products = [
 const Layout = () => {
   const location = useLocation();
   const [scrolled, setScrolled] = useState(false);
+  const [showBar, setShowBar] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -30,6 +31,59 @@ const Layout = () => {
       {/* Deep space nebula aurora */}
       <div className="nebula-overlay" aria-hidden="true" />
 
+      {/* Web3 hex grid */}
+      <div className="hex-overlay" aria-hidden="true" />
+
+      {/* Noise grain texture */}
+      <div className="grain-overlay" aria-hidden="true" />
+
+      {/* Constellation — Pollux/Gemini star lines */}
+      <svg className="constellation-svg" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="cg1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%"   stopColor="#2bb6ff" stopOpacity="0" />
+            <stop offset="50%"  stopColor="#2bb6ff" stopOpacity="0.7" />
+            <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0" />
+          </linearGradient>
+          <linearGradient id="cg2" x1="100%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%"   stopColor="#8b5cf6" stopOpacity="0" />
+            <stop offset="50%"  stopColor="#ec4899" stopOpacity="0.7" />
+            <stop offset="100%" stopColor="#2bb6ff" stopOpacity="0" />
+          </linearGradient>
+          <linearGradient id="cg3" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%"   stopColor="#00d3a7" stopOpacity="0" />
+            <stop offset="50%"  stopColor="#2bb6ff" stopOpacity="0.6" />
+            <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+        {/* Constellation lines */}
+        <line x1="8%"  y1="12%" x2="25%" y2="28%" stroke="url(#cg1)" strokeWidth="0.6" />
+        <line x1="25%" y1="28%" x2="48%" y2="18%" stroke="url(#cg1)" strokeWidth="0.6" />
+        <line x1="48%" y1="18%" x2="68%" y2="35%" stroke="url(#cg2)" strokeWidth="0.6" />
+        <line x1="68%" y1="35%" x2="88%" y2="16%" stroke="url(#cg2)" strokeWidth="0.6" />
+        <line x1="25%" y1="28%" x2="38%" y2="52%" stroke="url(#cg1)" strokeWidth="0.5" />
+        <line x1="38%" y1="52%" x2="60%" y2="68%" stroke="url(#cg3)" strokeWidth="0.5" />
+        <line x1="60%" y1="68%" x2="80%" y2="55%" stroke="url(#cg2)" strokeWidth="0.5" />
+        <line x1="12%" y1="72%" x2="35%" y2="84%" stroke="url(#cg3)" strokeWidth="0.5" />
+        <line x1="62%" y1="78%" x2="86%" y2="65%" stroke="url(#cg2)" strokeWidth="0.5" />
+        <line x1="88%" y1="16%" x2="80%" y2="55%" stroke="url(#cg2)" strokeWidth="0.4" />
+        {/* Star nodes */}
+        {[[8,12],[25,28],[48,18],[68,35],[88,16],[38,52],[60,68],[80,55],[12,72],[35,84],[62,78],[86,65]].map(([x,y],i) => (
+          <circle key={i} cx={`${x}%`} cy={`${y}%`} r={i % 3 === 0 ? '2' : '1.2'}
+            fill={i % 3 === 0 ? '#2bb6ff' : i % 3 === 1 ? '#8b5cf6' : '#ec4899'}
+            opacity="0.55" className="const-star" style={{ animationDelay: `${i * 0.4}s` }} />
+        ))}
+      </svg>
+
+      {/* Network pulse nodes */}
+      <div aria-hidden="true" style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0 }}>
+        <div className="net-node"         style={{ top: '18%', left:  '7%' }} />
+        <div className="net-node violet"  style={{ top: '34%', right: '11%' }} />
+        <div className="net-node magenta" style={{ top: '62%', left:  '14%' }} />
+        <div className="net-node mint"    style={{ top: '75%', right: '7%' }} />
+        <div className="net-node"         style={{ top: '50%', left:  '50%' }} />
+      </div>
+
       {/* Shooting stars */}
       <div className="shoot-wrap" aria-hidden="true">
         <div className="shoot shoot-1" />
@@ -40,12 +94,20 @@ const Layout = () => {
         <div className="shoot shoot-6" />
       </div>
 
+      {/* ANNOUNCEMENT BAR */}
+      {showBar && (
+        <div className="announce-bar">
+          <span>🤖 Agent CRM is now live — <Link to="/agents">free for 3 years</Link> &nbsp;·&nbsp; No credit card required</span>
+          <button className="announce-dismiss" onClick={() => setShowBar(false)} aria-label="Dismiss">×</button>
+        </div>
+      )}
+
       {/* TOP NAV */}
       <nav className={`topnav${scrolled ? ' scrolled' : ''}`}>
         <div className="topnav-inner">
           {/* Logo */}
           <Link to="/" className="logo">
-            <span className="logo-mark"></span> Polluxa
+            <img src={polluxaLogo} alt="Polluxa" className="logo-svg" />
           </Link>
 
           {/* Nav links */}
@@ -122,8 +184,7 @@ const Layout = () => {
           {/* Logo */}
           <div className="footer-logo-col">
             <Link to="/" className="footer-logo">
-              <span className="logo-mark" />
-              Polluxa
+              <img src={polluxaLogo} alt="Polluxa" className="logo-svg footer-logo-svg" />
             </Link>
           </div>
 

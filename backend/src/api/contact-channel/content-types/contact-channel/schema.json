@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "contact_channels",
+  "info": {
+    "singularName": "contact-channel",
+    "pluralName": "contact-channels",
+    "displayName": "Contact Channel",
+    "description": "Contact email / channel entries on the Contact page"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "email"
+    },
+    "icon_name": {
+      "type": "string"
+    },
+    "sort_order": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}

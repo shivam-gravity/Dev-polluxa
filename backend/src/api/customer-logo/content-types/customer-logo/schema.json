@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "customer_logos",
+  "info": {
+    "singularName": "customer-logo",
+    "pluralName": "customer-logos",
+    "displayName": "Customer Logo",
+    "description": "Brand logos shown in the customer trust strip"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "sort_order": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}

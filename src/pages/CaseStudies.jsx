@@ -8,65 +8,8 @@ const tagColor = (tag) => {
   return map[tag] || '#6b7280';
 };
 
-const FALLBACK_CASE_STUDIES = [
-  {
-    type: 'Case Study',
-    category: 'Commerce · Fashion',
-    title: 'How Trendy Fashion grew GMV 3.2× in 12 months with Polluxa Commerce',
-    desc: 'A mid-market fashion brand consolidated 6 sales channels, eliminated manual sync, and grew GMV from ₹18 Cr to ₹58 Cr in a single year.',
-    tags: ['Commerce'],
-    highlight: 'Featured',
-    slug: 'trendy-fashion-gmv-growth',
-  },
-  {
-    type: 'Case Study',
-    category: 'PLM · Beauty',
-    title: 'Style House cuts sample approvals from 14 days to 3 using Polluxa PLM',
-    desc: 'A beauty brand accelerated product launches by streamlining BOM management, supplier collaboration, and approval workflows end to end.',
-    tags: ['PLM', 'Beauty'],
-    highlight: null,
-    slug: 'style-house-plm-approval',
-  },
-  {
-    type: 'Case Study',
-    category: 'Logistics · Outdoor',
-    title: 'Metropolitan Retail achieves 98.5% on-time delivery across 400+ pin codes',
-    desc: 'By switching to Polluxa Logistics, a sports retailer halved NDR rates and cut last-mile costs by 25% in Q1.',
-    tags: ['Logistics'],
-    highlight: null,
-    slug: 'metropolitan-retail-logistics',
-  },
-  {
-    type: 'Whitepaper',
-    category: 'Industry Report · Sustainability',
-    title: 'The future of sustainable supply chains in fashion: 2025 benchmarks',
-    desc: 'An in-depth look at ESG reporting requirements, circular economy trends, and how leading brands are rethinking their supplier networks.',
-    tags: ['Sustainability'],
-    highlight: null,
-    slug: 'sustainable-supply-chain-2025',
-  },
-  {
-    type: 'Case Study',
-    category: 'WMS · Pharma',
-    title: 'How a leading Pharma distributor cut fulfilment cost by 35% with Polluxa WMS',
-    desc: 'Slotting optimisation, wave planning, and real-time floor tracking helped a pharma distributor double throughput without adding headcount.',
-    tags: ['Pharma'],
-    highlight: null,
-    slug: 'pharma-wms-cost-reduction',
-  },
-  {
-    type: 'Whitepaper',
-    category: 'Industry Report · Fragrance',
-    title: 'Creator commerce in luxury fragrance: building brand equity through drops',
-    desc: 'How niche fragrance houses are leveraging limited-edition drops and creator partnerships to build cult audiences and premium pricing power.',
-    tags: ['Fragrance', 'Beauty'],
-    highlight: null,
-    slug: 'creator-commerce-fragrance',
-  },
-];
-
 const CaseStudies = () => {
-  const [caseStudies, setCaseStudies] = useState(FALLBACK_CASE_STUDIES);
+  const [caseStudies, setCaseStudies] = useState([]);
 
   useEffect(() => {
     async function loadCaseStudies() {

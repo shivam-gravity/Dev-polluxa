@@ -1,170 +1,199 @@
 import { useState, useEffect } from 'react';
-import { ArrowRight, MapPin, Briefcase, Clock } from 'lucide-react';
+import { ArrowRight, MapPin, Briefcase, Clock, AlertCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { fetchAPI } from '../lib/api';
 
-const benefits = [
-  { icon: '🌍', title: 'Remote-friendly', desc: 'Work from any of our 12 global offices or remotely — with async-first culture across 38 countries.' },
-  { icon: '📈', title: 'Equity', desc: "Early-stage ownership through ESOP. Every full-time team member is a part-owner of what we're building." },
-  { icon: '🏥', title: 'Health coverage', desc: 'Comprehensive health, dental, and vision plans for you and your dependants.' },
-  { icon: '📚', title: 'Learning budget', desc: 'Annual stipend for courses, conferences, certifications, and books — no approval hoops.' },
-  { icon: '🍱', title: 'Meals', desc: 'Daily catered lunches in all office locations, plus meal credits for remote team members.' },
-  { icon: '🧘', title: 'Wellness', desc: 'Gym reimbursement, mental health days, and flexible working hours.' },
-];
-
 const deptColors = {
-  'HR & People': '#8b5cf6',
-  'Sales': '#0ea5e9',
-  'Marketing': '#ec4899',
-  'Strategy': '#f59e0b',
-  'Business Development': '#10b981',
+  'HR & People':         { bg: 'rgba(139,92,246,0.14)',  text: '#a78bfa' },
+  'Sales':               { bg: 'rgba(14,165,233,0.14)',  text: '#38bdf8' },
+  'Marketing':           { bg: 'rgba(236,72,153,0.14)',  text: '#f472b6' },
+  'Strategy':            { bg: 'rgba(245,158,11,0.14)',  text: '#fbbf24' },
+  'Business Development':{ bg: 'rgba(16,185,129,0.14)',  text: '#34d399' },
+  'Engineering':         { bg: 'rgba(43,182,255,0.14)',  text: '#2bb6ff' },
+  'Product':             { bg: 'rgba(139,92,246,0.14)',  text: '#a78bfa' },
+  'Design':              { bg: 'rgba(236,72,153,0.14)',  text: '#f472b6' },
 };
+
+const JobSkeleton = () => (
+  <div className="career-card career-card-skeleton" aria-hidden="true">
+    <div className="career-card-left">
+      <span className="skel skel-tag" />
+      <div className="skel skel-title" style={{ marginTop: '0.75rem', width: '70%' }} />
+      <div className="skel skel-body" style={{ marginTop: '0.5rem' }} />
+      <div className="skel skel-body" style={{ width: '85%' }} />
+      <div className="career-card-meta">
+        <span className="skel skel-date" style={{ width: '80px' }} />
+        <span className="skel skel-date" style={{ width: '100px' }} />
+        <span className="skel skel-date" style={{ width: '90px' }} />
+      </div>
+    </div>
+    <div className="skel" style={{ width: '90px', height: '38px', borderRadius: '999px', flexShrink: 0 }} />
+  </div>
+);
 
 const Careers = () => {
   const [openings, setOpenings] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [benefits, setBenefits] = useState([]);
+  const [loading, setLoading]   = useState(true);
+  const [error, setError]       = useState(false);
 
   useEffect(() => {
-    async function loadCareers() {
+    let cancelled = false;
+    async function load() {
       try {
-        const response = await fetchAPI('/api/careers', {
-          populate: '*',
-        });
-        if (response && response.data && response.data.length > 0) {
-          const apiCareers = response.data.map(item => ({
-            title: item.attributes.title,
-            dept: item.attributes.job_types?.data?.[0]?.attributes?.name || 'General',
-            type: item.attributes.job_types?.data?.[0]?.attributes?.name || 'Full-time',
-            exp: item.attributes.level || 'Experienced',
-            locations: item.attributes.location ? item.attributes.location.split(',').map(l => l.trim()) : ['Remote'],
+        const [careersRes, benefitsRes] = await Promise.all([
+          fetchAPI('/api/careers', { populate: '*' }),
+          fetchAPI('/api/job-benefits', { sort: 'sort_order:asc' }),
+        ]);
+        if (cancelled) return;
+
+        if (careersRes?.data?.length > 0) {
+          setOpenings(careersRes.data.map(item => ({
+            title:     item.attributes.title,
+            dept:      item.attributes.job_types?.data?.[0]?.attributes?.name || 'General',
+            type:      item.attributes.job_types?.data?.[0]?.attributes?.name || 'Full-time',
+            exp:       item.attributes.level || 'Experienced',
+            locations: item.attributes.location
+              ? item.attributes.location.split(',').map(l => l.trim())
+              : ['Remote'],
             desc: item.attributes.description,
-          }));
-          setOpenings(apiCareers);
+          })));
         }
-      } catch (error) {
-        console.error('Failed to load careers', error);
+
+        if (benefitsRes?.data?.length > 0) {
+          setBenefits(benefitsRes.data.map(b => ({
+            icon:  b.attributes.icon,
+            title: b.attributes.title,
+            desc:  b.attributes.description,
+          })));
+        }
+      } catch {
+        if (!cancelled) setError(true);
       } finally {
-        setLoading(false);
+        if (!cancelled) setLoading(false);
       }
     }
-    loadCareers();
+    load();
+    return () => { cancelled = true; };
   }, []);
 
+  const deptStyle = (dept) => deptColors[dept] || { bg: 'rgba(255,255,255,0.08)', text: 'var(--muted)' };
+
   return (
-  <div className="careers-page">
-    <section className="section section-light" style={{ paddingBottom: '4rem' }}>
-      <div className="container" style={{ maxWidth: '900px', textAlign: 'center' }}>
-        <span style={{ textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: '600', color: 'var(--accent-color)' }}>Careers</span>
-        <h1 style={{ fontSize: '3.75rem', fontWeight: '800', lineHeight: '1.1', marginTop: '0.5rem' }}>
-          Work on the future of <em>enterprise software.</em>
-        </h1>
-        <p style={{ fontSize: '1.25rem', marginTop: '1.5rem', color: 'var(--muted)', lineHeight: '1.6' }}>
-          Polluxa is building the agentic operating system for enterprise — CRM, Commerce, PLM, Logistics, and WMS on one intelligent platform. Join a team that ships fast and thinks big.
-        </p>
-        <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: '2.5rem', flexWrap: 'wrap' }}>
-          <a href="#openings" className="btn btn-primary" style={{ padding: '1rem 2rem', fontSize: '1.125rem' }}>
-            See open roles <ArrowRight size={18} className="btn-icon" />
+    <div className="careers-page">
+
+      {/* ── Hero ── */}
+      <section className="section section-light careers-hero">
+        <div className="container careers-hero-inner">
+          <span className="section-tag">Careers</span>
+          <h1 className="careers-hero-h1">
+            Work on the future of <em>enterprise software.</em>
+          </h1>
+          <p className="careers-hero-lede">
+            Polluxa is building one intelligent platform for CRM, Commerce, PLM, Logistics, and WMS.
+            Join a team that ships fast, thinks big, and is distributed across 38 countries.
+          </p>
+          <a href="#openings" className="btn-primary careers-hero-cta">
+            See open roles <ArrowRight size={18} aria-hidden="true" />
           </a>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section className="section section-alt" style={{ padding: '3rem 0' }}>
-      <div className="container">
-        <div className="grid-4" style={{ textAlign: 'center' }}>
-          <div>
-            <h3 style={{ fontSize: '2.5rem', color: 'var(--primary-color)', marginBottom: '0.25rem' }}>450+</h3>
-            <p style={{ color: 'var(--muted)', fontWeight: '500' }}>Team members</p>
+      {/* ── Open Roles ── */}
+      <section id="openings" className="section section-light">
+        <div className="container">
+          <div className="careers-section-head">
+            <span className="section-tag">Open Positions</span>
+            <h2 style={{ marginTop: '0.5rem' }}>Join the <em>team.</em></h2>
+            <p className="careers-section-sub">
+              All roles are open to candidates in Dubai, Netherlands, Prague, Canada, and the USA — unless noted otherwise.
+            </p>
           </div>
-          <div>
-            <h3 style={{ fontSize: '2.5rem', color: 'var(--primary-color)', marginBottom: '0.25rem' }}>12</h3>
-            <p style={{ color: 'var(--muted)', fontWeight: '500' }}>Global offices</p>
-          </div>
-          <div>
-            <h3 style={{ fontSize: '2.5rem', color: 'var(--primary-color)', marginBottom: '0.25rem' }}>38</h3>
-            <p style={{ color: 'var(--muted)', fontWeight: '500' }}>Countries</p>
-          </div>
-          <div>
-            <h3 style={{ fontSize: '2.5rem', color: 'var(--primary-color)', marginBottom: '0.25rem' }}>2018</h3>
-            <p style={{ color: 'var(--muted)', fontWeight: '500' }}>Founded</p>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <section id="openings" className="section section-light">
-      <div className="container">
-        <div style={{ marginBottom: '3rem' }}>
-          <span style={{ textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: '600', color: 'var(--accent-color)', fontSize: '0.875rem' }}>Open Positions</span>
-          <h2 style={{ marginTop: '0.5rem' }}>Join the <em>team.</em></h2>
-          <p style={{ color: 'var(--muted)', marginTop: '0.5rem', maxWidth: '520px' }}>All roles are open to candidates across Dubai, Netherlands, Prague, Canada, and USA unless noted.</p>
-        </div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          {openings.map(({ title, dept, type, exp, locations, desc }) => (
-            <div key={title} className="card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '2rem', flexWrap: 'wrap' }}>
-              <div style={{ flex: 1, minWidth: '280px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
-                  <span style={{ fontSize: '0.75rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em', background: (deptColors[dept] || '#888') + '22', color: deptColors[dept] || '#888', padding: '0.2rem 0.6rem', borderRadius: '4px' }}>{dept}</span>
-                </div>
-                <h4 style={{ fontSize: '1.125rem', margin: '0 0 0.5rem 0' }}>{title}</h4>
-                <p style={{ fontSize: '0.9rem', color: 'var(--muted)', lineHeight: '1.6', margin: '0 0 1rem 0' }}>{desc}</p>
-                <div style={{ display: 'flex', gap: '1.25rem', flexWrap: 'wrap' }}>
-                  <div style={{ display: 'flex', gap: '0.35rem', alignItems: 'center', color: 'var(--muted)', fontSize: '0.85rem' }}>
-                    <Briefcase size={14} /> <span>{type}</span>
-                  </div>
-                  <div style={{ display: 'flex', gap: '0.35rem', alignItems: 'center', color: 'var(--muted)', fontSize: '0.85rem' }}>
-                    <Clock size={14} /> <span>{exp}</span>
-                  </div>
-                  <div style={{ display: 'flex', gap: '0.35rem', alignItems: 'center', color: 'var(--muted)', fontSize: '0.85rem' }}>
-                    <MapPin size={14} /> <span>{locations.join(' / ')}</span>
-                  </div>
-                </div>
-              </div>
-              <div style={{ flexShrink: 0, marginTop: '0.25rem' }}>
-                <Link
-                  to={`/contact?interest=Job+Application&subject=${encodeURIComponent(title)}`}
-                  className="btn btn-primary"
-                  style={{ padding: '0.6rem 1.25rem', fontSize: '0.875rem' }}
-                >
-                  Apply <ArrowRight size={14} className="btn-icon" />
-                </Link>
-              </div>
+          {error && !loading && (
+            <div className="blog-notice" role="alert">
+              <AlertCircle size={15} aria-hidden="true" /> Could not reach the jobs API. Please try again later.
             </div>
-          ))}
-        </div>
-      </div>
-    </section>
+          )}
 
-    <section className="section section-alt">
-      <div className="container">
-        <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
-          <span style={{ textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: '600', color: 'var(--accent-color)', fontSize: '0.875rem' }}>Benefits</span>
-          <h2 style={{ marginTop: '0.5rem' }}>Built for the <em>long run.</em></h2>
+          <div className="careers-jobs-list">
+            {loading
+              ? [1, 2, 3].map(i => <JobSkeleton key={i} />)
+              : openings.length === 0
+              ? (
+                <div className="blog-empty">
+                  <p>No open roles right now — check back soon.</p>
+                  <Link to="/contact" className="btn-primary" style={{ marginTop: '1rem', display: 'inline-flex', gap: '0.5rem', alignItems: 'center' }}>
+                    Send a speculative application <ArrowRight size={15} />
+                  </Link>
+                </div>
+              )
+              : openings.map(({ title, dept, type, exp, locations, desc }) => {
+                  const ds = deptStyle(dept);
+                  return (
+                    <div key={title} className="career-card">
+                      <div className="career-card-left">
+                        <span className="career-dept-tag" style={{ background: ds.bg, color: ds.text }}>{dept}</span>
+                        <h3 className="career-title">{title}</h3>
+                        <p className="career-desc">{desc}</p>
+                        <div className="career-card-meta">
+                          <span className="career-meta-item"><Briefcase size={13} aria-hidden="true" />{type}</span>
+                          <span className="career-meta-item"><Clock    size={13} aria-hidden="true" />{exp}</span>
+                          <span className="career-meta-item"><MapPin   size={13} aria-hidden="true" />{locations.join(' / ')}</span>
+                        </div>
+                      </div>
+                      <div className="career-card-action">
+                        <Link
+                          to={`/contact?interest=Job+Application&subject=${encodeURIComponent(title)}`}
+                          className="btn-primary career-apply-btn"
+                          aria-label={`Apply for ${title}`}
+                        >
+                          Apply <ArrowRight size={14} aria-hidden="true" />
+                        </Link>
+                      </div>
+                    </div>
+                  );
+                })
+            }
+          </div>
         </div>
-        <div className="grid-3">
-          {benefits.map(({ icon, title, desc }) => (
-            <div key={title} className="card">
-              <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>{icon}</div>
-              <h4>{title}</h4>
-              <p style={{ fontSize: '0.95rem', color: 'var(--muted)' }}>{desc}</p>
+      </section>
+
+      {/* ── Benefits ── */}
+      {benefits.length > 0 && (
+        <section className="section section-alt">
+          <div className="container">
+            <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+              <span className="section-tag">Benefits</span>
+              <h2 style={{ marginTop: '0.5rem' }}>Built for the <em>long run.</em></h2>
             </div>
-          ))}
-        </div>
-      </div>
-    </section>
+            <div className="grid-3">
+              {benefits.map(({ icon, title, desc }) => (
+                <div key={title} className="card">
+                  <div className="career-benefit-icon">{icon}</div>
+                  <h4>{title}</h4>
+                  <p style={{ fontSize: '0.95rem', color: 'var(--muted)' }}>{desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
-    <section className="section section-light" style={{ borderTop: '1px solid var(--border-color)' }}>
-      <div className="container" style={{ textAlign: 'center', maxWidth: '700px' }}>
-        <h2>{"Don't see your role? "}<em>Reach out anyway.</em></h2>
-        <p style={{ color: 'var(--muted)', marginBottom: '2.5rem' }}>
-          We're always looking for great people. Send us a note — we'll flag it when something opens up.
-        </p>
-        <Link to="/contact" className="btn btn-primary" style={{ padding: '1rem 2rem', fontSize: '1.125rem' }}>
-          Get in touch <ArrowRight size={18} className="btn-icon" />
-        </Link>
-      </div>
-    </section>
-  </div>
+      {/* ── Footer CTA ── */}
+      <section className="section section-light careers-footer-cta">
+        <div className="container" style={{ textAlign: 'center', maxWidth: '680px' }}>
+          <h2>{"Don't see your role? "}<em>Reach out anyway.</em></h2>
+          <p style={{ color: 'var(--muted)', marginBottom: '2.5rem', fontSize: '1.0625rem', lineHeight: '1.7' }}>
+            We're always looking for great people. Send us a note and we'll reach out when something opens up.
+          </p>
+          <Link to="/contact" className="btn-primary" style={{ padding: '0.9375rem 2rem', fontSize: '1.0625rem' }}>
+            Get in touch <ArrowRight size={18} aria-hidden="true" />
+          </Link>
+        </div>
+      </section>
+
+    </div>
   );
 };
 

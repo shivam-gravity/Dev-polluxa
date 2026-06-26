@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "success_stories",
+  "info": {
+    "singularName": "success-story",
+    "pluralName": "success-stories",
+    "displayName": "Success Story",
+    "description": "Customer success story cards on the homepage"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "company": {
+      "type": "string",
+      "required": true
+    },
+    "category": {
+      "type": "string"
+    },
+    "gradient": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "sort_order": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}

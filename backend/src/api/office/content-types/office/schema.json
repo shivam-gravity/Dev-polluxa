@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "offices",
+  "info": {
+    "singularName": "office",
+    "pluralName": "offices",
+    "displayName": "Office",
+    "description": "Office locations shown on the Contact page"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "city": {
+      "type": "string",
+      "required": true
+    },
+    "address": {
+      "type": "text"
+    },
+    "is_hq": {
+      "type": "boolean",
+      "default": false
+    },
+    "sort_order": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}

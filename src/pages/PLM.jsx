@@ -32,44 +32,13 @@ const FAQ = ({ items = [] }) => {
   );
 };
 
-const FALLBACK_PAGE = {
-  hero_title: 'Manage Less. Ship Faster. Scale Smarter.',
-  hero_description: 'Polluxa PLM centralises product data, design collaboration, and supplier workflows so your teams spend less time chasing approvals and more time building great products.',
-  cta_primary_url: '/contact',
-  cta_primary_label: 'Book Live Demo',
-  cta_secondary_url: '#features',
-  cta_secondary_label: 'See all features',
-  demo_headline: 'Ready to ship faster, with less rework?',
-  demo_description: 'Book a 30-minute demo with a Polluxa PLM specialist. We will show you the platform running live on your product categories.',
-  metrics: [
-    { value: '40%',   label: 'Faster time-to-market' },
-    { value: '60%',   label: 'Reduction in sampling rounds' },
-    { value: '99%',   label: 'BOM accuracy rate' },
-    { value: '2000+', label: 'Brands on the platform' },
-  ],
-  features: [
-    { icon: '📦', title: 'Version Control',       subtitle: 'PRODUCT CONTROL',  description: 'Track every iteration of a product — specs, images, materials — with full audit history and rollback.' },
-    { icon: '🎨', title: 'Design Collaboration',  subtitle: 'CREATIVE WORKFLOW', description: 'Real-time collaboration between designers, merchandisers, and buyers on tech packs and range plans.' },
-    { icon: '🏭', title: 'Supplier Management',   subtitle: 'SUPPLY CHAIN',     description: 'Centralise supplier profiles, certifications, capacity, and performance scores in one place.' },
-    { icon: '📋', title: 'Bill of Materials',     subtitle: 'COSTING',          description: 'Build multi-level BOMs with live costing, margin analysis, and what-if scenario planning.' },
-    { icon: '📅', title: 'Critical Path Tracking',subtitle: 'PLANNING',         description: 'Visual timeline of every milestone from design brief to store delivery — with automated alerts.' },
-    { icon: '🔗', title: 'ERP & WMS Integration', subtitle: 'CONNECTIVITY',     description: 'Bi-directional sync with your ERP and WMS ensures that PLM data is always the single source of truth.' },
-  ],
-  faq: [
-    { question: 'Can Polluxa PLM handle multiple product categories?',     answer: 'Yes — the platform is built for fashion, beauty, electronics, home goods, and more, with configurable templates per category.' },
-    { question: 'How does it integrate with our existing ERP?',            answer: 'We offer pre-built connectors for SAP, Oracle, and Microsoft Dynamics, plus a REST API for custom integrations.' },
-    { question: 'What does the implementation timeline look like?',        answer: 'Most teams are live in 45–60 days. Our implementation squad handles data migration, configuration, and training.' },
-    { question: 'Can suppliers access the platform directly?',             answer: 'Yes — suppliers get a dedicated portal to receive tech packs, submit samples, and update delivery status without needing a full licence.' },
-  ],
-};
-
 const PLM = () => {
   const [page, setPage] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchAPI('/api/plms', { 'filters[slug][$eq]': 'overview' }).then((res) => {
-      setPage(res?.data?.[0]?.attributes ?? FALLBACK_PAGE);
+      setPage(res?.data?.[0]?.attributes ?? null);
       setLoading(false);
     });
   }, []);

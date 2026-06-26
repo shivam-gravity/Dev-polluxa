@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "key_features",
+  "info": {
+    "singularName": "key-feature",
+    "pluralName": "key-features",
+    "displayName": "Key Feature",
+    "description": "Homepage feature highlight cards"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "icon_name": {
+      "type": "string",
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "sort_order": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}

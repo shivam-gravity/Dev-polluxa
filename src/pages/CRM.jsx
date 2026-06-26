@@ -70,51 +70,6 @@ const Counter = ({ target, suffix = '' }) => {
   );
 };
 
-const FALLBACK_PAGE = {
-  hero_title: 'The AI-Native CRM Built for Modern Revenue Teams',
-  hero_subtitle: 'Agent-powered sales, from first signal to closed deal.',
-  hero_description: 'Polluxa CRM brings together AI agents, unified data, and powerful execution channels so your team can prospect smarter, engage faster, and close more deals — all from one workspace.',
-  cta_primary_url: 'https://sales.polluxa.com/',
-  cta_primary_label: 'Get Agent CRM — Free',
-  cta_secondary_url: '/contact',
-  cta_secondary_label: 'Talk to sales',
-  metrics: [
-    { type: 'counter', target: 2000, suffix: '+', label: 'Customers worldwide' },
-    { type: 'counter', target: 40,   suffix: '%', label: 'Faster pipeline velocity' },
-    { type: 'counter', target: 99,   suffix: '%', label: 'Platform uptime SLA' },
-    { type: 'display', display: '< 30 days', label: 'Average go-live time' },
-  ],
-  capabilities: [
-    { icon: '🤖', tag: 'AI Agents',    title: 'Autonomous Sales Agents',       description: 'Deploy AI agents that prospect, qualify, and follow up 24/7 without manual effort.', link_url: '/agents' },
-    { icon: '🔍', tag: 'Prospecting',  title: 'TAM Canvas & Lead Finder',      description: 'Map your total addressable market and surface high-intent leads with precision signals.', link_url: '/tam-canvas' },
-    { icon: '📊', tag: 'Analytics',    title: 'Real-Time Pipeline Analytics',  description: 'Live dashboards showing exactly where deals stand and what is blocking revenue.', link_url: '/crm' },
-    { icon: '✉️', tag: 'Outreach',     title: 'Multi-Channel Sequences',       description: 'Orchestrate LinkedIn, email, WhatsApp, and Meta Ads campaigns from a single workspace.', link_url: '/outreach' },
-    { icon: '🎯', tag: 'Signals',      title: 'Buying Signal Aggregation',     description: 'Catch intent signals — funding rounds, job changes, product launches — the moment they happen.', link_url: '/signal-aggregation' },
-    { icon: '🔗', tag: 'Data',         title: 'Contact & Account Enrichment',  description: 'Automatically enrich every contact with verified emails, phone numbers, and firmographic data.', link_url: '/contact-enrichment' },
-  ],
-  channels: [
-    { badge: 'PRIMARY CHANNEL', title: 'LinkedIn Outreach',  is_featured: true, featured_label: 'Most Powerful', description: 'Our strongest engine. Connect, message, and sequence prospects on LinkedIn at scale with AI personalization.', stats: [{ value: '3×', label: 'Reply rate vs email' }, { value: '87%', label: 'Connect rate' }], link_url: '/linkedin-outreach' },
-    { badge: 'CHANNEL',         title: 'Email Outreach',     description: 'AI-written, deliverability-optimized email sequences with built-in warm-up, tracking, and smart throttling.', stats: [{ value: '42%', label: 'Open rate' }, { value: '11%', label: 'Reply rate' }], link_url: '/email-outreach' },
-    { badge: 'CHANNEL',         title: 'WhatsApp',           description: 'Reach buyers on the channel they actually check. Compliant, templated, and personalized WhatsApp campaigns.', stats: [], link_url: '/whatsapp' },
-    { badge: 'CHANNEL',         title: 'Meta Ads',           description: 'Sync your CRM audiences to Facebook and Instagram to run precisely targeted paid campaigns alongside your outreach.', stats: [], link_url: '/meta-ads' },
-  ],
-  modules: [
-    { title: 'Agent Module',   badge: 'Included', badge_variant: 'success', description: 'Deploy AI sales agents that handle prospecting, follow-up, and qualification autonomously.', link_url: '/agents',    link_label: 'Explore Agents' },
-    { title: 'Marketing',      badge: 'Included', badge_variant: 'success', description: 'Plan, launch, and measure campaigns across every channel from one unified hub.', link_url: '/marketing', link_label: 'Explore Marketing' },
-    { title: 'Sales Module',   badge: 'Included', badge_variant: 'success', description: 'Manage pipeline, set targets, and give reps a clean workspace to close faster.', link_url: '/sales',     link_label: 'Explore Sales' },
-    { title: 'Data Module',    badge: 'Add-on',   badge_variant: 'default', description: 'Clean, enrich, and sync contact and account data across your entire stack automatically.', link_url: '/data',      link_label: 'Explore Data' },
-    { title: 'Help Desk',      badge: 'Add-on',   badge_variant: 'default', description: 'Unified support ticketing powered by the same agent framework as your sales team.', link_url: '/helpdesk',  link_label: 'Explore Help Desk' },
-    { title: 'Commerce',       badge: 'Add-on',   badge_variant: 'default', description: 'Extend your CRM into full B2B and D2C commerce with order management and storefront tools.', link_url: '/commerce',  link_label: 'Explore Commerce' },
-  ],
-  faq: [
-    { question: 'How quickly can we go live?',                  answer: 'Most teams are fully live within 30 days. Our implementation team handles data migration, integrations, and agent configuration.' },
-    { question: 'Does Polluxa CRM replace our existing tools?', answer: 'It can, but it does not have to. Polluxa integrates with Salesforce, HubSpot, and 50+ tools so you can adopt it gradually.' },
-    { question: 'How do the AI agents work?',                   answer: 'Agents are pre-built workflows that combine our data graph, LLM reasoning, and execution channels. You configure goals; agents handle the actions.' },
-    { question: 'Is there a free tier?',                        answer: 'Yes — every module starts free with generous limits. You only pay as you scale beyond the free tier thresholds.' },
-    { question: 'How is data security handled?',               answer: 'Polluxa is SOC 2 Type II certified, GDPR compliant, and stores data in your chosen region. All agent actions are logged and auditable.' },
-  ],
-};
-
 const NAV_ITEMS = [
   { id: 'overview',  label: 'Overview' },
   { id: 'features',  label: 'Features' },
@@ -143,7 +98,7 @@ const CRM = () => {
   /* fetch page content */
   useEffect(() => {
     fetchAPI('/api/crms', { 'filters[slug][$eq]': 'overview' }).then((res) => {
-      setPage(res?.data?.[0]?.attributes ?? FALLBACK_PAGE);
+      setPage(res?.data?.[0]?.attributes ?? null);
       setLoading(false);
     });
   }, []);

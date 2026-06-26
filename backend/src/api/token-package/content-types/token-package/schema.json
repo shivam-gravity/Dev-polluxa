@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "token_packages",
+  "info": {
+    "singularName": "token-package",
+    "pluralName": "token-packages",
+    "displayName": "Token Package",
+    "description": "Add-on token bundles on the Pricing page"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "price": {
+      "type": "string",
+      "required": true
+    },
+    "sort_order": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}

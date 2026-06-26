@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "agent_channels",
+  "info": {
+    "singularName": "agent-channel",
+    "pluralName": "agent-channels",
+    "displayName": "Agent Channel",
+    "description": "Deployment channel cards on the Agents page"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "icon": {
+      "type": "string",
+      "required": true
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "sort_order": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}

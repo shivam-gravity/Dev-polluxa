@@ -16,6 +16,13 @@
     }
   },
   "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "sort_order": {
+      "type": "integer",
+      "default": 0
+    },
     "title": {
       "type": "string",
       "pluginOptions": {

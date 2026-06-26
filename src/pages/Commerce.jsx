@@ -14,70 +14,6 @@ const NAV_ITEMS = [
   { id: 'faq',          label: 'FAQ' },
 ];
 
-const FALLBACK_PAGE = {
-  hero_label: 'Commerce Platform',
-  hero_title: 'Sell Everywhere. Fulfil Anywhere.',
-  hero_description: 'Polluxa Commerce unifies your B2B and D2C channels, order management, and supplier network into one intelligent platform — built for brands that are serious about scale.',
-  cta_primary_url: '/contact',
-  cta_primary_label: 'Book a live demo',
-  cta_secondary_url: '#features',
-  cta_secondary_label: 'See all features',
-  trust_badges: ['500+ brands onboarded', 'SOC 2 Type II certified', 'Global fulfilment network', 'Live in < 45 days'],
-  metrics: [
-    { value: '500+',   label: 'Brands on the platform' },
-    { value: '99.8%',  label: 'Order accuracy rate' },
-    { value: '3.2×',   label: 'Average GMV growth (Y1)' },
-    { value: '45 days', label: 'Average go-live time' },
-  ],
-  product_showcase: [
-    { type: 'Channel',   title: 'Shopify',     color: '#00d3a7', detail: 'Active',     detail_color: '#16a34a' },
-    { type: 'Channel',   title: 'WooCommerce', color: '#8b5cf6', detail: 'Active',     detail_color: '#16a34a' },
-    { type: 'Channel',   title: 'Amazon',      color: '#f5b042', detail: 'Syncing…',   detail_color: '#d97706' },
-    { type: 'Warehouse', title: 'MUM-WH-01',   color: '#2bb6ff', detail: '142 orders', detail_color: undefined },
-  ],
-  ecommerce_features: [
-    { icon: '🛒', tag: 'Catalog',        title: 'Unified Product Catalogue',    description: 'One master catalogue that syncs across every storefront and marketplace automatically.', link_url: '/commerce' },
-    { icon: '📦', tag: 'Fulfilment',     title: 'Smart Order Routing',          description: 'Route every order to the optimal warehouse or 3PL based on proximity, stock, and cost.', link_url: '/wms' },
-    { icon: '📊', tag: 'Analytics',      title: 'Revenue & Sell-Through Intel', description: 'Real-time dashboards on GMV, returns, margin, and channel contribution.', link_url: '/commerce' },
-    { icon: '🤝', tag: 'B2B',           title: 'B2B Buyer Portal',             description: 'Self-serve portal for wholesale buyers — orders, invoices, and returns in one place.', link_url: '/commerce' },
-    { icon: '🌐', tag: 'Marketplace',   title: 'Marketplace Sync',             description: 'List, price, and fulfil across Amazon, Flipkart, and Myntra without manual work.', link_url: '/commerce' },
-    { icon: '⚡', tag: 'Automation',    title: 'Agentic Replenishment',        description: 'AI agents that monitor stock levels and raise purchase orders before you run out.', link_url: '/agents' },
-  ],
-  d2c_section: {
-    label: 'Direct-to-Consumer',
-    title: 'Own your customer relationship, end to end.',
-    description: 'Launch branded storefronts, run campaigns, and deliver a seamless post-purchase experience that turns first-time buyers into loyal fans.',
-    bullets: ['Multi-currency checkout', 'Loyalty & rewards engine', 'Abandoned cart recovery', 'Personalised recommendations'],
-    dashboard_title: 'D2C Storefront · Live Stats',
-    dashboard: [
-      { label: 'Sessions today',  value: '18,420', trend: '↑ 14% vs last week',  trend_color: '#16a34a' },
-      { label: 'Conversion rate', value: '4.2%',   trend: '↑ 0.6pp this month',  trend_color: '#16a34a' },
-      { label: 'Avg order value', value: '₹2,840',  trend: 'Stable',              trend_color: '#8a98c0' },
-      { label: 'Revenue (MTD)',   value: '₹1.4 Cr', trend: '↑ 22% vs last month', trend_color: '#16a34a' },
-    ],
-  },
-  b2b_section: {
-    label: 'Business-to-Business',
-    title: 'Close more wholesale deals with less back-and-forth.',
-    description: 'Give your retail partners a self-serve portal to place orders, view invoices, and track shipments — fully integrated with your ERP and WMS.',
-    bullets: ['Custom price lists per buyer', 'Credit limit management', 'EDI & API connectivity', 'Automated invoicing'],
-    portal_title: 'Buyer Portal · Sample Orders',
-    portal_items: [
-      { label: 'Trendy Fashion Pvt Ltd',  type: 'badge',  status: 'Confirmed', status_bg: 'rgba(0,211,167,0.15)', status_color: '#00d3a7' },
-      { label: 'Style House Exports',     type: 'value',  value: '₹4.2L',     value_color: '#2bb6ff' },
-      { label: 'Metropolitan Retail',     type: 'badge',  status: 'Pending',   status_bg: 'rgba(245,176,66,0.15)', status_color: '#f5b042' },
-      { label: 'New Partner Inquiry',     type: 'button', action_label: 'Approve' },
-    ],
-  },
-  integrations_list: ['Shopify', 'WooCommerce', 'PayPal', 'Salesforce', 'Google Analytics', 'Outlook', 'Gmail', 'Slack'],
-  faq: [
-    { question: 'Can Polluxa Commerce handle both B2B and D2C simultaneously?', answer: 'Yes. The platform manages separate price lists, buyer portals, and fulfilment logic for B2B and D2C from one admin.' },
-    { question: 'How does inventory sync work across channels?',                answer: 'A single inventory ledger propagates changes to all connected channels in real time — no overselling, no manual updates.' },
-    { question: 'How long does it take to go live?',                           answer: 'Most brands are live in 30–45 days. We handle data migration, integration setup, and training end to end.' },
-    { question: 'Do you support international selling?',                       answer: 'Yes — multi-currency checkout, region-based pricing, and localised tax calculation are all built in.' },
-  ],
-};
-
 const FEAT_COLORS = [
   'var(--cyan)',
   'var(--mint)',
@@ -125,7 +61,7 @@ const Commerce = () => {
   /* fetch page content */
   useEffect(() => {
     fetchAPI('/api/commerces', { 'filters[slug][$eq]': 'overview' }).then((res) => {
-      setPage(res?.data?.[0]?.attributes ?? FALLBACK_PAGE);
+      setPage(res?.data?.[0]?.attributes ?? null);
       setLoading(false);
     });
   }, []);

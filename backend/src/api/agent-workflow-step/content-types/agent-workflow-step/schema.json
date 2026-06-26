@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "agent_workflow_steps",
+  "info": {
+    "singularName": "agent-workflow-step",
+    "pluralName": "agent-workflow-steps",
+    "displayName": "Agent Workflow Step",
+    "description": "Steps in the agent workflow diagram on the Agents page"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "icon": {
+      "type": "string",
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "sort_order": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}

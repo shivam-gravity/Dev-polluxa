@@ -32,41 +32,13 @@ const FAQ = ({ items = [] }) => {
   );
 };
 
-const FALLBACK_PAGE = {
-  hero_title: 'Ship Anywhere. Anytime. At Any Scale.',
-  hero_description: 'Polluxa Logistics connects your brand to a nationwide network of fulfilment hubs and couriers — giving you last-mile visibility, automated dispatch, and carrier-agnostic flexibility in one platform.',
-  cta_primary_url: '/contact',
-  cta_primary_label: 'Book Live Demo',
-  demo_headline: 'Make better a reality.',
-  demo_description: 'Give us 60 minutes and see how Polluxa Logistics can cut your delivery costs and improve customer satisfaction scores.',
-  metrics: [
-    { value: '98.5%', label: 'On-time delivery rate' },
-    { value: '25%',   label: 'Reduction in shipping cost' },
-    { value: '500+',  label: 'Pin codes served' },
-  ],
-  features: [
-    { icon: '🗺️', title: 'Intelligent Route Planning',  subtitle: 'LAST MILE',       description: 'AI optimises delivery routes in real time based on traffic, time windows, and vehicle capacity.' },
-    { icon: '📡', title: 'Live Shipment Tracking',      subtitle: 'VISIBILITY',       description: 'End-to-end tracking from dispatch to doorstep — shareable with customers via SMS and email.' },
-    { icon: '🚚', title: 'Multi-Carrier Orchestration', subtitle: 'CARRIER NETWORK',  description: 'Auto-allocate shipments to the best-performing carrier per pin code, weight, and service level.' },
-    { icon: '🔄', title: 'Returns Management',          subtitle: 'REVERSE LOGISTICS', description: 'Scheduled pickups, condition grading, and warehouse re-entry — fully automated.' },
-    { icon: '🏪', title: 'Hub & Spoke Network',         subtitle: 'INFRASTRUCTURE',   description: 'Access Polluxa\'s regional hub network for faster regional distribution and lower transit times.' },
-    { icon: '📊', title: 'Delivery Analytics',          subtitle: 'REPORTING',        description: 'Track SLA adherence, NDR rates, and carrier performance with daily and weekly dashboards.' },
-  ],
-  faq: [
-    { question: 'Which carriers does Polluxa Logistics support?',    answer: 'We integrate with all major carriers — Delhivery, Blue Dart, Ekart, Xpressbees, DTDC, and more — plus international forwarders.' },
-    { question: 'Can I use my existing carrier contracts?',          answer: 'Yes — you can bring your own carrier accounts and still use our routing engine, tracking, and analytics layer on top.' },
-    { question: 'How does NDR (non-delivery report) handling work?', answer: 'Our system automatically triggers reattempt workflows, customer communication, and escalation rules based on your NDR policies.' },
-    { question: 'Is COD supported?',                                 answer: 'Yes — cash-on-delivery with automated remittance reconciliation is fully supported across all partner carriers.' },
-  ],
-};
-
 const Logistics = () => {
   const [page, setPage] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchAPI('/api/logistics', { 'filters[slug][$eq]': 'overview' }).then((res) => {
-      setPage(res?.data?.[0]?.attributes ?? FALLBACK_PAGE);
+      setPage(res?.data?.[0]?.attributes ?? null);
       setLoading(false);
     });
   }, []);

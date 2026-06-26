@@ -1,7 +1,17 @@
 /**
  * Base utility for fetching data from Strapi API
  */
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:1338';
+export const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:1338';
+
+/**
+ * Resolve a Strapi media field to an absolute URL.
+ * Handles both full URLs (Cloudinary, S3) and relative Strapi upload paths.
+ */
+export function getImgUrl(mediaField) {
+  const url = mediaField?.data?.attributes?.url;
+  if (!url) return null;
+  return url.startsWith('http') ? url : `${API_URL}${url}`;
+}
 const API_TOKEN = import.meta.env.VITE_API_TOKEN;
 const FORM_TOKEN = import.meta.env.VITE_FORM_TOKEN;
 

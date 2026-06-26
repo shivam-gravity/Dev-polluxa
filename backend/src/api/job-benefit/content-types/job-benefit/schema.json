@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "job_benefits",
+  "info": {
+    "singularName": "job-benefit",
+    "pluralName": "job-benefits",
+    "displayName": "Job Benefit",
+    "description": "Employee benefits shown on the Careers page"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "icon": {
+      "type": "string",
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "sort_order": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}

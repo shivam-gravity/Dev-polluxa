@@ -788,6 +788,142 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
+export interface ApiAgentAgent extends Schema.CollectionType {
+  collectionName: 'agents';
+  info: {
+    singularName: 'agent';
+    pluralName: 'agents';
+    displayName: 'Agent';
+    description: 'AI agent cards on the Agents page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String & Attribute.Required;
+    role: Attribute.String;
+    icon: Attribute.String;
+    description: Attribute.Text;
+    sort_order: Attribute.Integer & Attribute.DefaultTo<0>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::agent.agent',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::agent.agent',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiAgentChannelAgentChannel extends Schema.CollectionType {
+  collectionName: 'agent_channels';
+  info: {
+    singularName: 'agent-channel';
+    pluralName: 'agent-channels';
+    displayName: 'Agent Channel';
+    description: 'Deployment channel cards on the Agents page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    icon: Attribute.String & Attribute.Required;
+    name: Attribute.String & Attribute.Required;
+    description: Attribute.Text;
+    sort_order: Attribute.Integer & Attribute.DefaultTo<0>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::agent-channel.agent-channel',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::agent-channel.agent-channel',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiAgentStatAgentStat extends Schema.CollectionType {
+  collectionName: 'agent_stats';
+  info: {
+    singularName: 'agent-stat';
+    pluralName: 'agent-stats';
+    displayName: 'Agent Stat';
+    description: 'Platform metrics shown on the Agents page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    value: Attribute.String & Attribute.Required;
+    label: Attribute.String & Attribute.Required;
+    sort_order: Attribute.Integer & Attribute.DefaultTo<0>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::agent-stat.agent-stat',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::agent-stat.agent-stat',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiAgentWorkflowStepAgentWorkflowStep
+  extends Schema.CollectionType {
+  collectionName: 'agent_workflow_steps';
+  info: {
+    singularName: 'agent-workflow-step';
+    pluralName: 'agent-workflow-steps';
+    displayName: 'Agent Workflow Step';
+    description: 'Steps in the agent workflow diagram on the Agents page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    icon: Attribute.String & Attribute.Required;
+    title: Attribute.String & Attribute.Required;
+    sort_order: Attribute.Integer & Attribute.DefaultTo<0>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::agent-workflow-step.agent-workflow-step',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::agent-workflow-step.agent-workflow-step',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiAgentcommerceAgentcommerce extends Schema.CollectionType {
   collectionName: 'agentcommerces';
   info: {
@@ -1041,6 +1177,38 @@ export interface ApiAuthorAuthor extends Schema.CollectionType {
   };
 }
 
+export interface ApiBlogCategoryBlogCategory extends Schema.CollectionType {
+  collectionName: 'blog_categories';
+  info: {
+    singularName: 'blog-category';
+    pluralName: 'blog-categories';
+    displayName: 'Blog Category';
+    description: 'Blog filter categories for Blog page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String & Attribute.Required;
+    sort_order: Attribute.Integer & Attribute.DefaultTo<0>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::blog-category.blog-category',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::blog-category.blog-category',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiCareerCareer extends Schema.CollectionType {
   collectionName: 'careers';
   info: {
@@ -1127,52 +1295,6 @@ export interface ApiCareerCareer extends Schema.CollectionType {
       'api::career.career'
     >;
     locale: Attribute.String;
-  };
-}
-
-export interface ApiCareerFormSubmissionCareerFormSubmission
-  extends Schema.CollectionType {
-  collectionName: 'career_form_submissions';
-  info: {
-    singularName: 'career-form-submission';
-    pluralName: 'career-form-submissions';
-    displayName: 'Career Form Submission';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    Name: Attribute.String;
-    PhoneNumber: Attribute.String;
-    Email: Attribute.Email;
-    Nationality: Attribute.String;
-    Experience: Attribute.String;
-    GraduationYear: Attribute.String;
-    resume: Attribute.Media;
-    CurrentPosition: Attribute.String;
-    CurrentCompany: Attribute.String;
-    HighestDegree: Attribute.String;
-    Location: Attribute.String;
-    Major: Attribute.String;
-    DOB: Attribute.String;
-    MaritalStatus: Attribute.String;
-    Gender: Attribute.String;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::career-form-submission.career-form-submission',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::career-form-submission.career-form-submission',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
   };
 }
 
@@ -1322,92 +1444,6 @@ export interface ApiCategoryCategory extends Schema.CollectionType {
       'api::category.category',
       'oneToMany',
       'api::category.category'
-    >;
-    locale: Attribute.String;
-  };
-}
-
-export interface ApiChannelCommerceChannelCommerce
-  extends Schema.CollectionType {
-  collectionName: 'channel_commerces';
-  info: {
-    singularName: 'channel-commerce';
-    pluralName: 'channel-commerces';
-    displayName: 'channel commerce';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  pluginOptions: {
-    i18n: {
-      localized: true;
-    };
-  };
-  attributes: {
-    title: Attribute.String &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    slug: Attribute.String &
-      Attribute.Required &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: false;
-        };
-      }>;
-    description: Attribute.String &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    media: Attribute.Component<'shared.media'> &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    blocks: Attribute.DynamicZone<
-      [
-        'sections.hero',
-        'sections.bottom-actions',
-        'sections.feature-list',
-        'sections.crm-features'
-      ]
-    > &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    seo: Attribute.Component<'shared.seo'> &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::channel-commerce.channel-commerce',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::channel-commerce.channel-commerce',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    localizations: Attribute.Relation<
-      'api::channel-commerce.channel-commerce',
-      'oneToMany',
-      'api::channel-commerce.channel-commerce'
     >;
     locale: Attribute.String;
   };
@@ -1610,6 +1646,40 @@ export interface ApiCommerceCommerce extends Schema.CollectionType {
       'api::commerce.commerce'
     >;
     locale: Attribute.String;
+  };
+}
+
+export interface ApiContactChannelContactChannel extends Schema.CollectionType {
+  collectionName: 'contact_channels';
+  info: {
+    singularName: 'contact-channel';
+    pluralName: 'contact-channels';
+    displayName: 'Contact Channel';
+    description: 'Contact email / channel entries on the Contact page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    label: Attribute.String & Attribute.Required;
+    email: Attribute.Email;
+    icon_name: Attribute.String;
+    sort_order: Attribute.Integer & Attribute.DefaultTo<0>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::contact-channel.contact-channel',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::contact-channel.contact-channel',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
   };
 }
 
@@ -1818,75 +1888,6 @@ export interface ApiCreatorCommerceCreatorCommerce
   };
 }
 
-export interface ApiCreatorManagementCreatorManagement
-  extends Schema.CollectionType {
-  collectionName: 'creator_managements';
-  info: {
-    singularName: 'creator-management';
-    pluralName: 'creator-managements';
-    displayName: 'Creator Management';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  pluginOptions: {
-    i18n: {
-      localized: true;
-    };
-  };
-  attributes: {
-    title: Attribute.String &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    slug: Attribute.String &
-      Attribute.Required &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: false;
-        };
-      }>;
-    media: Attribute.Component<'shared.media'> &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    blocks: Attribute.DynamicZone<
-      ['sections.hero', 'sections.feature-list', 'sections.bottom-actions']
-    > &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::creator-management.creator-management',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::creator-management.creator-management',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    localizations: Attribute.Relation<
-      'api::creator-management.creator-management',
-      'oneToMany',
-      'api::creator-management.creator-management'
-    >;
-    locale: Attribute.String;
-  };
-}
-
 export interface ApiCrmCrm extends Schema.CollectionType {
   collectionName: 'crms';
   info: {
@@ -2053,6 +2054,39 @@ export interface ApiCrmCrm extends Schema.CollectionType {
       'api::crm.crm'
     >;
     locale: Attribute.String;
+  };
+}
+
+export interface ApiCustomerLogoCustomerLogo extends Schema.CollectionType {
+  collectionName: 'customer_logos';
+  info: {
+    singularName: 'customer-logo';
+    pluralName: 'customer-logos';
+    displayName: 'Customer Logo';
+    description: 'Customer brand logos shown in marquee';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String & Attribute.Required;
+    logo: Attribute.Media;
+    sort_order: Attribute.Integer & Attribute.DefaultTo<0>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::customer-logo.customer-logo',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::customer-logo.customer-logo',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
   };
 }
 
@@ -2407,58 +2441,6 @@ export interface ApiGlobalGlobal extends Schema.SingleType {
   };
 }
 
-export interface ApiGlobalShopGlobalShop extends Schema.SingleType {
-  collectionName: 'global_shops';
-  info: {
-    singularName: 'global-shop';
-    pluralName: 'global-shops';
-    displayName: 'Global Shop';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  pluginOptions: {
-    i18n: {
-      localized: true;
-    };
-  };
-  attributes: {
-    Footer: Attribute.Component<'sections.footer-shop'> &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    Header: Attribute.Component<'sections.header-shop'> &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::global-shop.global-shop',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::global-shop.global-shop',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    localizations: Attribute.Relation<
-      'api::global-shop.global-shop',
-      'oneToMany',
-      'api::global-shop.global-shop'
-    >;
-    locale: Attribute.String;
-  };
-}
-
 export interface ApiIndustryIndustry extends Schema.CollectionType {
   collectionName: 'industries';
   info: {
@@ -2476,6 +2458,8 @@ export interface ApiIndustryIndustry extends Schema.CollectionType {
     };
   };
   attributes: {
+    name: Attribute.String;
+    sort_order: Attribute.Integer & Attribute.DefaultTo<0>;
     title: Attribute.String &
       Attribute.SetPluginOptions<{
         i18n: {
@@ -2544,6 +2528,74 @@ export interface ApiIndustryIndustry extends Schema.CollectionType {
       'api::industry.industry'
     >;
     locale: Attribute.String;
+  };
+}
+
+export interface ApiIndustryStatIndustryStat extends Schema.CollectionType {
+  collectionName: 'industry_stats';
+  info: {
+    singularName: 'industry-stat';
+    pluralName: 'industry-stats';
+    displayName: 'Industry Stat';
+    description: 'Industry breakdown for Customers page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    icon: Attribute.String;
+    name: Attribute.String & Attribute.Required;
+    brand_count: Attribute.String;
+    sort_order: Attribute.Integer & Attribute.DefaultTo<0>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::industry-stat.industry-stat',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::industry-stat.industry-stat',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiJobBenefitJobBenefit extends Schema.CollectionType {
+  collectionName: 'job_benefits';
+  info: {
+    singularName: 'job-benefit';
+    pluralName: 'job-benefits';
+    displayName: 'Job Benefit';
+    description: 'Employee benefits cards for Careers page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    icon: Attribute.String;
+    title: Attribute.String & Attribute.Required;
+    description: Attribute.Text;
+    sort_order: Attribute.Integer & Attribute.DefaultTo<0>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::job-benefit.job-benefit',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::job-benefit.job-benefit',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
   };
 }
 
@@ -2617,34 +2669,33 @@ export interface ApiJobTypeJobType extends Schema.CollectionType {
   };
 }
 
-export interface ApiLeadFormSubmissionLeadFormSubmission
-  extends Schema.CollectionType {
-  collectionName: 'lead_form_submissions';
+export interface ApiKeyFeatureKeyFeature extends Schema.CollectionType {
+  collectionName: 'key_features';
   info: {
-    singularName: 'lead-form-submission';
-    pluralName: 'lead-form-submissions';
-    displayName: 'Lead form submission';
-    name: 'lead-form-submission';
-    description: '';
+    singularName: 'key-feature';
+    pluralName: 'key-features';
+    displayName: 'Key Feature';
+    description: 'Platform feature cards for Homepage bento grid';
   };
   options: {
-    increments: true;
-    timestamps: true;
-    draftAndPublish: false;
+    draftAndPublish: true;
   };
   attributes: {
-    email: Attribute.String;
-    status: Attribute.Enumeration<['seen', 'contacted', 'ignored']>;
+    icon_name: Attribute.String;
+    title: Attribute.String & Attribute.Required;
+    description: Attribute.Text;
+    sort_order: Attribute.Integer & Attribute.DefaultTo<0>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'api::lead-form-submission.lead-form-submission',
+      'api::key-feature.key-feature',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'api::lead-form-submission.lead-form-submission',
+      'api::key-feature.key-feature',
       'oneToOne',
       'admin::user'
     > &
@@ -2851,85 +2902,6 @@ export interface ApiMainMenuMainMenu extends Schema.SingleType {
       'api::main-menu.main-menu',
       'oneToMany',
       'api::main-menu.main-menu'
-    >;
-    locale: Attribute.String;
-  };
-}
-
-export interface ApiMainMenuShopMainMenuShop extends Schema.CollectionType {
-  collectionName: 'main_menu_shops';
-  info: {
-    singularName: 'main-menu-shop';
-    pluralName: 'main-menu-shops';
-    displayName: 'Main Menu Shop';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  pluginOptions: {
-    i18n: {
-      localized: true;
-    };
-  };
-  attributes: {
-    title: Attribute.String &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    url: Attribute.String &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    Level1: Attribute.Component<'sections.level-1', true> &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    order: Attribute.Integer &
-      Attribute.Required &
-      Attribute.Unique &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    isOnSale: Attribute.Boolean &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }> &
-      Attribute.DefaultTo<false>;
-    saleColor: Attribute.String &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::main-menu-shop.main-menu-shop',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::main-menu-shop.main-menu-shop',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    localizations: Attribute.Relation<
-      'api::main-menu-shop.main-menu-shop',
-      'oneToMany',
-      'api::main-menu-shop.main-menu-shop'
     >;
     locale: Attribute.String;
   };
@@ -3182,6 +3154,40 @@ export interface ApiNavigationNavigation extends Schema.CollectionType {
   };
 }
 
+export interface ApiOfficeOffice extends Schema.CollectionType {
+  collectionName: 'offices';
+  info: {
+    singularName: 'office';
+    pluralName: 'offices';
+    displayName: 'Office';
+    description: 'Office locations shown on the Contact page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    city: Attribute.String & Attribute.Required;
+    address: Attribute.Text;
+    is_hq: Attribute.Boolean & Attribute.DefaultTo<false>;
+    sort_order: Attribute.Integer & Attribute.DefaultTo<0>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::office.office',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::office.office',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiPagePage extends Schema.CollectionType {
   collectionName: 'pages';
   info: {
@@ -3387,6 +3393,73 @@ export interface ApiPartnerPartner extends Schema.CollectionType {
   };
 }
 
+export interface ApiPartnerStatPartnerStat extends Schema.CollectionType {
+  collectionName: 'partner_stats';
+  info: {
+    singularName: 'partner-stat';
+    pluralName: 'partner-stats';
+    displayName: 'Partner Stat';
+    description: 'Partner ecosystem stats for Partners page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    value: Attribute.String & Attribute.Required;
+    label: Attribute.String & Attribute.Required;
+    sort_order: Attribute.Integer & Attribute.DefaultTo<0>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::partner-stat.partner-stat',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::partner-stat.partner-stat',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiPartnerTypePartnerType extends Schema.CollectionType {
+  collectionName: 'partner_types';
+  info: {
+    singularName: 'partner-type';
+    pluralName: 'partner-types';
+    displayName: 'Partner Type';
+    description: 'Partner category cards for Partners page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    icon: Attribute.String;
+    name: Attribute.String & Attribute.Required;
+    description: Attribute.Text;
+    sort_order: Attribute.Integer & Attribute.DefaultTo<0>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::partner-type.partner-type',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::partner-type.partner-type',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiPlmPlm extends Schema.CollectionType {
   collectionName: 'plms';
   info: {
@@ -3551,41 +3624,146 @@ export interface ApiPlmPlm extends Schema.CollectionType {
   };
 }
 
-export interface ApiPricingFormSubmissionPricingFormSubmission
-  extends Schema.CollectionType {
-  collectionName: 'pricing_form_submissions';
+export interface ApiPricingPlanPricingPlan extends Schema.CollectionType {
+  collectionName: 'pricing_plans';
   info: {
-    singularName: 'pricing-form-submission';
-    pluralName: 'pricing-form-submissions';
-    displayName: 'Pricing Form Submission';
-    description: '';
+    singularName: 'pricing-plan';
+    pluralName: 'pricing-plans';
+    displayName: 'Pricing Plan';
+    description: 'CRM pricing plan cards';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    FirstName: Attribute.String;
-    LastName: Attribute.String;
-    BusinessEmail: Attribute.String;
-    JobTitle: Attribute.String;
-    Phone: Attribute.String;
-    Country: Attribute.String;
-    Comments: Attribute.Text;
-    Industry: Attribute.Enumeration<
-      ['plm', 'marketing', 'logistics', 'retail', 'technology', 'others']
-    >;
-    Company: Attribute.String;
+    name: Attribute.String & Attribute.Required;
+    price: Attribute.String;
+    period: Attribute.String;
+    highlight: Attribute.Boolean & Attribute.DefaultTo<false>;
+    badge: Attribute.String;
+    tokens: Attribute.String;
+    contacts: Attribute.String;
+    features: Attribute.JSON;
+    cta: Attribute.String;
+    href: Attribute.String;
+    is_internal: Attribute.Boolean & Attribute.DefaultTo<true>;
+    sort_order: Attribute.Integer & Attribute.DefaultTo<0>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'api::pricing-form-submission.pricing-form-submission',
+      'api::pricing-plan.pricing-plan',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'api::pricing-form-submission.pricing-form-submission',
+      'api::pricing-plan.pricing-plan',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiProductProduct extends Schema.CollectionType {
+  collectionName: 'products';
+  info: {
+    singularName: 'product';
+    pluralName: 'products';
+    displayName: 'Product';
+    description: 'Product cards for Homepage grid';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String & Attribute.Required;
+    slug: Attribute.String & Attribute.Required;
+    description: Attribute.Text;
+    image: Attribute.Media;
+    sort_order: Attribute.Integer & Attribute.DefaultTo<0>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::product.product',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::product.product',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiPromisePromise extends Schema.CollectionType {
+  collectionName: 'promises';
+  info: {
+    singularName: 'promise';
+    pluralName: 'promises';
+    displayName: 'Promise';
+    description: 'Why-Polluxa promise cards on Homepage';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    icon_name: Attribute.String;
+    title: Attribute.String & Attribute.Required;
+    description: Attribute.Text;
+    sort_order: Attribute.Integer & Attribute.DefaultTo<0>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::promise.promise',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::promise.promise',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiResourceResource extends Schema.CollectionType {
+  collectionName: 'resources';
+  info: {
+    singularName: 'resource';
+    pluralName: 'resources';
+    displayName: 'Resource';
+    description: 'Whitepapers case studies and playbooks';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    slug: Attribute.String & Attribute.Required;
+    resource_type: Attribute.String;
+    title: Attribute.String & Attribute.Required;
+    description: Attribute.Text;
+    image: Attribute.Media;
+    sort_order: Attribute.Integer & Attribute.DefaultTo<0>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::resource.resource',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::resource.resource',
       'oneToOne',
       'admin::user'
     > &
@@ -3681,43 +3859,6 @@ export interface ApiRetailRetail extends Schema.CollectionType {
   };
 }
 
-export interface ApiRetailApplicationFormSubmissionRetailApplicationFormSubmission
-  extends Schema.CollectionType {
-  collectionName: 'retail_application_form_submissions';
-  info: {
-    singularName: 'retail-application-form-submission';
-    pluralName: 'retail-application-form-submissions';
-    displayName: 'Retail Application Form Submission';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    FirstName: Attribute.String & Attribute.Required;
-    BrandName: Attribute.String;
-    Country: Attribute.String;
-    ProductType: Attribute.String;
-    QualityCertification: Attribute.Boolean;
-    PhoneNumber: Attribute.String;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::retail-application-form-submission.retail-application-form-submission',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::retail-application-form-submission.retail-application-form-submission',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 export interface ApiSalescrmSalescrm extends Schema.CollectionType {
   collectionName: 'salescrms';
   info: {
@@ -3798,6 +3939,110 @@ export interface ApiSalescrmSalescrm extends Schema.CollectionType {
       'api::salescrm.salescrm'
     >;
     locale: Attribute.String;
+  };
+}
+
+export interface ApiSuccessStorySuccessStory extends Schema.CollectionType {
+  collectionName: 'success_stories';
+  info: {
+    singularName: 'success-story';
+    pluralName: 'success-stories';
+    displayName: 'Success Story';
+    description: 'Customer success story cards';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    company: Attribute.String & Attribute.Required;
+    category: Attribute.String;
+    gradient: Attribute.String;
+    description: Attribute.Text;
+    sort_order: Attribute.Integer & Attribute.DefaultTo<0>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::success-story.success-story',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::success-story.success-story',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiTestimonialTestimonial extends Schema.CollectionType {
+  collectionName: 'testimonials';
+  info: {
+    singularName: 'testimonial';
+    pluralName: 'testimonials';
+    displayName: 'Testimonial';
+    description: 'Customer testimonial quotes';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    quote: Attribute.Text & Attribute.Required;
+    name: Attribute.String & Attribute.Required;
+    company: Attribute.String;
+    initials: Attribute.String;
+    avatar: Attribute.Media;
+    sort_order: Attribute.Integer & Attribute.DefaultTo<0>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::testimonial.testimonial',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::testimonial.testimonial',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiTokenPackageTokenPackage extends Schema.CollectionType {
+  collectionName: 'token_packages';
+  info: {
+    singularName: 'token-package';
+    pluralName: 'token-packages';
+    displayName: 'Token Package';
+    description: 'AI token top-up packages for Pricing page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String & Attribute.Required;
+    price: Attribute.String & Attribute.Required;
+    sort_order: Attribute.Integer & Attribute.DefaultTo<0>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::token-package.token-package',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::token-package.token-package',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
   };
 }
 
@@ -3969,40 +4214,52 @@ declare module '@strapi/types' {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
+      'api::agent.agent': ApiAgentAgent;
+      'api::agent-channel.agent-channel': ApiAgentChannelAgentChannel;
+      'api::agent-stat.agent-stat': ApiAgentStatAgentStat;
+      'api::agent-workflow-step.agent-workflow-step': ApiAgentWorkflowStepAgentWorkflowStep;
       'api::agentcommerce.agentcommerce': ApiAgentcommerceAgentcommerce;
       'api::article.article': ApiArticleArticle;
       'api::author.author': ApiAuthorAuthor;
+      'api::blog-category.blog-category': ApiBlogCategoryBlogCategory;
       'api::career.career': ApiCareerCareer;
-      'api::career-form-submission.career-form-submission': ApiCareerFormSubmissionCareerFormSubmission;
       'api::case-study.case-study': ApiCaseStudyCaseStudy;
       'api::category.category': ApiCategoryCategory;
-      'api::channel-commerce.channel-commerce': ApiChannelCommerceChannelCommerce;
       'api::commerce.commerce': ApiCommerceCommerce;
+      'api::contact-channel.contact-channel': ApiContactChannelContactChannel;
       'api::contact-form-submission.contact-form-submission': ApiContactFormSubmissionContactFormSubmission;
       'api::creator-commerce.creator-commerce': ApiCreatorCommerceCreatorCommerce;
-      'api::creator-management.creator-management': ApiCreatorManagementCreatorManagement;
       'api::crm.crm': ApiCrmCrm;
+      'api::customer-logo.customer-logo': ApiCustomerLogoCustomerLogo;
       'api::dlm.dlm': ApiDlmDlm;
       'api::enterprisegpt.enterprisegpt': ApiEnterprisegptEnterprisegpt;
       'api::event.event': ApiEventEvent;
       'api::global.global': ApiGlobalGlobal;
-      'api::global-shop.global-shop': ApiGlobalShopGlobalShop;
       'api::industry.industry': ApiIndustryIndustry;
+      'api::industry-stat.industry-stat': ApiIndustryStatIndustryStat;
+      'api::job-benefit.job-benefit': ApiJobBenefitJobBenefit;
       'api::job-type.job-type': ApiJobTypeJobType;
-      'api::lead-form-submission.lead-form-submission': ApiLeadFormSubmissionLeadFormSubmission;
+      'api::key-feature.key-feature': ApiKeyFeatureKeyFeature;
       'api::logistic.logistic': ApiLogisticLogistic;
       'api::main-menu.main-menu': ApiMainMenuMainMenu;
-      'api::main-menu-shop.main-menu-shop': ApiMainMenuShopMainMenuShop;
       'api::marketing.marketing': ApiMarketingMarketing;
       'api::merchandise-financial-planning.merchandise-financial-planning': ApiMerchandiseFinancialPlanningMerchandiseFinancialPlanning;
       'api::navigation.navigation': ApiNavigationNavigation;
+      'api::office.office': ApiOfficeOffice;
       'api::page.page': ApiPagePage;
       'api::partner.partner': ApiPartnerPartner;
+      'api::partner-stat.partner-stat': ApiPartnerStatPartnerStat;
+      'api::partner-type.partner-type': ApiPartnerTypePartnerType;
       'api::plm.plm': ApiPlmPlm;
-      'api::pricing-form-submission.pricing-form-submission': ApiPricingFormSubmissionPricingFormSubmission;
+      'api::pricing-plan.pricing-plan': ApiPricingPlanPricingPlan;
+      'api::product.product': ApiProductProduct;
+      'api::promise.promise': ApiPromisePromise;
+      'api::resource.resource': ApiResourceResource;
       'api::retail.retail': ApiRetailRetail;
-      'api::retail-application-form-submission.retail-application-form-submission': ApiRetailApplicationFormSubmissionRetailApplicationFormSubmission;
       'api::salescrm.salescrm': ApiSalescrmSalescrm;
+      'api::success-story.success-story': ApiSuccessStorySuccessStory;
+      'api::testimonial.testimonial': ApiTestimonialTestimonial;
+      'api::token-package.token-package': ApiTokenPackageTokenPackage;
       'api::wms.wms': ApiWmsWms;
     }
   }

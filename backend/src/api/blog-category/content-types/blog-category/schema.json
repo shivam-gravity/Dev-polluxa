@@ -1,23 +1,15 @@
-{
+﻿{
   "kind": "collectionType",
   "collectionName": "blog_categories",
   "info": {
     "singularName": "blog-category",
     "pluralName": "blog-categories",
     "displayName": "Blog Category",
-    "description": "Filter tabs on the Blog listing page"
+    "description": "Blog filter categories for Blog page"
   },
-  "options": {
-    "draftAndPublish": true
-  },
+  "options": { "draftAndPublish": true },
   "attributes": {
-    "name": {
-      "type": "string",
-      "required": true
-    },
-    "sort_order": {
-      "type": "integer",
-      "default": 0
-    }
+    "name":       { "type": "string", "required": true },
+    "sort_order": { "type": "integer", "default": 0 }
   }
 }

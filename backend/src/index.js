@@ -4,6 +4,7 @@ const crypto = require('crypto');
 const { seed } = require('./seed/seed.js');
 const { seedPages } = require('./seed/seed-pages.js');
 const { seedContent } = require('./seed/seed-content.js');
+const { seedMissing } = require('./seed/seed-missing.js');
 
 /* ─────────────────────────────────────────────────────────
    TOKEN SETUP
@@ -92,6 +93,26 @@ async function setPublicPermissions({ strapi }) {
     'api::marketing.marketing',
     'api::enterprisegpt.enterprisegpt',
     'api::crm.crm',
+    // Agent types
+    'api::agent.agent',
+    'api::agent-stat.agent-stat',
+    'api::agent-channel.agent-channel',
+    'api::agent-workflow-step.agent-workflow-step',
+    // New content types
+    'api::customer-logo.customer-logo',
+    'api::product.product',
+    'api::key-feature.key-feature',
+    'api::success-story.success-story',
+    'api::promise.promise',
+    'api::resource.resource',
+    'api::testimonial.testimonial',
+    'api::industry-stat.industry-stat',
+    'api::partner-stat.partner-stat',
+    'api::partner-type.partner-type',
+    'api::pricing-plan.pricing-plan',
+    'api::token-package.token-package',
+    'api::job-benefit.job-benefit',
+    'api::blog-category.blog-category',
   ];
 
   const existing = await strapi
@@ -124,5 +145,6 @@ module.exports = {
     await seed({ strapi });
     await seedPages({ strapi });
     await seedContent({ strapi });
+    await seedMissing({ strapi });
   },
 };

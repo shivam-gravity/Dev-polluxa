@@ -1,27 +1,16 @@
-{
+﻿{
   "kind": "collectionType",
   "collectionName": "partner_stats",
   "info": {
     "singularName": "partner-stat",
     "pluralName": "partner-stats",
     "displayName": "Partner Stat",
-    "description": "Partnership metrics shown on the Partners page"
+    "description": "Partner ecosystem stats for Partners page"
   },
-  "options": {
-    "draftAndPublish": true
-  },
+  "options": { "draftAndPublish": true },
   "attributes": {
-    "value": {
-      "type": "string",
-      "required": true
-    },
-    "label": {
-      "type": "string",
-      "required": true
-    },
-    "sort_order": {
-      "type": "integer",
-      "default": 0
-    }
+    "value":      { "type": "string", "required": true },
+    "label":      { "type": "string", "required": true },
+    "sort_order": { "type": "integer", "default": 0 }
   }
 }

@@ -152,12 +152,15 @@ const Homepage = () => {
       {/* ════════════════════════════════════════
           HERO
       ════════════════════════════════════════ */}
+      <div className="page-scroll-bar" aria-hidden="true" />
+
       <section className="hero" style={{ overflow: 'hidden' }}>
         <div className="hero-blob hero-blob-a" />
         <div className="hero-blob hero-blob-b" />
         <div className="hero-blob hero-blob-c" />
         <div className="hero-blob hero-blob-d" />
         <div className="hero-mesh-grid" aria-hidden="true" />
+        <div className="hero-prism" aria-hidden="true" />
 
         <div className="hero-inner" style={{ position: 'relative', zIndex: 2 }}>
           <span className="eyebrow"><span className="dot" />The complete agentic enterprise platform</span>
@@ -175,9 +178,11 @@ const Homepage = () => {
               Book a live demo
             </Link>
           </div>
-          <div style={{ marginTop: '2rem', display: 'flex', gap: '0.5rem', justifyContent: 'center', alignItems: 'center' }}>
-            <span style={{ fontSize: '2rem', fontWeight: '900', background: 'var(--grad-hero)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>2000+</span>
-            <span style={{ color: 'var(--muted)', fontSize: '0.9375rem', fontWeight: '500' }}>Customers worldwide</span>
+          <div style={{ marginTop: '2rem', display: 'flex', justifyContent: 'center' }}>
+            <div className="hero-count-badge">
+              <span className="hcb-num">2000+</span>
+              <span className="hcb-label">Customers worldwide</span>
+            </div>
           </div>
           <div className="glow-line" />
           <div className="hero-dash">
@@ -189,25 +194,30 @@ const Homepage = () => {
         </div>
       </section>
 
-      {/* ════════════════════════════════════════
+{/* ════════════════════════════════════════
           CUSTOMER LOGOS — MARQUEE
       ════════════════════════════════════════ */}
-      {logoNames.length > 0 && (
-        <div style={{ background: 'var(--bg-2)', borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)', padding: '1.75rem 0' }}>
-          <div style={{ maxWidth: '900px', margin: '0 auto 1rem', textAlign: 'center' }}>
-            <span style={{ fontSize: '0.6875rem', textTransform: 'uppercase', letterSpacing: '0.14em', color: 'var(--muted)', fontWeight: '700' }}>
-              Trusted by leading brands worldwide
-            </span>
-          </div>
-          <div className="marquee-outer">
-            <div className="marquee-track">
-              {[...logoNames, ...logoNames].map((name, i) => (
-                <span key={i} className="marquee-item">{name}</span>
-              ))}
+      {(() => {
+        const fallback = ['Reliance', 'Tata', 'Zara', 'H&M', 'Myntra', 'Flipkart', 'Nykaa', 'Decathlon', 'Puma', 'Adidas', 'Lenskart', 'Mamaearth', 'Sugar', 'Boat', 'Bewakoof'];
+        const names = logoNames.length > 0 ? logoNames : fallback;
+        const items = [...names, ...names, ...names];
+        return (
+          <div style={{ background: 'var(--bg-2)', borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)', padding: '1.75rem 0' }}>
+            <div style={{ maxWidth: '900px', margin: '0 auto 1rem', textAlign: 'center' }}>
+              <span style={{ fontSize: '0.6875rem', textTransform: 'uppercase', letterSpacing: '0.14em', color: 'var(--muted)', fontWeight: '700' }}>
+                Trusted by leading brands worldwide
+              </span>
+            </div>
+            <div className="marquee-outer">
+              <div className="marquee-track">
+                {items.map((name, i) => (
+                  <span key={i} className="marquee-item">{name}</span>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
 
       {/* ════════════════════════════════════════
           PRODUCTS
@@ -223,16 +233,22 @@ const Homepage = () => {
             <div className="grid-3" style={{ gap: '1.5rem', marginTop: '3rem' }}>
               {products.map(({ slug, img, name, desc }, i) => (
                 <Link key={name} to={slug || '/'} style={{ textDecoration: 'none' }}>
-                  <div className={`card reveal d${i + 1}`} style={{ padding: '0', overflow: 'hidden', display: 'flex', flexDirection: 'column', height: '100%' }}>
-                    {img && (
+                  <div className={`card reveal d${i + 1}${i === 0 ? ' holo-card' : ''}`} style={{ padding: '0', overflow: 'hidden', display: 'flex', flexDirection: 'column', height: '100%' }}>
+                    {img ? (
                       <div className="prod-img">
                         <img src={img} alt={name} loading="lazy" />
+                      </div>
+                    ) : (
+                      <div className="prod-icon-hdr" style={{ background: `linear-gradient(135deg, rgba(${i%3===0?'0,245,255':i%3===1?'123,47,255':'255,0,195'},0.12) 0%, rgba(0,0,0,0.3) 100%)` }}>
+                        <div className="prod-icon-ring">
+                          <Zap size={26} color="var(--w3-cyan)" strokeWidth={1.5} />
+                        </div>
                       </div>
                     )}
                     <div style={{ padding: '1.25rem 1.375rem', display: 'flex', flexDirection: 'column', flex: 1 }}>
                       <h4 style={{ color: 'var(--ink)', marginBottom: '0.5rem' }}>{name}</h4>
                       <p style={{ fontSize: '0.875rem', color: 'var(--muted)', lineHeight: '1.65', flex: 1 }}>{desc}</p>
-                      <span style={{ marginTop: '1.125rem', fontSize: '0.875rem', fontWeight: '700', color: 'var(--cyan)', display: 'inline-flex', alignItems: 'center', gap: '0.3rem' }}>
+                      <span className="card-arrow-link">
                         Learn more <ArrowRight size={14} />
                       </span>
                     </div>
@@ -304,21 +320,21 @@ const Homepage = () => {
           <div className="hiw-steps reveal">
             <div className="hiw-step">
               <div className="hiw-num" aria-hidden="true">01</div>
-              <div className="hiw-icon">🔌</div>
+              <div className="hiw-icon-wrap"><Plug size={24} color="var(--w3-cyan)" strokeWidth={1.5} /></div>
               <h3 className="hiw-title">Connect your systems</h3>
               <p className="hiw-desc">Plug in your existing tools — ERP, e-commerce stores, warehouses, courier partners. Polluxa connects everything on one data layer in days, not months.</p>
             </div>
             <div className="hiw-connector" aria-hidden="true" />
             <div className="hiw-step">
               <div className="hiw-num" aria-hidden="true">02</div>
-              <div className="hiw-icon">🤖</div>
+              <div className="hiw-icon-wrap w3-violet"><Bot size={24} color="var(--w3-violet)" strokeWidth={1.5} /></div>
               <h3 className="hiw-title">Let AI agents do the routine work</h3>
               <p className="hiw-desc">Autonomous agents monitor your business 24/7 — chasing approvals, flagging stock issues, updating CRM records, and routing tasks to the right person automatically.</p>
             </div>
             <div className="hiw-connector" aria-hidden="true" />
             <div className="hiw-step">
               <div className="hiw-num" aria-hidden="true">03</div>
-              <div className="hiw-icon">🚀</div>
+              <div className="hiw-icon-wrap w3-magenta"><Rocket size={24} color="var(--w3-magenta)" strokeWidth={1.5} /></div>
               <h3 className="hiw-title">Your team focuses on growth</h3>
               <p className="hiw-desc">With agents handling the repetitive, your sales, ops, and logistics teams spend their time on customers and strategy — not spreadsheets and data entry.</p>
             </div>
@@ -334,14 +350,14 @@ const Homepage = () => {
           SUCCESS STORIES
       ════════════════════════════════════════ */}
       {successStories.length > 0 && (
-        <section className="block" style={{ padding: '5rem 0' }}>
+        <section className="block" style={{ padding: '2.5rem 0' }}>
           <div className="container">
             <div className="section-head reveal">
               <div className="section-tag">Success Stories</div>
               <h2 className="section-h"><em>Success Stories.</em></h2>
               <p className="section-sub">We power change for hundreds of global brands, retailers and manufacturers through our ERP and CRM software solutions.</p>
             </div>
-            <div className="grid-4" style={{ gap: '1.25rem', marginTop: '3rem' }}>
+            <div className="grid-4" style={{ gap: '1.25rem', marginTop: '1.5rem' }}>
               {successStories.map(({ company, category, gradient, desc }, i) => (
                 <Link key={company} to="/case-studies" style={{ textDecoration: 'none' }}>
                   <div className={`card reveal d${i + 1}`} style={{ padding: '0', overflow: 'hidden', height: '100%', display: 'flex', flexDirection: 'column' }}>
@@ -482,13 +498,13 @@ const Homepage = () => {
           TESTIMONIALS
       ════════════════════════════════════════ */}
       {testimonials.length > 0 && (
-        <section className="block" style={{ padding: '5rem 0' }}>
+        <section className="block" style={{ padding: '2.5rem 0' }}>
           <div className="container">
             <div className="section-head reveal">
               <div className="section-tag">Testimonials</div>
               <h2 className="section-h">What our <em>clients say.</em></h2>
             </div>
-            <div className="grid-2" style={{ gap: '1.5rem', marginTop: '3rem' }}>
+            <div className="grid-2" style={{ gap: '1.5rem', marginTop: '1.5rem' }}>
               {testimonials.map(({ quote, name, company, avatar }, i) => (
                 <div key={name} className={`reveal d${i + 1}`}
                   style={{ background: 'var(--panel)', border: '1px solid var(--line-strong)', borderRadius: '1rem', padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1.25rem', transition: 'transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease' }}

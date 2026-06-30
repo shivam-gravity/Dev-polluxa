@@ -577,7 +577,7 @@ module.exports = (config, { strapi }) => {
   return async (ctx, next) => {
     ctx.query = {
       populate,
-      filters: { slug: ctx.query.filters.slug },
+      filters: ctx.query.filters ? { slug: ctx.query.filters.slug } : undefined,
       locale: ctx.query.locale,
     };
 

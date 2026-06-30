@@ -50,7 +50,6 @@ const COMPANY_PATHS  = new Set(['/about','/careers','/blog','/events','/contact'
 const Layout = () => {
   const location = useLocation();
   const [scrolled, setScrolled]           = useState(false);
-  const [showBar, setShowBar]             = useState(true);
   const [menuOpen, setMenuOpen]           = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [openSection, setOpenSection]     = useState(null);
@@ -65,6 +64,9 @@ const Layout = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     setMenuOpen(false);
+    setOpenSection(null);
+    /* Blur any focused nav element so :focus-within dropdowns don't stay open after SPA navigation */
+    if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
   }, [location.pathname]);
 
   useEffect(() => {
@@ -87,8 +89,20 @@ const Layout = () => {
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : '';
+    if (!menuOpen) setOpenSection(null);
     return () => { document.body.style.overflow = ''; };
   }, [menuOpen]);
+
+  /* Measure topnav height → CSS variable --topnav-h used by product subnavs */
+  useEffect(() => {
+    const nav = document.querySelector('.topnav');
+    if (!nav) return;
+    const set = () => document.documentElement.style.setProperty('--topnav-h', nav.offsetHeight + 'px');
+    set();
+    const ro = new ResizeObserver(set);
+    ro.observe(nav);
+    return () => ro.disconnect();
+  }, []);
 
   const toggleSection = (label) =>
     setOpenSection(prev => (prev === label ? null : label));
@@ -103,6 +117,17 @@ const Layout = () => {
 
       {/* Web3 hex grid */}
       <div className="hex-overlay" aria-hidden="true" />
+
+      {/* Data rain scan-lines */}
+      <div className="data-rain-overlay" aria-hidden="true">
+        {[0,1,2,3,4,5,6,7,8,9].map(i => (
+          <div key={i} className="rain-col" style={{
+            left: `${4 + i * 9.5}%`,
+            animationDuration: `${3 + (i % 4) * 0.8}s`,
+            animationDelay: `${(i * 0.65) % 3}s`,
+          }} />
+        ))}
+      </div>
 
       {/* Noise grain texture */}
       <div className="grain-overlay" aria-hidden="true" />
@@ -162,6 +187,9 @@ const Layout = () => {
         <div className="shoot shoot-6" />
         <div className="shoot shoot-7 shoot-violet" />
         <div className="shoot shoot-8 shoot-magenta" />
+        <div className="shoot shoot-9 shoot-cyan" />
+        <div className="shoot shoot-10 shoot-gold" />
+        <div className="shoot shoot-11 shoot-teal" />
       </div>
 
       {/* Pollux star corona */}
@@ -193,15 +221,7 @@ const Layout = () => {
         ))}
       </div>
 
-      {/* ANNOUNCEMENT BAR */}
-      {showBar && (
-        <div className="announce-bar" role="status" aria-live="polite">
-          <span>🤖 Agent CRM is now live — <Link to="/agents">free for 3 years</Link> &nbsp;·&nbsp; No credit card required</span>
-          <button className="announce-dismiss" onClick={() => setShowBar(false)} aria-label="Dismiss announcement">×</button>
-        </div>
-      )}
-
-      {/* TOP NAV */}
+{/* TOP NAV */}
       <nav className={`topnav${scrolled ? ' scrolled' : ''}`} aria-label="Main navigation">
         <div className="topnav-inner">
           {/* Logo */}
@@ -267,6 +287,9 @@ const Layout = () => {
           {/* Right side */}
           <div className="topnav-right">
             <Link to="/contact" className="btn-contact">Contact Us</Link>
+            <a href="https://crm.polluxa.com/auth/login" className="btn-primary" style={{ fontSize: '0.875rem', padding: '0.5rem 1.125rem', textDecoration: 'none' }}>
+              <span className="nav-live-dot" aria-hidden="true" />Start Today
+            </a>
 
             {/* Hamburger — mobile only */}
             <button

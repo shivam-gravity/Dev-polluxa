@@ -1,36 +1,18 @@
-{
+﻿{
   "kind": "collectionType",
   "collectionName": "products",
   "info": {
     "singularName": "product",
     "pluralName": "products",
     "displayName": "Product",
-    "description": "Product cards shown on the homepage and contact page"
+    "description": "Product cards for Homepage grid"
   },
-  "options": {
-    "draftAndPublish": true
-  },
+  "options": { "draftAndPublish": true },
   "attributes": {
-    "name": {
-      "type": "string",
-      "required": true
-    },
-    "slug": {
-      "type": "string",
-      "required": true
-    },
-    "description": {
-      "type": "text"
-    },
-    "image": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
-      "allowedTypes": ["images"]
-    },
-    "sort_order": {
-      "type": "integer",
-      "default": 0
-    }
+    "name":       { "type": "string", "required": true },
+    "slug":       { "type": "string", "required": true },
+    "description":{ "type": "text" },
+    "image":      { "allowedTypes": ["images"], "type": "media", "multiple": false },
+    "sort_order": { "type": "integer", "default": 0 }
   }
 }

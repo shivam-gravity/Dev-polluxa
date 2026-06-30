@@ -1151,7 +1151,7 @@ h1 em, h2 em {
 .float-med  { animation: floatY 5s 1.6s ease-in-out infinite; }
 
 /* ── Marquee logos ── */
-@keyframes marqueeScroll { to { transform: translateX(-50%); } }
+@keyframes marqueeScroll { to { transform: translateX(-33.333%); } }
 .marquee-outer {
   overflow: hidden;
   -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 12%, #000 88%, transparent 100%);
@@ -3155,4 +3155,546 @@ h1.hero-h em, .section-h em, h1 em, h2 em {
   .blog-card   { padding: 1.25rem; }
   .blog-sub-form { flex-direction: column; align-items: stretch; }
   .blog-sub-btn  { width: 100%; justify-content: center; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   W E B 3 × W E B 4   V I S U A L   U P G R A D E
+   Appended after original rules — later cascade wins
+═══════════════════════════════════════════════════════════ */
+
+/* ── 1. Vivid token layer ── */
+:root {
+  --w3-cyan:    #00f5ff;
+  --w3-violet:  #7b2fff;
+  --w3-magenta: #ff00c3;
+  --w3-gold:    #ffbb00;
+  --w3-teal:    #00ffcc;
+  --grad-w3: linear-gradient(135deg,#00f5ff 0%,#7b2fff 35%,#ff00c3 65%,#ffbb00 100%);
+  --grad-w4: linear-gradient(135deg,#00ffcc 0%,#7b2fff 40%,#00f5ff 80%,#ff00c3 100%);
+}
+
+/* ── 2. Houdini rotating border property ── */
+@property --holo-a {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+/* ── 3. GPU-safe keyframes ── */
+@keyframes holoSpin    { to { --holo-a: 360deg; } }
+@keyframes scaleProgress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+@keyframes w3Pulse {
+  0%   { filter: hue-rotate(0deg)   saturate(1)   brightness(1); }
+  33%  { filter: hue-rotate(60deg)  saturate(1.4) brightness(1.15); }
+  66%  { filter: hue-rotate(-40deg) saturate(1.6) brightness(1.05); }
+  100% { filter: hue-rotate(0deg)   saturate(1)   brightness(1); }
+}
+@keyframes btnHuePulse {
+  0%,100% { filter: hue-rotate(0deg)  brightness(1); }
+  50%     { filter: hue-rotate(40deg) brightness(1.15); }
+}
+@keyframes hexDrift {
+  0%,100% { transform: translateY(0) translateX(0); }
+  50%     { transform: translateY(-10px) translateX(5px); }
+}
+@keyframes rainDrop {
+  0%        { transform: translateY(-100vh); opacity: 0; }
+  8%,92%    { opacity: 0.18; }
+  100%      { transform: translateY(100vh);  opacity: 0; }
+}
+@keyframes chainFloat {
+  0%,100% { transform: translateY(0) rotate(0deg); }
+  50%     { transform: translateY(-14px) rotate(0.4deg); }
+}
+@keyframes chainTickerScroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes prismPulse {
+  0%,100% { opacity: 0; }
+  25%,75% { opacity: 0.14; }
+  50%     { opacity: 0.22; }
+}
+@keyframes auroraW4 {
+  0%,100% { filter: hue-rotate(0deg)  brightness(1); }
+  50%     { filter: hue-rotate(50deg) brightness(1.08); }
+}
+@keyframes statEnterW3 {
+  from { transform: scale(0.8); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+@keyframes navLivePulse {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50%     { opacity: 0.5; transform: scale(0.7); }
+}
+
+/* ── 4. Heading gradient — vivid cycling ── */
+.section-h em,
+.hero-h em {
+  background: var(--grad-w3);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-style: normal;
+  will-change: filter;
+  animation: w3Pulse 9s ease-in-out infinite;
+}
+
+/* ── 5. Hero blobs — richer W3 palette ── */
+.hero-blob-a { background: radial-gradient(ellipse, rgba(0,245,255,0.22) 0%, transparent 70%) !important; }
+.hero-blob-b { background: radial-gradient(ellipse, rgba(123,47,255,0.20) 0%, transparent 70%) !important; }
+.hero-blob-c { background: radial-gradient(ellipse, rgba(255,0,195,0.16) 0%, transparent 70%) !important; }
+.hero-blob-d { background: radial-gradient(ellipse, rgba(0,255,204,0.13) 0%, transparent 70%) !important; }
+
+/* ── 6. Hero count badge — glass pill ── */
+.hero-count-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.45rem 1.25rem;
+  background: rgba(0,245,255,0.07);
+  border: 1px solid rgba(0,245,255,0.22);
+  border-radius: 999px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.hero-count-badge .hcb-num {
+  font-size: 1.5rem;
+  font-weight: 900;
+  background: var(--grad-w3);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  will-change: filter;
+  animation: w3Pulse 9s ease-in-out infinite;
+}
+.hero-count-badge .hcb-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+/* ── 7. Hero prism rays ── */
+.hero-prism {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+.hero-prism::before {
+  content: '';
+  position: absolute;
+  top: -20%;
+  left: 28%;
+  width: 2px;
+  height: 200%;
+  background: linear-gradient(to bottom, transparent 0%, var(--w3-cyan) 40%, var(--w3-violet) 60%, transparent 100%);
+  opacity: 0;
+  filter: blur(1.5px);
+  will-change: opacity;
+  animation: prismPulse 7s ease-in-out 1s infinite;
+}
+.hero-prism::after {
+  content: '';
+  position: absolute;
+  top: -20%;
+  left: 64%;
+  width: 2px;
+  height: 200%;
+  background: linear-gradient(to bottom, transparent 0%, var(--w3-magenta) 40%, var(--w3-gold) 60%, transparent 100%);
+  opacity: 0;
+  filter: blur(1.5px);
+  will-change: opacity;
+  animation: prismPulse 7s ease-in-out 3.5s infinite;
+}
+
+/* ── 8. Hex grid overlay ── */
+.hex-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 2L54 17L54 47L28 62L2 47L2 17Z' fill='none' stroke='%2300f5ff' stroke-width='0.7'/%3E%3C/svg%3E");
+  background-size: 56px 100px;
+  will-change: transform;
+  animation: hexDrift 22s ease-in-out infinite;
+}
+
+/* ── 9. Data rain overlay ── */
+.data-rain-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+.data-rain-overlay .rain-col {
+  position: absolute;
+  top: 0;
+  width: 1px;
+  height: 40vh;
+  background: linear-gradient(to bottom, transparent, rgba(0,245,255,0.5), transparent);
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: rainDrop linear infinite;
+}
+
+/* ── 10. Blockchain floating panels ── */
+.chain-blocks {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.chain-block {
+  position: absolute;
+  padding: 0.55rem 0.9rem;
+  background: rgba(0,245,255,0.04);
+  border: 1px solid rgba(0,245,255,0.14);
+  border-radius: 8px;
+  font-family: 'JetBrains Mono','Fira Code','Courier New',monospace;
+  font-size: 0.6rem;
+  color: rgba(0,245,255,0.5);
+  line-height: 1.6;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  will-change: transform;
+  animation: chainFloat ease-in-out infinite;
+}
+.chain-block .cb-hash { color: rgba(0,245,255,0.35); letter-spacing: 0.03em; }
+.chain-block .cb-val  { color: rgba(0,255,204,0.7); font-weight: 700; }
+
+/* ── 11. Chain data ticker ── */
+.chain-ticker {
+  width: 100%;
+  overflow: hidden;
+  background: rgba(4,8,20,0.7);
+  border-top: 1px solid rgba(0,245,255,0.12);
+  border-bottom: 1px solid rgba(0,245,255,0.12);
+  padding: 0.45rem 0;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.chain-ticker-track {
+  display: flex;
+  width: max-content;
+  justify-content: center;
+}
+.chain-ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0 2rem;
+  font-family: 'JetBrains Mono','Fira Code',monospace;
+  font-size: 0.6875rem;
+  color: rgba(0,245,255,0.55);
+  white-space: nowrap;
+  border-right: 1px solid rgba(0,245,255,0.08);
+}
+.chain-ticker-item .cti-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--w3-cyan);
+  box-shadow: 0 0 6px var(--w3-cyan);
+}
+.chain-ticker-item.cti-gold   { color: rgba(255,187,0,0.65); }
+.chain-ticker-item.cti-gold   .cti-dot { background: var(--w3-gold);   box-shadow: 0 0 6px var(--w3-gold); }
+.chain-ticker-item.cti-violet { color: rgba(123,47,255,0.75); }
+.chain-ticker-item.cti-violet .cti-dot { background: var(--w3-violet); box-shadow: 0 0 6px var(--w3-violet); }
+.chain-ticker-item.cti-teal   { color: rgba(0,255,204,0.65); }
+.chain-ticker-item.cti-teal   .cti-dot { background: var(--w3-teal);   box-shadow: 0 0 6px var(--w3-teal); }
+
+/* ── 12. HIW icon wrapper ── */
+.hiw-icon-wrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 0.5rem;
+  background: rgba(0,245,255,0.07);
+  border: 1px solid rgba(0,245,255,0.2);
+  box-shadow: 0 0 18px rgba(0,245,255,0.1);
+  will-change: filter;
+  animation: w3Pulse 12s ease-in-out infinite;
+}
+.hiw-icon-wrap.w3-violet {
+  background: rgba(123,47,255,0.07);
+  border-color: rgba(123,47,255,0.22);
+  box-shadow: 0 0 18px rgba(123,47,255,0.1);
+  animation-delay: 3s;
+}
+.hiw-icon-wrap.w3-magenta {
+  background: rgba(255,0,195,0.07);
+  border-color: rgba(255,0,195,0.22);
+  box-shadow: 0 0 18px rgba(255,0,195,0.1);
+  animation-delay: 6s;
+}
+
+/* ── 13. Cards — deeper glassmorphism ── */
+.card {
+  background: rgba(10,17,36,0.72) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  backdrop-filter: blur(18px) !important;
+  -webkit-backdrop-filter: blur(18px) !important;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.32), inset 0 1px 0 rgba(255,255,255,0.05) !important;
+  will-change: transform;
+}
+.card:hover {
+  border-color: rgba(0,245,255,0.25) !important;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.42), 0 0 30px rgba(0,245,255,0.07), inset 0 1px 0 rgba(255,255,255,0.08) !important;
+}
+
+/* ── 14. Holo card — rotating conic border ── */
+.holo-card {
+  position: relative;
+  isolation: isolate;
+}
+.holo-card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: conic-gradient(from var(--holo-a),var(--w3-cyan),var(--w3-violet),var(--w3-magenta),var(--w3-gold),var(--w3-teal),var(--w3-cyan));
+  z-index: -1;
+  opacity: 0.55;
+  animation: holoSpin 5s linear infinite;
+  will-change: --holo-a;
+}
+.holo-card::after {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  background: var(--panel);
+  z-index: -1;
+}
+
+/* ── 15. Product icon header ── */
+.prod-icon-hdr {
+  height: 112px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  background: rgba(0,0,0,0.3);
+}
+.prod-icon-hdr::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 60%, rgba(0,245,255,0.14) 0%, transparent 65%);
+}
+.prod-icon-ring {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.45);
+  border: 1px solid rgba(0,245,255,0.28);
+  box-shadow: 0 0 22px rgba(0,245,255,0.18), inset 0 1px 0 rgba(255,255,255,0.1);
+  position: relative;
+  z-index: 1;
+}
+
+/* ── 16. Card arrow link ── */
+.card-arrow-link {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--w3-cyan);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: gap 0.2s ease, color 0.2s ease;
+  text-decoration: none;
+}
+.card:hover .card-arrow-link { gap: 0.5rem; color: var(--w3-teal); }
+
+/* ── 17. Bento large accent ── */
+.bento-large {
+  border-top: 2px solid rgba(0,245,255,0.28) !important;
+  background: linear-gradient(160deg, rgba(0,245,255,0.04) 0%, rgba(123,47,255,0.04) 100%) !important;
+}
+
+/* ── 18. Section tag — vivid ── */
+.section-tag {
+  color: var(--w3-cyan) !important;
+  border-color: rgba(0,245,255,0.22) !important;
+  background: rgba(0,245,255,0.07) !important;
+}
+
+/* ── 19. Marquee chips — monospace ── */
+.marquee-item {
+  font-family: 'JetBrains Mono','Fira Code',monospace !important;
+  font-size: 0.6875rem !important;
+  letter-spacing: 0.04em;
+  background: rgba(0,245,255,0.05) !important;
+  border: 1px solid rgba(0,245,255,0.14) !important;
+  color: rgba(0,245,255,0.65) !important;
+}
+
+/* ── 20. Stat numbers — vivid gradient ── */
+.stat-num {
+  background: var(--grad-w3) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+  font-variant-numeric: tabular-nums;
+  will-change: filter;
+  animation: w3Pulse 9s ease-in-out 2s infinite;
+}
+
+/* ── 21. Button upgrades ── */
+.btn-primary {
+  background: var(--grad-w3) !important;
+  box-shadow: 0 4px 20px rgba(0,245,255,0.22), inset 0 1px 0 rgba(255,255,255,0.14) !important;
+  will-change: filter;
+  animation: btnHuePulse 12s ease-in-out infinite;
+}
+.btn-primary:hover {
+  filter: brightness(1.14) !important;
+  box-shadow: 0 8px 32px rgba(0,245,255,0.32), 0 0 40px rgba(123,47,255,0.18) !important;
+}
+.btn-ghost {
+  background: rgba(255,255,255,0.04) !important;
+  border: 1px solid rgba(0,245,255,0.24) !important;
+  color: var(--w3-cyan) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+}
+.btn-ghost:hover {
+  background: rgba(0,245,255,0.07) !important;
+  border-color: rgba(0,245,255,0.48) !important;
+  box-shadow: 0 0 18px rgba(0,245,255,0.14) !important;
+}
+
+/* ── 22. Nav scrolled — vivid glow ── */
+.topnav.scrolled {
+  border-bottom-color: rgba(0,245,255,0.1) !important;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.42), 0 0 20px rgba(0,245,255,0.05) !important;
+}
+
+/* ── 23. Aurora curtain — hue cycle ── */
+.aurora-curtain {
+  will-change: filter;
+  animation: auroraW4 22s ease-in-out infinite !important;
+}
+
+/* ── 24. Nav "Start Today" live-dot ── */
+.nav-live-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--w3-cyan);
+  box-shadow: 0 0 8px var(--w3-cyan);
+  margin-right: 0.375rem;
+  vertical-align: middle;
+  will-change: opacity, transform;
+  animation: navLivePulse 1.6s ease-in-out infinite;
+}
+
+/* ── 25. Extra shooting star colors ── */
+.shoot-9  { top: 22%; left: 5%;  animation-delay: 5s !important;  animation-duration: 8s !important; }
+.shoot-10 { top: 55%; left: 2%;  animation-delay: 9s !important;  animation-duration: 11s !important; }
+.shoot-11 { top: 78%; left: 8%;  animation-delay: 2s !important;  animation-duration: 9s !important; }
+.shoot-cyan    { background: linear-gradient(90deg, var(--w3-cyan),    transparent) !important; box-shadow: 0 0 8px var(--w3-cyan)    !important; }
+.shoot-gold    { background: linear-gradient(90deg, var(--w3-gold),    transparent) !important; box-shadow: 0 0 8px var(--w3-gold)    !important; }
+.shoot-teal    { background: linear-gradient(90deg, var(--w3-teal),    transparent) !important; box-shadow: 0 0 8px var(--w3-teal)    !important; }
+
+/* ── 26. Page progress bar (base) ── */
+.page-scroll-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background: var(--grad-w3);
+  transform: scaleX(0);
+  transform-origin: left;
+  z-index: 9999;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* ── 27. Scroll-driven Web4 animations ── */
+@supports (animation-timeline: scroll()) {
+  .page-scroll-bar {
+    animation: scaleProgress linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0% 100%;
+  }
+
+  @keyframes nebulaHueScroll {
+    from { filter: hue-rotate(0deg); }
+    to   { filter: hue-rotate(30deg); }
+  }
+  .hero-h {
+    animation: nebulaHueScroll linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0% 35%;
+    animation-composition: add;
+  }
+
+  @keyframes cardEnterView {
+    from { transform: translateY(28px); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
+  }
+  .card {
+    animation: cardEnterView 0.6s cubic-bezier(0.16,1,0.3,1) both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 55%;
+  }
+
+  @keyframes auroraScroll {
+    from { filter: hue-rotate(0deg); }
+    to   { filter: hue-rotate(55deg); }
+  }
+  .aurora-curtain {
+    animation: auroraScroll linear both, auroraW4 22s ease-in-out infinite;
+    animation-timeline: scroll(root), auto;
+    animation-range: 0% 100%, auto;
+    animation-composition: add;
+  }
+}
+
+/* ── 28. Mobile guards — disable expensive FX ── */
+@media (max-width: 768px) {
+  .chain-blocks,
+  .data-rain-overlay { display: none; }
+  .chain-ticker { display: none; }
+  .hero-prism::before,
+  .hero-prism::after { display: none; }
+  .holo-card::before { display: none; }
+  .section-h em,
+  .hero-h em { animation: none; }
+  .stat-num   { animation: none; }
+  .btn-primary { animation: none; }
+  .aurora-curtain { animation: none !important; }
+}
+
+/* ── 29. Accessibility ── */
+@media (prefers-reduced-motion: reduce) {
+  .chain-ticker-track,
+  .chain-block,
+  .hex-overlay,
+  .data-rain-overlay .rain-col,
+  .aurora-curtain,
+  .hero-prism::before,
+  .hero-prism::after,
+  .holo-card::before,
+  .section-h em,
+  .hero-h em,
+  .stat-num,
+  .btn-primary,
+  .nav-live-dot { animation: none !important; }
 }

@@ -1,31 +1,17 @@
-{
+﻿{
   "kind": "collectionType",
   "collectionName": "industry_stats",
   "info": {
     "singularName": "industry-stat",
     "pluralName": "industry-stats",
     "displayName": "Industry Stat",
-    "description": "Industry coverage stats shown on the Customers page"
+    "description": "Industry breakdown for Customers page"
   },
-  "options": {
-    "draftAndPublish": true
-  },
+  "options": { "draftAndPublish": true },
   "attributes": {
-    "icon": {
-      "type": "string",
-      "required": true
-    },
-    "name": {
-      "type": "string",
-      "required": true
-    },
-    "brand_count": {
-      "type": "integer",
-      "default": 0
-    },
-    "sort_order": {
-      "type": "integer",
-      "default": 0
-    }
+    "icon":        { "type": "string" },
+    "name":        { "type": "string", "required": true },
+    "brand_count": { "type": "string" },
+    "sort_order":  { "type": "integer", "default": 0 }
   }
 }

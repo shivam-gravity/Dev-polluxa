@@ -19,6 +19,7 @@ import Blog from './pages/Blog';
 import Events from './pages/Events';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import Terms from './pages/Terms';
+import DynamicPage from './pages/DynamicPage';
 
 // Capabilities
 import TAMCanvas from './pages/TAMCanvas';
@@ -137,7 +138,7 @@ function App() {
           <Route path="blog" element={<Blog />} />
           <Route path="events" element={<Events />} />
 
-          <Route path="*" element={<div className="container section"><h1>Page Not Found</h1></div>} />
+          <Route path="*" element={<DynamicPage />} />
         </Route>
       </Routes>
     </Router>

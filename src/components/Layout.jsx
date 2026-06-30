@@ -233,7 +233,7 @@ const Layout = () => {
           <div className="topnav-links" aria-label="Primary navigation">
 
             {/* Products */}
-            <span className={`nav-dd${activeNav === 'products' ? ' nav-dd--active' : ''}`} tabIndex="0" role="button" aria-haspopup="true">Products
+            <span className={`nav-dd${activeNav === 'products' ? ' nav-dd--active' : ''}`} tabIndex="0" role="button" aria-haspopup="true" onMouseLeave={e => e.currentTarget.blur()}>Products
               <div className="mega mega-wide" role="menu">
                 <div className="head">Our Software Suite</div>
                 {products.map(({ to, name, desc }) => (
@@ -250,7 +250,7 @@ const Layout = () => {
             </span>
 
             {/* Customers */}
-            <span className={`nav-dd${activeNav === 'customers' ? ' nav-dd--active' : ''}`} tabIndex="0" role="button" aria-haspopup="true">Customers
+            <span className={`nav-dd${activeNav === 'customers' ? ' nav-dd--active' : ''}`} tabIndex="0" role="button" aria-haspopup="true" onMouseLeave={e => e.currentTarget.blur()}>Customers
               <div className="mega" role="menu">
                 <div className="head">Customers</div>
                 <Link to="/customers" role="menuitem"><span className="mega-dot"></span>All customers</Link>
@@ -261,7 +261,7 @@ const Layout = () => {
             </span>
 
             {/* Partners */}
-            <span className={`nav-dd${activeNav === 'partners' ? ' nav-dd--active' : ''}`} tabIndex="0" role="button" aria-haspopup="true">Partners
+            <span className={`nav-dd${activeNav === 'partners' ? ' nav-dd--active' : ''}`} tabIndex="0" role="button" aria-haspopup="true" onMouseLeave={e => e.currentTarget.blur()}>Partners
               <div className="mega" role="menu">
                 <div className="head">Ecosystem</div>
                 <Link to="/partners" role="menuitem"><span className="mega-dot"></span>Partner network</Link>
@@ -270,7 +270,7 @@ const Layout = () => {
             </span>
 
             {/* Company */}
-            <span className={`nav-dd${activeNav === 'company' ? ' nav-dd--active' : ''}`} tabIndex="0" role="button" aria-haspopup="true">Company
+            <span className={`nav-dd${activeNav === 'company' ? ' nav-dd--active' : ''}`} tabIndex="0" role="button" aria-haspopup="true" onMouseLeave={e => e.currentTarget.blur()}>Company
               <div className="mega" role="menu">
                 <div className="head">About Polluxa</div>
                 <Link to="/about" role="menuitem"><span className="mega-dot"></span>About us</Link>

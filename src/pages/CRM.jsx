@@ -3,8 +3,6 @@ import { ArrowRight, ChevronDown, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { fetchAPI } from '../lib/api';
 
-const SCROLL_THRESHOLD = 80;
-
 const FaqAccordion = ({ items = [] }) => {
   const [open, setOpen] = useState(null);
   if (!items.length) return null;
@@ -106,6 +104,7 @@ const CRM = () => {
   /* scroll-merge: toggle scrolled state and mark topnav */
   useEffect(() => {
     const topnav = document.querySelector('.topnav');
+    const SCROLL_THRESHOLD = 80;
     const onScroll = () => {
       const isScrolled = window.scrollY > SCROLL_THRESHOLD;
       setScrolled(isScrolled);
@@ -191,7 +190,7 @@ const CRM = () => {
       data-scrolled={scrolled ? 'true' : undefined}
       style={{
         position: 'sticky',
-        top: '64px', /* fixed — never animates through the topnav */
+        top: 'var(--topnav-h, 64px)',
         zIndex: 30,
         background: 'rgba(6,10,24,0.85)',
         backdropFilter: scrolled ? 'none' : 'saturate(160%) blur(14px)',

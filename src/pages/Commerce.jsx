@@ -155,7 +155,7 @@ const Commerce = () => {
       className="page-subnav"
       style={{
         position: 'sticky',
-        top: '64px', /* fixed — never animates through the topnav */
+        top: 'var(--topnav-h, 64px)',
         zIndex: 30,
         background: 'rgba(6,10,24,0.85)',
         backdropFilter: scrolled ? 'none' : 'saturate(160%) blur(14px)',

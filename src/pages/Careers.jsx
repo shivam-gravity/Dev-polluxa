@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { ArrowRight, MapPin, Briefcase, Clock, AlertCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { fetchAPI } from '../lib/api';
+import { useSeoEffect } from '../lib/seo';
 
 const deptColors = {
   'HR & People':         { bg: 'rgba(139,92,246,0.14)',  text: '#a78bfa' },
@@ -36,6 +37,11 @@ const Careers = () => {
   const [benefits, setBenefits] = useState([]);
   const [loading, setLoading]   = useState(true);
   const [error, setError]       = useState(false);
+
+  useSeoEffect(
+    { metaTitle: 'Careers — Polluxa', metaDescription: 'Work on the future of enterprise software. Polluxa is building one intelligent platform for CRM, Commerce, PLM, Logistics, and WMS.' },
+    'Careers — Polluxa'
+  );
 
   useEffect(() => {
     let cancelled = false;

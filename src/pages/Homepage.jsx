@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ArrowRight,
@@ -6,6 +6,23 @@ import {
   Rocket, Building2, Users, Plug, HelpCircle,
 } from 'lucide-react';
 import { fetchAPI, getImgUrl } from '../lib/api';
+import { useSeoEffect } from '../lib/seo';
+import crmScreenshot from '../assets/product-screens/crm.png';
+import commerceScreenshot from '../assets/product-screens/commerce.png';
+import creatorCommerceScreenshot from '../assets/product-screens/creator-commerce.png';
+import plmScreenshot from '../assets/product-screens/plm.png';
+import logisticsScreenshot from '../assets/product-screens/logistics.png';
+import wmsScreenshot from '../assets/product-screens/wms.png';
+
+/* ── Fallback product screenshots, keyed by product slug, used when Strapi has no image set ── */
+const PRODUCT_SCREENSHOTS = {
+  crm: crmScreenshot,
+  commerce: commerceScreenshot,
+  'creator-commerce': creatorCommerceScreenshot,
+  plm: plmScreenshot,
+  logistics: logisticsScreenshot,
+  wms: wmsScreenshot,
+};
 
 /* ── Icon registry: maps Strapi icon_name strings → Lucide components ── */
 const ICON_MAP = {
@@ -33,6 +50,7 @@ function useScrollReveal(deps = []) {
     );
     els.forEach(el => io.observe(el));
     return () => io.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
 }
 
@@ -66,6 +84,7 @@ function useCounters(deps = []) {
     );
     els.forEach(el => io.observe(el));
     return () => io.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
 }
 
@@ -101,7 +120,7 @@ const Homepage = () => {
         logoNames:      (logos?.data     || []).map(i => i.attributes.name),
         products:       (products?.data  || []).map(i => ({
           slug:  i.attributes.slug,
-          img:   getImgUrl(i.attributes.image),
+          img:   getImgUrl(i.attributes.image) || PRODUCT_SCREENSHOTS[i.attributes.slug],
           name:  i.attributes.name,
           desc:  i.attributes.description,
         })),
@@ -144,6 +163,10 @@ const Homepage = () => {
 
   useScrollReveal([loading]);
   useCounters([loading]);
+  useSeoEffect(
+    { metaTitle: 'Polluxa — The Agentic Enterprise Platform', metaDescription: 'Polluxa is to enterprise software what a neural network is to AI — intelligent, adaptive, and built for the future. CRM, Commerce, PLM, Logistics and WMS on one platform.' },
+    'Polluxa — The Agentic Enterprise Platform'
+  );
 
   const { logoNames, products, keyFeatures, successStories, promises, resources, testimonials, articleCount } = data;
 

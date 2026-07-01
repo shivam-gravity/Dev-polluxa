@@ -218,6 +218,44 @@ const populate = {
       },
       Bullets: true,
       // End Company Section
+      // Split Feature Panel (sections.split-feature-panel)
+      bullets: true,
+      stats: {
+        populate: {
+          image: {
+            fields: ["url", "alternativeText", "caption", "width", "height"],
+          },
+        },
+      },
+      // End Split Feature Panel
+      // Stat Feed / Process Steps / Data Panel (Phase 2)
+      rows: true,
+      steps: true,
+      // End Stat Feed / Process Steps / Data Panel
+      // Pricing form (sections.pricing-form)
+      FormDetails: {
+        populate: {
+          media: {
+            fields: ["url", "alternativeText", "caption", "width", "height"],
+          },
+          MediaHover: {
+            fields: ["url", "alternativeText", "caption", "width", "height"],
+          },
+        },
+      },
+      // End Pricing form
+      // Agent card (shared.agent-card)
+      agent: {
+        populate: {
+          image: {
+            fields: ["url", "alternativeText", "caption", "width", "height"],
+          },
+          bulletspoint: true,
+        },
+      },
+      // End Agent card
+      // Generic link component (links.link) used by banner-slide / favorite-categories
+      link: true,
       // About us Section
       aboutUs: {
         populate: {

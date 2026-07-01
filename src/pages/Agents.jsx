@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { fetchAPI } from '../lib/api';
+import { useSeoEffect } from '../lib/seo';
 
 const Agents = () => {
   const [agents, setAgents]         = useState([]);
@@ -9,6 +10,11 @@ const Agents = () => {
   const [channels, setChannels]     = useState([]);
   const [steps, setSteps]           = useState([]);
   const [loading, setLoading]       = useState(true);
+
+  useSeoEffect(
+    { metaTitle: 'Agents — Polluxa', metaDescription: 'Autonomous workers, always on. A constellation of AI agents that find pipeline, qualify leads, brief your reps and chase the long tail.' },
+    'Agents — Polluxa'
+  );
 
   useEffect(() => {
     let cancelled = false;

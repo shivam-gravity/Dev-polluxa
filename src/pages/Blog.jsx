@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { ArrowRight, Clock, Calendar, Search } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { fetchAPI } from '../lib/api';
+import { useSeoEffect } from '../lib/seo';
 
 const SkeletonCard = () => (
   <div className="blog-card blog-card-skeleton" aria-hidden="true">
@@ -29,6 +30,11 @@ const Blog = () => {
   const [search, setSearch]             = useState('');
   const [subEmail, setSubEmail]         = useState('');
   const [subDone, setSubDone]           = useState(false);
+
+  useSeoEffect(
+    { metaTitle: 'Blog — Polluxa', metaDescription: 'Practical insights on enterprise software, supply chain, creator commerce, and the future of AI-driven operations.' },
+    'Blog — Polluxa'
+  );
 
   useEffect(() => {
     let cancelled = false;

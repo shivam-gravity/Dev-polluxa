@@ -1,0 +1,24 @@
+{
+  "collectionName": "components_sections_data_panels",
+  "info": {
+    "displayName": "Data Panel",
+    "description": "A label/value fact panel — an enrichment demo, a health dashboard, an A/B test result table."
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "subtitle": {
+      "type": "string"
+    },
+    "badge": {
+      "type": "string"
+    },
+    "rows": {
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.data-panel-row"
+    }
+  }
+}

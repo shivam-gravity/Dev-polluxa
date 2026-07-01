@@ -36,6 +36,18 @@ export interface ElementsCompanyBullets extends Schema.Component {
   };
 }
 
+export interface ElementsDataPanelRow extends Schema.Component {
+  collectionName: 'components_elements_data_panel_rows';
+  info: {
+    displayName: 'Data Panel Row';
+  };
+  attributes: {
+    label: Attribute.String;
+    value: Attribute.String;
+    highlight: Attribute.Boolean & Attribute.DefaultTo<false>;
+  };
+}
+
 export interface ElementsFeatureBullets extends Schema.Component {
   collectionName: 'components_elements_feature_bullets';
   info: {
@@ -262,6 +274,18 @@ export interface ElementsPricingFeature extends Schema.Component {
   };
 }
 
+export interface ElementsProcessStep extends Schema.Component {
+  collectionName: 'components_elements_process_steps';
+  info: {
+    displayName: 'Process Step';
+  };
+  attributes: {
+    icon: Attribute.String;
+    title: Attribute.String;
+    description: Attribute.Text;
+  };
+}
+
 export interface ElementsService extends Schema.Component {
   collectionName: 'components_elements_plans';
   info: {
@@ -278,6 +302,21 @@ export interface ElementsService extends Schema.Component {
     video: Attribute.Media;
     Button: Attribute.Component<'links.button-link'>;
     subheader: Attribute.Text;
+  };
+}
+
+export interface ElementsStatFeedRow extends Schema.Component {
+  collectionName: 'components_elements_stat_feed_rows';
+  info: {
+    displayName: 'Stat Feed Row';
+  };
+  attributes: {
+    icon: Attribute.String;
+    title: Attribute.String;
+    subtitle: Attribute.String;
+    badge: Attribute.String;
+    badgeVariant: Attribute.Enumeration<['hot', 'warm', 'success', 'default']> &
+      Attribute.DefaultTo<'default'>;
   };
 }
 
@@ -872,6 +911,20 @@ export interface SectionsCta extends Schema.Component {
   };
 }
 
+export interface SectionsDataPanel extends Schema.Component {
+  collectionName: 'components_sections_data_panels';
+  info: {
+    displayName: 'Data Panel';
+    description: 'A label/value fact panel \u2014 an enrichment demo, a health dashboard, an A/B test result table.';
+  };
+  attributes: {
+    title: Attribute.String;
+    subtitle: Attribute.String;
+    badge: Attribute.String;
+    rows: Attribute.Component<'elements.data-panel-row', true>;
+  };
+}
+
 export interface SectionsEnhancedPricingPlans extends Schema.Component {
   collectionName: 'components_sections_enhanced_pricing_plans';
   info: {
@@ -1462,6 +1515,19 @@ export interface SectionsPricingPlans extends Schema.Component {
   };
 }
 
+export interface SectionsProcessSteps extends Schema.Component {
+  collectionName: 'components_sections_process_steps';
+  info: {
+    displayName: 'Process Steps';
+    description: 'A sequential, numbered list of steps \u2014 a workflow, a pipeline, a how-it-works walkthrough.';
+  };
+  attributes: {
+    title: Attribute.String;
+    description: Attribute.Text;
+    steps: Attribute.Component<'elements.process-step', true>;
+  };
+}
+
 export interface SectionsRetailApplicationForm extends Schema.Component {
   collectionName: 'components_sections_retail_application_forms';
   info: {
@@ -1571,6 +1637,36 @@ export interface SectionsSpecialCategories extends Schema.Component {
   };
   attributes: {
     Card: Attribute.Component<'shared.card', true>;
+  };
+}
+
+export interface SectionsSplitFeaturePanel extends Schema.Component {
+  collectionName: 'components_sections_split_feature_panels';
+  info: {
+    displayName: 'Split Feature Panel';
+    description: 'Two-column section: heading/title/description + bullet list on one side, optional stat callouts on the other.';
+  };
+  attributes: {
+    heading: Attribute.String;
+    title: Attribute.String;
+    description: Attribute.Text;
+    bullets: Attribute.Component<'elements.company-bullets', true>;
+    stats: Attribute.Component<'elements.metrics', true>;
+    imagePosition: Attribute.Enumeration<['left', 'right']> &
+      Attribute.DefaultTo<'right'>;
+  };
+}
+
+export interface SectionsStatFeed extends Schema.Component {
+  collectionName: 'components_sections_stat_feeds';
+  info: {
+    displayName: 'Stat Feed';
+    description: 'A live-look list of scored/ranked rows \u2014 leads, signals, alerts \u2014 each with an icon, title, subtitle and an optional score badge.';
+  };
+  attributes: {
+    title: Attribute.String;
+    description: Attribute.Text;
+    rows: Attribute.Component<'elements.stat-feed-row', true>;
   };
 }
 
@@ -1970,6 +2066,7 @@ declare module '@strapi/types' {
       'elements.brand': ElementsBrand;
       'elements.brands-category': ElementsBrandsCategory;
       'elements.company-bullets': ElementsCompanyBullets;
+      'elements.data-panel-row': ElementsDataPanelRow;
       'elements.feature-bullets': ElementsFeatureBullets;
       'elements.feature-column': ElementsFeatureColumn;
       'elements.feature-row': ElementsFeatureRow;
@@ -1986,7 +2083,9 @@ declare module '@strapi/types' {
       'elements.pricing-feature-group': ElementsPricingFeatureGroup;
       'elements.pricing-feature-item': ElementsPricingFeatureItem;
       'elements.pricing-feature': ElementsPricingFeature;
+      'elements.process-step': ElementsProcessStep;
       'elements.service': ElementsService;
+      'elements.stat-feed-row': ElementsStatFeedRow;
       'elements.tech-tabs': ElementsTechTabs;
       'elements.testimonial': ElementsTestimonial;
       'elements.transaction-fee': ElementsTransactionFee;
@@ -2024,6 +2123,7 @@ declare module '@strapi/types' {
       'sections.crm-features': SectionsCrmFeatures;
       'sections.crm-pricing-plans': SectionsCrmPricingPlans;
       'sections.cta': SectionsCta;
+      'sections.data-panel': SectionsDataPanel;
       'sections.enhanced-pricing-plans': SectionsEnhancedPricingPlans;
       'sections.event-actions': SectionsEventActions;
       'sections.event-gallery-and-video': SectionsEventGalleryAndVideo;
@@ -2066,6 +2166,7 @@ declare module '@strapi/types' {
       'sections.power-up-addons': SectionsPowerUpAddons;
       'sections.pricing-form': SectionsPricingForm;
       'sections.pricing-plans': SectionsPricingPlans;
+      'sections.process-steps': SectionsProcessSteps;
       'sections.retail-application-form': SectionsRetailApplicationForm;
       'sections.retail': SectionsRetail;
       'sections.rich-text': SectionsRichText;
@@ -2074,6 +2175,8 @@ declare module '@strapi/types' {
       'sections.service-tabs': SectionsServiceTabs;
       'sections.services': SectionsServices;
       'sections.special-categories': SectionsSpecialCategories;
+      'sections.split-feature-panel': SectionsSplitFeaturePanel;
+      'sections.stat-feed': SectionsStatFeed;
       'sections.success-stories': SectionsSuccessStories;
       'sections.tech-expertise': SectionsTechExpertise;
       'sections.tech-products': SectionsTechProducts;

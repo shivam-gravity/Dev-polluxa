@@ -12,6 +12,15 @@ export function getImgUrl(mediaField) {
   if (!url) return null;
   return url.startsWith('http') ? url : `${API_URL}${url}`;
 }
+
+/**
+ * Resolve either a direct Strapi media field or a `shared.media`-style
+ * component that wraps one in a `file` attribute. Handles both shapes so
+ * callers don't need to know which one a given schema field uses.
+ */
+export function resolveMedia(field) {
+  return getImgUrl(field?.file ?? field);
+}
 const API_TOKEN = import.meta.env.VITE_API_TOKEN;
 const FORM_TOKEN = import.meta.env.VITE_FORM_TOKEN;
 

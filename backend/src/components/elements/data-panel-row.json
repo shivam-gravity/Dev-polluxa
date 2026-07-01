@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_elements_data_panel_rows",
+  "info": {
+    "displayName": "Data Panel Row"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string"
+    },
+    "value": {
+      "type": "string"
+    },
+    "highlight": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

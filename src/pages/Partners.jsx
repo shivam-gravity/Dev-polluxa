@@ -2,12 +2,18 @@ import { useState, useEffect } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { fetchAPI } from '../lib/api';
+import { useSeoEffect } from '../lib/seo';
 
 const Partners = () => {
   const [solutionPartners, setSolutionPartners] = useState([]);
   const [partnerStats, setPartnerStats]         = useState([]);
   const [partnerTypes, setPartnerTypes]         = useState([]);
   const [loading, setLoading]                   = useState(true);
+
+  useSeoEffect(
+    { metaTitle: 'Partners — Polluxa', metaDescription: 'We collaborate with the top associations and partners in the industry and technology to keep innovating our products and hasten the adoption of Polluxa.' },
+    'Partners — Polluxa'
+  );
 
   useEffect(() => {
     let cancelled = false;

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { fetchAPI } from '../lib/api';
+import { useSeoEffect } from '../lib/seo';
 
 const PlanSkeleton = () => (
   <div style={{ background: 'var(--panel)', border: '1px solid var(--line)', borderRadius: '1rem', padding: '2rem' }}>
@@ -18,6 +19,11 @@ const Pricing = () => {
   const [plans, setPlans]           = useState([]);
   const [tokenPkgs, setTokenPkgs]   = useState([]);
   const [loading, setLoading]       = useState(true);
+
+  useSeoEffect(
+    { metaTitle: 'Pricing — Polluxa', metaDescription: 'Free to start, scales with your team. Every Polluxa plan includes a free-forever tier — no credit card required to start.' },
+    'Pricing — Polluxa'
+  );
 
   useEffect(() => {
     let cancelled = false;

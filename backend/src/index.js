@@ -5,6 +5,10 @@ const { seed } = require('./seed/seed.js');
 const { seedPages } = require('./seed/seed-pages.js');
 const { seedContent } = require('./seed/seed-content.js');
 const { seedMissing } = require('./seed/seed-missing.js');
+const { seedImages } = require('./seed/seed-images.js');
+const { seedProductPageMigration } = require('./seed/seed-product-pages-migration.js');
+const { seedPhase2ClassB } = require('./seed/seed-phase2-class-b.js');
+const { seedPhase2ClassC } = require('./seed/seed-phase2-class-c.js');
 
 /* ─────────────────────────────────────────────────────────
    TOKEN SETUP
@@ -146,5 +150,9 @@ module.exports = {
     await seedPages({ strapi });
     await seedContent({ strapi });
     await seedMissing({ strapi });
+    await seedImages({ strapi });
+    await seedProductPageMigration({ strapi });
+    await seedPhase2ClassB({ strapi });
+    await seedPhase2ClassC({ strapi });
   },
 };

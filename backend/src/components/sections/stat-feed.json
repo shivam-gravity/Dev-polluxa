@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_sections_stat_feeds",
+  "info": {
+    "displayName": "Stat Feed",
+    "description": "A live-look list of scored/ranked rows — leads, signals, alerts — each with an icon, title, subtitle and an optional score badge."
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "rows": {
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.stat-feed-row"
+    }
+  }
+}

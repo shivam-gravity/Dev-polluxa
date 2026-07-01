@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_elements_process_steps",
+  "info": {
+    "displayName": "Process Step"
+  },
+  "options": {},
+  "attributes": {
+    "icon": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    }
+  }
+}

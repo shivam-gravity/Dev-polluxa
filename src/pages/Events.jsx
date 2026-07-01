@@ -2,10 +2,17 @@ import { useState, useEffect } from 'react';
 import { ArrowRight, MapPin, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { fetchAPI } from '../lib/api';
+import { useSeoEffect } from '../lib/seo';
 
 const Events = () => {
   const [upcoming, setUpcoming] = useState([]);
   const [past, setPast] = useState([]);
+
+  useSeoEffect(
+    { metaTitle: 'Events — Polluxa', metaDescription: 'Stay updated with our latest events — conferences, summits and exhibitions across India, the Middle East, Southeast Asia, Australia, and beyond.' },
+    'Events — Polluxa'
+  );
+
   useEffect(() => {
     async function loadEvents() {
       try {

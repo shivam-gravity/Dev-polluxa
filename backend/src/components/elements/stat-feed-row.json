@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_elements_stat_feed_rows",
+  "info": {
+    "displayName": "Stat Feed Row"
+  },
+  "options": {},
+  "attributes": {
+    "icon": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "subtitle": {
+      "type": "string"
+    },
+    "badge": {
+      "type": "string"
+    },
+    "badgeVariant": {
+      "type": "enumeration",
+      "enum": ["hot", "warm", "success", "default"],
+      "default": "default"
+    }
+  }
+}

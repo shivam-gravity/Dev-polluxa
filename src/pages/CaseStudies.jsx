@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { ArrowRight, FileText } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { fetchAPI } from '../lib/api';
+import { fetchAPI, getImgUrl } from '../lib/api';
+import { useSeoEffect } from '../lib/seo';
 
 const tagColor = (tag) => {
   const map = { Commerce: '#0ea5e9', PLM: '#8b5cf6', Logistics: '#10b981', Sustainability: '#16a34a', Pharma: '#f59e0b', Beauty: '#ec4899', Fragrance: '#f97316' };
@@ -10,6 +11,11 @@ const tagColor = (tag) => {
 
 const CaseStudies = () => {
   const [caseStudies, setCaseStudies] = useState([]);
+
+  useSeoEffect(
+    { metaTitle: 'Case Studies & Whitepapers — Polluxa', metaDescription: 'Real outcomes from real enterprises. Plus in-depth whitepapers on the future of commerce, PLM, logistics, and agentic AI.' },
+    'Case Studies & Whitepapers — Polluxa'
+  );
 
   useEffect(() => {
     async function loadCaseStudies() {
@@ -26,6 +32,7 @@ const CaseStudies = () => {
             tags: ['Customer', 'Success'],
             highlight: null,
             slug: item.attributes.slug,
+            cover: getImgUrl(item.attributes.cover),
           }));
           setCaseStudies(apiCaseStudies);
         }
@@ -83,10 +90,13 @@ const CaseStudies = () => {
           <h2 style={{ marginTop: '0.5rem' }}>Real enterprises. <em>Proven results.</em></h2>
         </div>
         <div className="grid-3">
-          {caseStudies.map(({ category, title, desc, tags, highlight, slug }) => (
+          {caseStudies.map(({ category, title, desc, tags, highlight, slug, cover }) => (
             <div key={title} className="card" style={{ display: 'flex', flexDirection: 'column', position: 'relative', overflow: 'hidden' }}>
               {highlight && (
                 <div style={{ position: 'absolute', top: 0, right: 0, background: 'var(--primary-color)', color: '#fff', padding: '0.25rem 0.75rem', fontSize: '0.75rem', fontWeight: '800', borderBottomLeftRadius: '0.5rem' }}>{highlight}</div>
+              )}
+              {cover && (
+                <img src={cover} alt={title} loading="lazy" style={{ width: 'calc(100% + 3rem)', margin: '-1.5rem -1.5rem 1rem', aspectRatio: '16/9', objectFit: 'cover' }} />
               )}
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>
                 <FileText size={14} color="var(--accent-color)" />

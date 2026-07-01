@@ -2,12 +2,18 @@ import { useState, useEffect } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { fetchAPI, getImgUrl } from '../lib/api';
+import { useSeoEffect } from '../lib/seo';
 
 const Customers = () => {
   const [logos, setLogos]       = useState([]);
   const [industries, setIndustries] = useState([]);
   const [testimonials, setTestimonials] = useState([]);
   const [loading, setLoading]   = useState(true);
+
+  useSeoEffect(
+    { metaTitle: 'Customers — Polluxa', metaDescription: '2,000+ brands, one platform. From category-defining retailers to fast-moving creator brands, Polluxa is the operating system behind the businesses you buy from every week.' },
+    'Customers — Polluxa'
+  );
 
   useEffect(() => {
     let cancelled = false;

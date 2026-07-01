@@ -160,6 +160,7 @@ const CRM_DATA = {
     { icon: '✉️', tag: 'Outreach',    title: 'Multi-Channel Sequences',      description: 'Orchestrate LinkedIn, email, WhatsApp, and Meta Ads campaigns from a single workspace.', link_url: '/outreach' },
     { icon: '🎯', tag: 'Signals',     title: 'Buying Signal Aggregation',    description: 'Catch intent signals — funding rounds, job changes, product launches — the moment they happen.', link_url: '/signal-aggregation' },
     { icon: '🔗', tag: 'Data',        title: 'Contact & Account Enrichment', description: 'Automatically enrich every contact with verified emails, phone numbers, and firmographic data.', link_url: '/contact-enrichment' },
+    { icon: '💬', tag: 'Chats',       title: 'Autonomous Sales Chat Agents', description: 'Deploy AI agents that prospect, qualify, and follow up 24/7 without manual effort.', link_url: '/chats' },
   ],
   channels: [
     { badge: 'PRIMARY CHANNEL', title: 'LinkedIn Outreach', is_featured: true, featured_label: 'Most Powerful', description: 'Our strongest engine. Connect, message, and sequence prospects on LinkedIn at scale with AI personalization.', stats: [{ value: '3×', label: 'Reply rate vs email' }, { value: '87%', label: 'Connect rate' }], link_url: '/linkedin-outreach' },

@@ -1196,6 +1196,21 @@ h1 em, h2 em {
 }
 .card:hover .res-img img { transform: scale(1.06); }
 
+/* ── Product page hero screenshot ── */
+.hero-screenshot {
+  margin: 2.5rem auto 0;
+  max-width: 960px;
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  box-shadow: 0 28px 64px rgba(0,0,0,0.45), 0 0 0 1px rgba(43,182,255,0.08) inset;
+}
+.hero-screenshot img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 /* ── Success story gradient header ── */
 .story-hdr {
   height: 72px; border-radius: 0.75rem 0.75rem 0 0;

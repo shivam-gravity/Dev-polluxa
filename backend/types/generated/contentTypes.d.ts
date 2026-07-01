@@ -3270,7 +3270,11 @@ export interface ApiPagePage extends Schema.CollectionType {
         'sections.content-with-image',
         'sections.power-up-addons',
         'shared.recommended-blogs',
-        'shared.agent-card'
+        'shared.agent-card',
+        'sections.split-feature-panel',
+        'sections.stat-feed',
+        'sections.process-steps',
+        'sections.data-panel'
       ]
     > &
       Attribute.SetPluginOptions<{

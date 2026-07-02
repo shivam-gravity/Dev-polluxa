@@ -41,6 +41,9 @@
       "type": "component",
       "repeatable": false,
       "component": "links.button-link"
+    },
+    "copyrightText": {
+      "type": "string"
     }
   }
 }

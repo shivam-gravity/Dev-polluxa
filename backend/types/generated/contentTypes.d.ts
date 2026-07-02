@@ -3154,6 +3154,37 @@ export interface ApiNavigationNavigation extends Schema.CollectionType {
   };
 }
 
+export interface ApiNewsletterSubscriberNewsletterSubscriber
+  extends Schema.CollectionType {
+  collectionName: 'newsletter_subscribers';
+  info: {
+    singularName: 'newsletter-subscriber';
+    pluralName: 'newsletter-subscribers';
+    displayName: 'Newsletter Subscriber';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    email: Attribute.Email & Attribute.Required;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::newsletter-subscriber.newsletter-subscriber',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::newsletter-subscriber.newsletter-subscriber',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiOfficeOffice extends Schema.CollectionType {
   collectionName: 'offices';
   info: {
@@ -4249,6 +4280,7 @@ declare module '@strapi/types' {
       'api::marketing.marketing': ApiMarketingMarketing;
       'api::merchandise-financial-planning.merchandise-financial-planning': ApiMerchandiseFinancialPlanningMerchandiseFinancialPlanning;
       'api::navigation.navigation': ApiNavigationNavigation;
+      'api::newsletter-subscriber.newsletter-subscriber': ApiNewsletterSubscriberNewsletterSubscriber;
       'api::office.office': ApiOfficeOffice;
       'api::page.page': ApiPagePage;
       'api::partner.partner': ApiPartnerPartner;

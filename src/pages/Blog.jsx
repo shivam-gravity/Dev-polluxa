@@ -3,6 +3,8 @@ import { ArrowRight, Clock, Calendar, Search } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { fetchAPI } from '../lib/api';
 import { useSeoEffect } from '../lib/seo';
+import { fetchPage, getSection } from '../lib/pageContent';
+import { submitNewsletterSignup } from '../lib/forms';
 
 const SkeletonCard = () => (
   <div className="blog-card blog-card-skeleton" aria-hidden="true">
@@ -30,11 +32,27 @@ const Blog = () => {
   const [search, setSearch]             = useState('');
   const [subEmail, setSubEmail]         = useState('');
   const [subDone, setSubDone]           = useState(false);
+  const [subError, setSubError]         = useState(false);
+  const [subSubmitting, setSubSubmitting] = useState(false);
+  const [hero, setHero]                 = useState(null);
+  const [cta, setCta]                   = useState(null);
+  const [pageSeo, setPageSeo]           = useState(null);
 
   useSeoEffect(
-    { metaTitle: 'Blog — Polluxa', metaDescription: 'Practical insights on enterprise software, supply chain, creator commerce, and the future of AI-driven operations.' },
+    pageSeo || { metaTitle: 'Blog — Polluxa', metaDescription: 'Practical insights on enterprise software, supply chain, creator commerce, and the future of AI-driven operations.' },
     'Blog — Polluxa'
   );
+
+  useEffect(() => {
+    let cancelled = false;
+    fetchPage('blog').then(({ sections, seo }) => {
+      if (cancelled) return;
+      setHero(getSection(sections, 'sections.hero'));
+      setCta(getSection(sections, 'sections.cta'));
+      setPageSeo(seo);
+    });
+    return () => { cancelled = true; };
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -74,10 +92,15 @@ const Blog = () => {
     .filter(p => activeCategory === 'All' || p.category === activeCategory)
     .filter(p => !search || p.title.toLowerCase().includes(search.toLowerCase()) || p.desc?.toLowerCase().includes(search.toLowerCase()));
 
-  const handleSubscribe = (e) => {
+  const handleSubscribe = async (e) => {
     e.preventDefault();
     if (!subEmail.trim()) return;
-    setSubDone(true);
+    setSubSubmitting(true);
+    setSubError(false);
+    const response = await submitNewsletterSignup(subEmail);
+    setSubSubmitting(false);
+    if (response?.error) setSubError(true);
+    else setSubDone(true);
   };
 
   return (
@@ -88,10 +111,10 @@ const Blog = () => {
         <div className="container blog-hero-inner">
           <span className="section-tag">Resources</span>
           <h1 className="blog-hero-h1">
-            The Polluxa <em>Blog.</em>
+            {hero?.title || <>The Polluxa <em>Blog.</em></>}
           </h1>
           <p className="blog-hero-lede">
-            Practical insights on enterprise software, supply chain, creator commerce, and the future of AI-driven operations.
+            {hero?.description || 'Practical insights on enterprise software, supply chain, creator commerce, and the future of AI-driven operations.'}
           </p>
 
           <div className="blog-search-wrap">
@@ -193,9 +216,9 @@ const Blog = () => {
       {/* ── Newsletter ── */}
       <section className="section section-light blog-newsletter-section">
         <div className="container blog-newsletter-inner">
-          <h2>Stay ahead of the <em>curve.</em></h2>
+          <h2>{cta?.title || <>Stay ahead of the <em>curve.</em></>}</h2>
           <p className="blog-newsletter-sub">
-            New insights every week — enterprise AI, commerce, and supply chain. No spam.
+            {cta?.description || 'New insights every week — enterprise AI, commerce, and supply chain. No spam.'}
           </p>
           {subDone ? (
             <div className="blog-sub-success" role="status">
@@ -213,9 +236,10 @@ const Blog = () => {
                 autoComplete="email"
                 aria-label="Work email address"
               />
-              <button type="submit" className="btn-primary blog-sub-btn">
-                Subscribe <ArrowRight size={15} aria-hidden="true" />
+              <button type="submit" className="btn-primary blog-sub-btn" disabled={subSubmitting}>
+                {subSubmitting ? 'Subscribing…' : 'Subscribe'} <ArrowRight size={15} aria-hidden="true" />
               </button>
+              {subError && <span style={{ color: '#f87171', fontSize: '0.8rem', display: 'block', marginTop: '0.5rem' }}>Failed to subscribe. Please try again.</span>}
             </form>
           )}
         </div>

@@ -9,6 +9,7 @@ const { seedImages } = require('./seed/seed-images.js');
 const { seedProductPageMigration } = require('./seed/seed-product-pages-migration.js');
 const { seedPhase2ClassB } = require('./seed/seed-phase2-class-b.js');
 const { seedPhase2ClassC } = require('./seed/seed-phase2-class-c.js');
+const { seedPhase3CmsCopy } = require('./seed/seed-phase3-cms-copy.js');
 
 /* ─────────────────────────────────────────────────────────
    TOKEN SETUP
@@ -96,6 +97,7 @@ async function setPublicPermissions({ strapi }) {
     'api::agentcommerce.agentcommerce',
     'api::marketing.marketing',
     'api::enterprisegpt.enterprisegpt',
+    'api::merchandise-financial-planning.merchandise-financial-planning',
     'api::crm.crm',
     // Agent types
     'api::agent.agent',
@@ -117,6 +119,15 @@ async function setPublicPermissions({ strapi }) {
     'api::token-package.token-package',
     'api::job-benefit.job-benefit',
     'api::blog-category.blog-category',
+    'api::newsletter-subscriber.newsletter-subscriber',
+  ];
+
+  // Public write access for the two form-submission endpoints — normally
+  // gated by the full-access FORM_TOKEN, but granted here too so the forms
+  // still work if that env var is ever unset.
+  const createOnlyUids = [
+    'api::contact-form-submission.contact-form-submission',
+    'api::newsletter-subscriber.newsletter-subscriber',
   ];
 
   const existing = await strapi
@@ -132,6 +143,15 @@ async function setPublicPermissions({ strapi }) {
           data: { action, role: publicRole.id },
         });
       }
+    }
+  }
+
+  for (const uid of createOnlyUids) {
+    const action = `${uid}.create`;
+    if (!existingSet.has(action)) {
+      await strapi.query('plugin::users-permissions.permission').create({
+        data: { action, role: publicRole.id },
+      });
     }
   }
   strapi.log.info('[bootstrap] Public permissions configured.');
@@ -154,5 +174,6 @@ module.exports = {
     await seedProductPageMigration({ strapi });
     await seedPhase2ClassB({ strapi });
     await seedPhase2ClassC({ strapi });
+    await seedPhase3CmsCopy({ strapi });
   },
 };

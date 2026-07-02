@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { fetchAPI } from '../lib/api';
 import { useSeoEffect } from '../lib/seo';
+import { fetchPage, getSection } from '../lib/pageContent';
 
 const Agents = () => {
   const [agents, setAgents]         = useState([]);
@@ -10,11 +11,25 @@ const Agents = () => {
   const [channels, setChannels]     = useState([]);
   const [steps, setSteps]           = useState([]);
   const [loading, setLoading]       = useState(true);
+  const [hero, setHero]             = useState(null);
+  const [cta, setCta]               = useState(null);
+  const [pageSeo, setPageSeo]       = useState(null);
 
   useSeoEffect(
-    { metaTitle: 'Agents — Polluxa', metaDescription: 'Autonomous workers, always on. A constellation of AI agents that find pipeline, qualify leads, brief your reps and chase the long tail.' },
+    pageSeo || { metaTitle: 'Agents — Polluxa', metaDescription: 'Autonomous workers, always on. A constellation of AI agents that find pipeline, qualify leads, brief your reps and chase the long tail.' },
     'Agents — Polluxa'
   );
+
+  useEffect(() => {
+    let cancelled = false;
+    fetchPage('agents').then(({ sections, seo }) => {
+      if (cancelled) return;
+      setHero(getSection(sections, 'sections.hero'));
+      setCta(getSection(sections, 'sections.cta'));
+      setPageSeo(seo);
+    });
+    return () => { cancelled = true; };
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -61,16 +76,16 @@ const Agents = () => {
         <div className="container" style={{ textAlign: 'center', maxWidth: '900px' }}>
           <span className="section-tag">Agents</span>
           <h1 style={{ fontSize: 'clamp(2rem, 6vw, 3.75rem)', fontWeight: '800', lineHeight: '1.1', marginTop: '0.5rem' }}>
-            Autonomous workers. <em>Always on.</em>
+            {hero?.title || <>Autonomous workers. <em>Always on.</em></>}
           </h1>
           <p style={{ fontSize: '1.25rem', marginTop: '1.5rem', color: 'var(--muted)', lineHeight: '1.6' }}>
-            A constellation of AI workers that find pipeline, qualify leads, brief your reps and chase the long tail — deployed in minutes, scaled without limits.
+            {hero?.description || 'A constellation of AI workers that find pipeline, qualify leads, brief your reps and chase the long tail — deployed in minutes, scaled without limits.'}
           </p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: '2.5rem', flexWrap: 'wrap' }}>
-            <a href="https://sales.polluxa.com/" className="btn-primary" style={{ padding: '1rem 2rem', fontSize: '1.125rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
-              Deploy agents free <ArrowRight size={18} aria-hidden="true" />
+            <a href={hero?.buttons?.[0]?.url || 'https://sales.polluxa.com/'} className="btn-primary" style={{ padding: '1rem 2rem', fontSize: '1.125rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+              {hero?.buttons?.[0]?.text || 'Deploy agents free'} <ArrowRight size={18} aria-hidden="true" />
             </a>
-            <Link to="/contact" className="btn-ghost" style={{ padding: '1rem 2rem', fontSize: '1.125rem' }}>Book a demo</Link>
+            <Link to={hero?.buttons?.[1]?.url || '/contact'} className="btn-ghost" style={{ padding: '1rem 2rem', fontSize: '1.125rem' }}>{hero?.buttons?.[1]?.text || 'Book a demo'}</Link>
           </div>
         </div>
       </section>
@@ -158,10 +173,10 @@ const Agents = () => {
       {/* ── Final CTA ── */}
       <section className="section section-alt" style={{ borderTop: '1px solid var(--line)' }}>
         <div className="container" style={{ textAlign: 'center', maxWidth: '700px' }}>
-          <h2>68% agent-sourced pipeline for established teams.</h2>
-          <p style={{ color: 'var(--muted)', marginBottom: '2.5rem' }}>Deploy in minutes. Free for 3 years.</p>
-          <a href="https://sales.polluxa.com/" className="btn-primary" style={{ padding: '1rem 2rem', fontSize: '1.125rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
-            Get Agent CRM — Free <ArrowRight size={18} aria-hidden="true" />
+          <h2>{cta?.title || '68% agent-sourced pipeline for established teams.'}</h2>
+          <p style={{ color: 'var(--muted)', marginBottom: '2.5rem' }}>{cta?.description || 'Deploy in minutes. Free for 3 years.'}</p>
+          <a href={cta?.Button?.url || 'https://sales.polluxa.com/'} className="btn-primary" style={{ padding: '1rem 2rem', fontSize: '1.125rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+            {cta?.Button?.text || 'Get Agent CRM — Free'} <ArrowRight size={18} aria-hidden="true" />
           </a>
         </div>
       </section>

@@ -3,17 +3,32 @@ import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { fetchAPI } from '../lib/api';
 import { useSeoEffect } from '../lib/seo';
+import { fetchPage, getSection } from '../lib/pageContent';
 
 const Partners = () => {
   const [solutionPartners, setSolutionPartners] = useState([]);
   const [partnerStats, setPartnerStats]         = useState([]);
   const [partnerTypes, setPartnerTypes]         = useState([]);
   const [loading, setLoading]                   = useState(true);
+  const [hero, setHero]                         = useState(null);
+  const [cta, setCta]                           = useState(null);
+  const [pageSeo, setPageSeo]                   = useState(null);
 
   useSeoEffect(
-    { metaTitle: 'Partners — Polluxa', metaDescription: 'We collaborate with the top associations and partners in the industry and technology to keep innovating our products and hasten the adoption of Polluxa.' },
+    pageSeo || { metaTitle: 'Partners — Polluxa', metaDescription: 'We collaborate with the top associations and partners in the industry and technology to keep innovating our products and hasten the adoption of Polluxa.' },
     'Partners — Polluxa'
   );
+
+  useEffect(() => {
+    let cancelled = false;
+    fetchPage('partners').then(({ sections, seo }) => {
+      if (cancelled) return;
+      setHero(getSection(sections, 'sections.hero'));
+      setCta(getSection(sections, 'sections.cta'));
+      setPageSeo(seo);
+    });
+    return () => { cancelled = true; };
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -49,14 +64,14 @@ const Partners = () => {
         <div className="container" style={{ maxWidth: '800px' }}>
           <span className="section-tag">Ecosystem</span>
           <h1 style={{ marginTop: '0.5rem', fontSize: 'clamp(2.25rem, 6vw, 3.75rem)', fontWeight: '800', lineHeight: '1.1' }}>
-            Our <em>Partners.</em>
+            {hero?.title || <>Our <em>Partners.</em></>}
           </h1>
           <p style={{ color: 'var(--muted)', fontSize: '1.25rem', marginTop: '1.5rem' }}>
-            We collaborate with the top associations and partners in the industry and technology to keep innovating our products and hasten the adoption of Polluxa.
+            {hero?.description || 'We collaborate with the top associations and partners in the industry and technology to keep innovating our products and hasten the adoption of Polluxa.'}
           </p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: '2rem', flexWrap: 'wrap' }}>
-            <Link to="/contact" className="btn-primary" style={{ padding: '1rem 2rem', fontSize: '1.125rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
-              Become a partner <ArrowRight size={18} aria-hidden="true" />
+            <Link to={hero?.buttons?.[0]?.url || '/contact'} className="btn-primary" style={{ padding: '1rem 2rem', fontSize: '1.125rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+              {hero?.buttons?.[0]?.text || 'Become a partner'} <ArrowRight size={18} aria-hidden="true" />
             </Link>
           </div>
         </div>
@@ -124,12 +139,12 @@ const Partners = () => {
       {/* ── CTA ── */}
       <section className="section section-alt" style={{ borderTop: '1px solid var(--line)' }}>
         <div className="container" style={{ textAlign: 'center', maxWidth: '700px' }}>
-          <h2>Ready to join <em>our partner network?</em></h2>
+          <h2>{cta?.title || <>Ready to join <em>our partner network?</em></>}</h2>
           <p style={{ color: 'var(--muted)', marginBottom: '2.5rem' }}>
-            Contact our partner team to explore the right tier and region together.
+            {cta?.description || 'Contact our partner team to explore the right tier and region together.'}
           </p>
-          <Link to="/contact" className="btn-primary" style={{ padding: '1rem 2rem', fontSize: '1.125rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
-            Find out more <ArrowRight size={18} aria-hidden="true" />
+          <Link to={cta?.Button?.url || '/contact'} className="btn-primary" style={{ padding: '1rem 2rem', fontSize: '1.125rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+            {cta?.Button?.text || 'Find out more'} <ArrowRight size={18} aria-hidden="true" />
           </Link>
         </div>
       </section>

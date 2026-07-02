@@ -3,15 +3,30 @@ import { ArrowRight, MapPin, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { fetchAPI } from '../lib/api';
 import { useSeoEffect } from '../lib/seo';
+import { fetchPage, getSection } from '../lib/pageContent';
 
 const Events = () => {
   const [upcoming, setUpcoming] = useState([]);
   const [past, setPast] = useState([]);
+  const [hero, setHero] = useState(null);
+  const [cta, setCta] = useState(null);
+  const [pageSeo, setPageSeo] = useState(null);
 
   useSeoEffect(
-    { metaTitle: 'Events — Polluxa', metaDescription: 'Stay updated with our latest events — conferences, summits and exhibitions across India, the Middle East, Southeast Asia, Australia, and beyond.' },
+    pageSeo || { metaTitle: 'Events — Polluxa', metaDescription: 'Stay updated with our latest events — conferences, summits and exhibitions across India, the Middle East, Southeast Asia, Australia, and beyond.' },
     'Events — Polluxa'
   );
+
+  useEffect(() => {
+    let cancelled = false;
+    fetchPage('events').then(({ sections, seo }) => {
+      if (cancelled) return;
+      setHero(getSection(sections, 'sections.hero'));
+      setCta(getSection(sections, 'sections.cta'));
+      setPageSeo(seo);
+    });
+    return () => { cancelled = true; };
+  }, []);
 
   useEffect(() => {
     async function loadEvents() {
@@ -67,14 +82,14 @@ const Events = () => {
       <div className="container" style={{ maxWidth: '800px', textAlign: 'center' }}>
         <span style={{ textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: '600', color: 'var(--accent-color)' }}>Events</span>
         <h1 style={{ fontSize: '3.75rem', fontWeight: '800', lineHeight: '1.1', marginTop: '0.5rem' }}>
-          Stay Updated with Our <em>Latest Events.</em>
+          {hero?.title || <>Stay Updated with Our <em>Latest Events.</em></>}
         </h1>
         <p style={{ fontSize: '1.25rem', marginTop: '1.5rem', color: 'var(--muted)', lineHeight: '1.6' }}>
-          Conferences, summits and exhibitions across India, the Middle East, Southeast Asia, Australia, and beyond.
+          {hero?.description || 'Conferences, summits and exhibitions across India, the Middle East, Southeast Asia, Australia, and beyond.'}
         </p>
         <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: '2.5rem', flexWrap: 'wrap' }}>
-          <Link to="/contact" className="btn btn-primary" style={{ padding: '1rem 2rem', fontSize: '1.125rem' }}>
-            Contact us <ArrowRight size={18} className="btn-icon" />
+          <Link to={hero?.buttons?.[0]?.url || '/contact'} className="btn btn-primary" style={{ padding: '1rem 2rem', fontSize: '1.125rem' }}>
+            {hero?.buttons?.[0]?.text || 'Contact us'} <ArrowRight size={18} className="btn-icon" />
           </Link>
         </div>
       </div>
@@ -142,12 +157,12 @@ const Events = () => {
 
     <section className="section section-alt" style={{ borderTop: '1px solid var(--border-color)' }}>
       <div className="container" style={{ textAlign: 'center', maxWidth: '700px' }}>
-        <h2>We'd love to discuss <em>your organization's needs.</em></h2>
+        <h2>{cta?.title || <>We'd love to discuss <em>your organization's needs.</em></>}</h2>
         <p style={{ color: 'var(--muted)', marginBottom: '2.5rem' }}>
-          Contact us via the details below or fill in a quick request — our team will reach out within one business day.
+          {cta?.description || 'Contact us via the details below or fill in a quick request — our team will reach out within one business day.'}
         </p>
-        <Link to="/contact" className="btn btn-primary" style={{ padding: '1rem 2rem', fontSize: '1.125rem' }}>
-          Contact us <ArrowRight size={18} className="btn-icon" />
+        <Link to={cta?.Button?.url || '/contact'} className="btn btn-primary" style={{ padding: '1rem 2rem', fontSize: '1.125rem' }}>
+          {cta?.Button?.text || 'Contact us'} <ArrowRight size={18} className="btn-icon" />
         </Link>
       </div>
     </section>

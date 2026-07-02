@@ -3,6 +3,7 @@ import { ArrowRight, MapPin, Briefcase, Clock, AlertCircle } from 'lucide-react'
 import { Link } from 'react-router-dom';
 import { fetchAPI } from '../lib/api';
 import { useSeoEffect } from '../lib/seo';
+import { fetchPage, getSection } from '../lib/pageContent';
 
 const deptColors = {
   'HR & People':         { bg: 'rgba(139,92,246,0.14)',  text: '#a78bfa' },
@@ -37,11 +38,25 @@ const Careers = () => {
   const [benefits, setBenefits] = useState([]);
   const [loading, setLoading]   = useState(true);
   const [error, setError]       = useState(false);
+  const [hero, setHero]         = useState(null);
+  const [cta, setCta]           = useState(null);
+  const [pageSeo, setPageSeo]   = useState(null);
 
   useSeoEffect(
-    { metaTitle: 'Careers — Polluxa', metaDescription: 'Work on the future of enterprise software. Polluxa is building one intelligent platform for CRM, Commerce, PLM, Logistics, and WMS.' },
+    pageSeo || { metaTitle: 'Careers — Polluxa', metaDescription: 'Work on the future of enterprise software. Polluxa is building one intelligent platform for CRM, Commerce, PLM, Logistics, and WMS.' },
     'Careers — Polluxa'
   );
+
+  useEffect(() => {
+    let cancelled = false;
+    fetchPage('careers').then(({ sections, seo }) => {
+      if (cancelled) return;
+      setHero(getSection(sections, 'sections.hero'));
+      setCta(getSection(sections, 'sections.cta'));
+      setPageSeo(seo);
+    });
+    return () => { cancelled = true; };
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -93,14 +108,13 @@ const Careers = () => {
         <div className="container careers-hero-inner">
           <span className="section-tag">Careers</span>
           <h1 className="careers-hero-h1">
-            Work on the future of <em>enterprise software.</em>
+            {hero?.title || <>Work on the future of <em>enterprise software.</em></>}
           </h1>
           <p className="careers-hero-lede">
-            Polluxa is building one intelligent platform for CRM, Commerce, PLM, Logistics, and WMS.
-            Join a team that ships fast, thinks big, and is distributed across 38 countries.
+            {hero?.description || 'Polluxa is building one intelligent platform for CRM, Commerce, PLM, Logistics, and WMS. Join a team that ships fast, thinks big, and is distributed across 38 countries.'}
           </p>
-          <a href="#openings" className="btn-primary careers-hero-cta">
-            See open roles <ArrowRight size={18} aria-hidden="true" />
+          <a href={hero?.buttons?.[0]?.url || '#openings'} className="btn-primary careers-hero-cta">
+            {hero?.buttons?.[0]?.text || 'See open roles'} <ArrowRight size={18} aria-hidden="true" />
           </a>
         </div>
       </section>
@@ -189,12 +203,12 @@ const Careers = () => {
       {/* ── Footer CTA ── */}
       <section className="section section-light careers-footer-cta">
         <div className="container" style={{ textAlign: 'center', maxWidth: '680px' }}>
-          <h2>{"Don't see your role? "}<em>Reach out anyway.</em></h2>
+          <h2>{cta?.title || <>{"Don't see your role? "}<em>Reach out anyway.</em></>}</h2>
           <p style={{ color: 'var(--muted)', marginBottom: '2.5rem', fontSize: '1.0625rem', lineHeight: '1.7' }}>
-            We're always looking for great people. Send us a note and we'll reach out when something opens up.
+            {cta?.description || "We're always looking for great people. Send us a note and we'll reach out when something opens up."}
           </p>
-          <Link to="/contact" className="btn-primary" style={{ padding: '0.9375rem 2rem', fontSize: '1.0625rem' }}>
-            Get in touch <ArrowRight size={18} aria-hidden="true" />
+          <Link to={cta?.Button?.url || '/contact'} className="btn-primary" style={{ padding: '0.9375rem 2rem', fontSize: '1.0625rem' }}>
+            {cta?.Button?.text || 'Get in touch'} <ArrowRight size={18} aria-hidden="true" />
           </Link>
         </div>
       </section>

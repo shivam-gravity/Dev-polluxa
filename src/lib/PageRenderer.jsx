@@ -1733,6 +1733,31 @@ const renderSection = (section, index) => {
   return <Renderer key={index} section={section} />;
 };
 
+/* ── Renders a raw dynamic-zone array through the same SECTION_RENDERERS map
+   PageRenderer uses, without its slug-fetch or generic hero/heading fallback.
+   Lets a bespoke page (e.g. ProductPage) append CMS-authored blocks below its
+   own hand-built sections without duplicating the component switch. ── */
+export function PageBlocks({ sections }) {
+  if (!sections?.length) return null;
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
+      {sections.map((section, i) => {
+        const type = section.__component;
+        if (WRAPPED_IN_INTRO.has(type)) {
+          return (
+            <section key={i} className="section section-light" style={{ paddingTop: 0 }}>
+              <div className="container" style={{ maxWidth: '860px' }}>
+                {renderSection(section, i)}
+              </div>
+            </section>
+          );
+        }
+        return renderSection(section, i);
+      })}
+    </div>
+  );
+}
+
 /* ── Generic page shell: fetches one entry by slug from any collection whose
    schema exposes a dynamic zone, and renders it through SECTION_RENDERERS.
    Used by both DynamicPage.jsx (api::page.page / contentSections) and
@@ -1744,14 +1769,22 @@ export default function PageRenderer({ apiEndpoint, sectionsField, slug, notFoun
   useEffect(() => {
     if (!slug) return;
     let cancelled = false;
-    fetchAPI(apiEndpoint, { 'filters[slug][$eq]': slug, locale: 'en' }).then((res) => {
+    /* api::page.page overrides this populate server-side via its own deep-populate
+       middleware regardless of what's sent — harmless there. For collections with
+       no such middleware (industry, and the simpler product-suite content-types),
+       this is required: dynamic zones return empty without an explicit populate. */
+    fetchAPI(apiEndpoint, {
+      'filters[slug][$eq]': slug,
+      locale: 'en',
+      [`populate[${sectionsField}][populate]`]: '*',
+    }).then((res) => {
       if (cancelled) return;
       const found = res?.data?.[0];
       setEntry(found ? (found.attributes ?? found) : null);
       setLoading(false);
     });
     return () => { cancelled = true; };
-  }, [apiEndpoint, slug]);
+  }, [apiEndpoint, slug, sectionsField]);
 
   useSeoEffect(entry?.seo, entry?.heading || entry?.title || entry?.name);
 

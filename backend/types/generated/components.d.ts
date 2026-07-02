@@ -404,6 +404,7 @@ export interface LayoutFooter extends Schema.Component {
     >;
     FooterMenu: Attribute.Component<'layout.footer-menu', true>;
     button: Attribute.Component<'links.button-link'>;
+    copyrightText: Attribute.String;
   };
 }
 

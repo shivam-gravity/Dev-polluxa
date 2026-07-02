@@ -3,17 +3,32 @@ import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { fetchAPI, getImgUrl } from '../lib/api';
 import { useSeoEffect } from '../lib/seo';
+import { fetchPage, getSection } from '../lib/pageContent';
 
 const Customers = () => {
   const [logos, setLogos]       = useState([]);
   const [industries, setIndustries] = useState([]);
   const [testimonials, setTestimonials] = useState([]);
   const [loading, setLoading]   = useState(true);
+  const [hero, setHero]         = useState(null);
+  const [cta, setCta]           = useState(null);
+  const [pageSeo, setPageSeo]   = useState(null);
 
   useSeoEffect(
-    { metaTitle: 'Customers — Polluxa', metaDescription: '2,000+ brands, one platform. From category-defining retailers to fast-moving creator brands, Polluxa is the operating system behind the businesses you buy from every week.' },
+    pageSeo || { metaTitle: 'Customers — Polluxa', metaDescription: '2,000+ brands, one platform. From category-defining retailers to fast-moving creator brands, Polluxa is the operating system behind the businesses you buy from every week.' },
     'Customers — Polluxa'
   );
+
+  useEffect(() => {
+    let cancelled = false;
+    fetchPage('customers').then(({ sections, seo }) => {
+      if (cancelled) return;
+      setHero(getSection(sections, 'sections.hero'));
+      setCta(getSection(sections, 'sections.cta'));
+      setPageSeo(seo);
+    });
+    return () => { cancelled = true; };
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -55,17 +70,17 @@ const Customers = () => {
         <div className="container" style={{ maxWidth: '900px', textAlign: 'center' }}>
           <span className="section-tag">Customers</span>
           <h1 style={{ fontSize: 'clamp(2.25rem, 6vw, 3.75rem)', fontWeight: '800', lineHeight: '1.1', marginTop: '0.5rem' }}>
-            2,000+ brands. <em>One platform.</em>
+            {hero?.title || <>2,000+ brands. <em>One platform.</em></>}
           </h1>
           <p style={{ fontSize: '1.25rem', marginTop: '1.5rem', color: 'var(--muted)' }}>
-            From category-defining retailers to fast-moving creator brands, Polluxa is the operating system behind the businesses you buy from every week.
+            {hero?.description || 'From category-defining retailers to fast-moving creator brands, Polluxa is the operating system behind the businesses you buy from every week.'}
           </p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: '2.5rem', flexWrap: 'wrap' }}>
-            <Link to="/case-studies" className="btn-primary" style={{ padding: '1rem 2rem', fontSize: '1.125rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
-              Read case studies <ArrowRight size={18} aria-hidden="true" />
+            <Link to={hero?.buttons?.[0]?.url || '/case-studies'} className="btn-primary" style={{ padding: '1rem 2rem', fontSize: '1.125rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+              {hero?.buttons?.[0]?.text || 'Read case studies'} <ArrowRight size={18} aria-hidden="true" />
             </Link>
-            <Link to="/contact" className="btn-ghost" style={{ padding: '1rem 2rem', fontSize: '1.125rem' }}>
-              Become a customer
+            <Link to={hero?.buttons?.[1]?.url || '/contact'} className="btn-ghost" style={{ padding: '1rem 2rem', fontSize: '1.125rem' }}>
+              {hero?.buttons?.[1]?.text || 'Become a customer'}
             </Link>
           </div>
         </div>
@@ -151,13 +166,13 @@ const Customers = () => {
       {/* ── Final CTA ── */}
       <section className="section section-light" style={{ borderTop: '1px solid var(--line)' }}>
         <div className="container" style={{ textAlign: 'center', maxWidth: '800px' }}>
-          <h2>Join 2,000+ brands on Polluxa.</h2>
+          <h2>{cta?.title || 'Join 2,000+ brands on Polluxa.'}</h2>
           <p style={{ color: 'var(--muted)', marginBottom: '2.5rem' }}>
-            Get custom configurations, dedicated migration engineering support, and transparent SLAs.
+            {cta?.description || 'Get custom configurations, dedicated migration engineering support, and transparent SLAs.'}
           </p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link to="/contact" className="btn-primary" style={{ padding: '1rem 2rem', fontSize: '1.125rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
-              Book a demo <ArrowRight size={18} aria-hidden="true" />
+            <Link to={cta?.Button?.url || '/contact'} className="btn-primary" style={{ padding: '1rem 2rem', fontSize: '1.125rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+              {cta?.Button?.text || 'Book a demo'} <ArrowRight size={18} aria-hidden="true" />
             </Link>
             <Link to="/case-studies" className="btn-ghost" style={{ padding: '1rem 2rem', fontSize: '1.125rem' }}>
               Read stories

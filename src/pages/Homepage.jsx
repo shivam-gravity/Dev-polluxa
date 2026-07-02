@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import { fetchAPI, getImgUrl } from '../lib/api';
 import { useSeoEffect } from '../lib/seo';
+import { fetchPage, getSection } from '../lib/pageContent';
 import crmScreenshot from '../assets/product-screens/crm.png';
 import commerceScreenshot from '../assets/product-screens/commerce.png';
 import creatorCommerceScreenshot from '../assets/product-screens/creator-commerce.png';
@@ -30,6 +31,23 @@ const ICON_MAP = {
   Rocket, Building2, Users, Plug,
 };
 const getIcon = (name) => ICON_MAP[name] || HelpCircle;
+
+/* ── "How it works" fallback steps + per-position icon styling, used until Strapi's sections.process-steps loads ── */
+const DEFAULT_HOW_IT_WORKS_STEPS = [
+  { title: 'Connect your systems', description: 'Plug in your existing tools — ERP, e-commerce stores, warehouses, courier partners. Polluxa connects everything on one data layer in days, not months.' },
+  { title: 'Let AI agents do the routine work', description: 'Autonomous agents monitor your business 24/7 — chasing approvals, flagging stock issues, updating CRM records, and routing tasks to the right person automatically.' },
+  { title: 'Your team focuses on growth', description: 'With agents handling the repetitive, your sales, ops, and logistics teams spend their time on customers and strategy — not spreadsheets and data entry.' },
+];
+const HIW_ICONS = [Plug, Bot, Rocket];
+const HIW_ICON_CLASSES = ['', 'w3-violet', 'w3-magenta'];
+const HIW_ICON_COLORS = ['var(--w3-cyan)', 'var(--w3-violet)', 'var(--w3-magenta)'];
+
+/* ── "By the numbers" fallback stats, used until Strapi's sections.key-stats loads ── */
+const DEFAULT_HOMEPAGE_STATS = [
+  { title: '2000+', description: 'Brands trust Polluxa' },
+  { title: '100%', description: 'Go live rate' },
+  { title: '99%', description: 'Customer retention rate' },
+];
 
 /* ── Wave divider ── */
 const Wave = ({ color }) => (
@@ -100,6 +118,24 @@ const Homepage = () => {
     articleCount:   null,
   });
   const [loading, setLoading] = useState(true);
+  const [hero, setHero] = useState(null);
+  const [howItWorks, setHowItWorks] = useState(null);
+  const [keyStats, setKeyStats] = useState(null);
+  const [finalCta, setFinalCta] = useState(null);
+  const [pageSeo, setPageSeo] = useState(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetchPage('home').then(({ sections, seo }) => {
+      if (cancelled) return;
+      setHero(getSection(sections, 'sections.hero'));
+      setHowItWorks(getSection(sections, 'sections.process-steps'));
+      setKeyStats(getSection(sections, 'sections.key-stats'));
+      setFinalCta(getSection(sections, 'sections.cta'));
+      setPageSeo(seo);
+    });
+    return () => { cancelled = true; };
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -164,7 +200,7 @@ const Homepage = () => {
   useScrollReveal([loading]);
   useCounters([loading]);
   useSeoEffect(
-    { metaTitle: 'Polluxa — The Agentic Enterprise Platform', metaDescription: 'Polluxa is to enterprise software what a neural network is to AI — intelligent, adaptive, and built for the future. CRM, Commerce, PLM, Logistics and WMS on one platform.' },
+    pageSeo || { metaTitle: 'Polluxa — The Agentic Enterprise Platform', metaDescription: 'Polluxa is to enterprise software what a neural network is to AI — intelligent, adaptive, and built for the future. CRM, Commerce, PLM, Logistics and WMS on one platform.' },
     'Polluxa — The Agentic Enterprise Platform'
   );
 
@@ -186,19 +222,19 @@ const Homepage = () => {
         <div className="hero-prism" aria-hidden="true" />
 
         <div className="hero-inner" style={{ position: 'relative', zIndex: 2 }}>
-          <span className="eyebrow"><span className="dot" />The complete agentic enterprise platform</span>
+          <span className="eyebrow"><span className="dot" />{hero?.subHeading || 'The complete agentic enterprise platform'}</span>
           <h1 className="hero-h" style={{ animationDelay: '0.1s' }}>
-            The future of Work <em>is Agentic.</em>
+            {hero?.title || <>The future of Work <em>is Agentic.</em></>}
           </h1>
           <p className="lede" style={{ animationDelay: '0.2s' }}>
-            Polluxa is to enterprise software what a neural network is to AI — intelligent, adaptive, and built for the future.
+            {hero?.description || 'Polluxa is to enterprise software what a neural network is to AI — intelligent, adaptive, and built for the future.'}
           </p>
           <div className="cta-row" style={{ justifyContent: 'center' }}>
-            <a href="https://crm.polluxa.com/auth/login" className="btn-primary" style={{ fontSize: '1rem', padding: '0.875rem 1.75rem' }}>
-              Start Today →
+            <a href={hero?.buttons?.[0]?.url || 'https://crm.polluxa.com/auth/login'} className="btn-primary" style={{ fontSize: '1rem', padding: '0.875rem 1.75rem' }}>
+              {hero?.buttons?.[0]?.text || 'Start Today'} →
             </a>
-            <Link to="/contact" className="btn-ghost" style={{ fontSize: '1rem', padding: '0.875rem 1.75rem' }}>
-              Book a live demo
+            <Link to={hero?.buttons?.[1]?.url || '/contact'} className="btn-ghost" style={{ fontSize: '1rem', padding: '0.875rem 1.75rem' }}>
+              {hero?.buttons?.[1]?.text || 'Book a live demo'}
             </Link>
           </div>
           <div style={{ marginTop: '2rem', display: 'flex', justifyContent: 'center' }}>
@@ -337,30 +373,26 @@ const Homepage = () => {
         <div className="container">
           <div className="section-head reveal">
             <div className="section-tag">How it works</div>
-            <h2 className="section-h">Up and running in <em>three steps.</em></h2>
-            <p className="section-sub">No months-long IT projects. No data silos. Polluxa connects your whole business and starts working from day one.</p>
+            <h2 className="section-h">{howItWorks?.title || <>Up and running in <em>three steps.</em></>}</h2>
+            <p className="section-sub">{howItWorks?.description || 'No months-long IT projects. No data silos. Polluxa connects your whole business and starts working from day one.'}</p>
           </div>
           <div className="hiw-steps reveal">
-            <div className="hiw-step">
-              <div className="hiw-num" aria-hidden="true">01</div>
-              <div className="hiw-icon-wrap"><Plug size={24} color="var(--w3-cyan)" strokeWidth={1.5} /></div>
-              <h3 className="hiw-title">Connect your systems</h3>
-              <p className="hiw-desc">Plug in your existing tools — ERP, e-commerce stores, warehouses, courier partners. Polluxa connects everything on one data layer in days, not months.</p>
-            </div>
-            <div className="hiw-connector" aria-hidden="true" />
-            <div className="hiw-step">
-              <div className="hiw-num" aria-hidden="true">02</div>
-              <div className="hiw-icon-wrap w3-violet"><Bot size={24} color="var(--w3-violet)" strokeWidth={1.5} /></div>
-              <h3 className="hiw-title">Let AI agents do the routine work</h3>
-              <p className="hiw-desc">Autonomous agents monitor your business 24/7 — chasing approvals, flagging stock issues, updating CRM records, and routing tasks to the right person automatically.</p>
-            </div>
-            <div className="hiw-connector" aria-hidden="true" />
-            <div className="hiw-step">
-              <div className="hiw-num" aria-hidden="true">03</div>
-              <div className="hiw-icon-wrap w3-magenta"><Rocket size={24} color="var(--w3-magenta)" strokeWidth={1.5} /></div>
-              <h3 className="hiw-title">Your team focuses on growth</h3>
-              <p className="hiw-desc">With agents handling the repetitive, your sales, ops, and logistics teams spend their time on customers and strategy — not spreadsheets and data entry.</p>
-            </div>
+            {(howItWorks?.steps || DEFAULT_HOW_IT_WORKS_STEPS).flatMap((step, i, arr) => {
+              const StepIcon = HIW_ICONS[i] || Plug;
+              const stepEl = (
+                <div className="hiw-step" key={`step-${i}`}>
+                  <div className="hiw-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</div>
+                  <div className={`hiw-icon-wrap${HIW_ICON_CLASSES[i] ? ` ${HIW_ICON_CLASSES[i]}` : ''}`}>
+                    <StepIcon size={24} color={HIW_ICON_COLORS[i] || 'var(--w3-cyan)'} strokeWidth={1.5} />
+                  </div>
+                  <h3 className="hiw-title">{step.title}</h3>
+                  <p className="hiw-desc">{step.description}</p>
+                </div>
+              );
+              return i < arr.length - 1
+                ? [stepEl, <div className="hiw-connector" aria-hidden="true" key={`connector-${i}`} />]
+                : [stepEl];
+            })}
           </div>
           <div className="hiw-cta reveal">
             <Link to="/contact" className="btn-primary">See a live demo →</Link>
@@ -481,21 +513,20 @@ const Homepage = () => {
       ════════════════════════════════════════ */}
       <section className="bg-alt" style={{ padding: '5.5rem 0' }}>
         <div className="container" style={{ textAlign: 'center' }}>
-          <p className="reveal" style={{ fontSize: '0.6875rem', textTransform: 'uppercase', letterSpacing: '0.14em', color: 'var(--cyan)', fontWeight: '700', marginBottom: '0.875rem' }}>By the numbers</p>
+          <p className="reveal" style={{ fontSize: '0.6875rem', textTransform: 'uppercase', letterSpacing: '0.14em', color: 'var(--cyan)', fontWeight: '700', marginBottom: '0.875rem' }}>{keyStats?.title || 'By the numbers'}</p>
           <h2 className="reveal" style={{ maxWidth: '720px', margin: '0 auto 3.5rem', fontSize: 'clamp(1.625rem, 3vw, 2.375rem)', fontWeight: '800', lineHeight: '1.2', color: '#e2e8f0' }}>
-            We are a key innovation partner for iconic and emerging brands <em>across the world.</em>
+            {keyStats?.description || <>We are a key innovation partner for iconic and emerging brands <em>across the world.</em></>}
           </h2>
           <div style={{ display: 'flex', justifyContent: 'center', gap: '5rem', flexWrap: 'wrap' }}>
-            {[
-              { count: 2000, suffix: '+', label: 'Brands trust Polluxa' },
-              { count: 100,  suffix: '%', label: 'Go live rate' },
-              { count: 99,   suffix: '%', label: 'Customer retention rate' },
-            ].map(({ count, suffix, label }, i) => (
-              <div key={label} className={`reveal d${i + 1}`} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <div className="stat-num" data-count={count} data-suffix={suffix}>0{suffix}</div>
-                <div style={{ marginTop: '0.5rem', fontSize: '0.9375rem', color: 'var(--muted)', fontWeight: '500' }}>{label}</div>
-              </div>
-            ))}
+            {(keyStats?.keys || DEFAULT_HOMEPAGE_STATS).map(({ title, description }, i) => {
+              const [, numPart, suffix] = title.match(/^([\d.]+)(.*)$/) || [null, title, ''];
+              return (
+                <div key={description} className={`reveal d${i + 1}`} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <div className="stat-num" data-count={numPart} data-suffix={suffix}>0{suffix}</div>
+                  <div style={{ marginTop: '0.5rem', fontSize: '0.9375rem', color: 'var(--muted)', fontWeight: '500' }}>{description}</div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -507,10 +538,10 @@ const Homepage = () => {
         <div className="container">
           <div className="final-card reveal">
             <span className="eyebrow"><span className="dot" />Driving creativity in Product Development</span>
-            <h2>Make better <em>a reality.</em></h2>
-            <p>Your business is unique. Polluxa delivers the tailored tools, integrations, and expert support to turn your growth ambitions into measurable outcomes — at enterprise scale.</p>
+            <h2>{finalCta?.title || <>Make better <em>a reality.</em></>}</h2>
+            <p>{finalCta?.description || 'Your business is unique. Polluxa delivers the tailored tools, integrations, and expert support to turn your growth ambitions into measurable outcomes — at enterprise scale.'}</p>
             <div className="cta-row" style={{ justifyContent: 'center' }}>
-              <Link to="/contact" className="btn-primary">Book Live Demo →</Link>
+              <Link to={finalCta?.Button?.url || '/contact'} className="btn-primary">{finalCta?.Button?.text || 'Book Live Demo'} →</Link>
               <Link to="/customers" className="btn-ghost">See customer stories</Link>
             </div>
           </div>

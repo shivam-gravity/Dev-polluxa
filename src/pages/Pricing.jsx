@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { fetchAPI } from '../lib/api';
 import { useSeoEffect } from '../lib/seo';
+import { fetchPage, getSection } from '../lib/pageContent';
 
 const PlanSkeleton = () => (
   <div style={{ background: 'var(--panel)', border: '1px solid var(--line)', borderRadius: '1rem', padding: '2rem' }}>
@@ -19,11 +20,25 @@ const Pricing = () => {
   const [plans, setPlans]           = useState([]);
   const [tokenPkgs, setTokenPkgs]   = useState([]);
   const [loading, setLoading]       = useState(true);
+  const [hero, setHero]             = useState(null);
+  const [cta, setCta]               = useState(null);
+  const [pageSeo, setPageSeo]       = useState(null);
 
   useSeoEffect(
-    { metaTitle: 'Pricing — Polluxa', metaDescription: 'Free to start, scales with your team. Every Polluxa plan includes a free-forever tier — no credit card required to start.' },
+    pageSeo || { metaTitle: 'Pricing — Polluxa', metaDescription: 'Free to start, scales with your team. Every Polluxa plan includes a free-forever tier — no credit card required to start.' },
     'Pricing — Polluxa'
   );
+
+  useEffect(() => {
+    let cancelled = false;
+    fetchPage('pricing').then(({ sections, seo }) => {
+      if (cancelled) return;
+      setHero(getSection(sections, 'sections.hero'));
+      setCta(getSection(sections, 'sections.cta'));
+      setPageSeo(seo);
+    });
+    return () => { cancelled = true; };
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -67,10 +82,10 @@ const Pricing = () => {
         <div className="container" style={{ textAlign: 'center', maxWidth: '800px' }}>
           <span className="section-tag">Pricing</span>
           <h1 style={{ fontSize: 'clamp(2rem, 6vw, 3.75rem)', fontWeight: '800', lineHeight: '1.1', marginTop: '0.5rem' }}>
-            Free to start. <em>Scales with your team.</em>
+            {hero?.title || <>Free to start. <em>Scales with your team.</em></>}
           </h1>
           <p style={{ fontSize: '1.25rem', marginTop: '1.5rem', color: 'var(--muted)' }}>
-            Every plan includes a free-forever tier. No credit card required to start.
+            {hero?.description || 'Every plan includes a free-forever tier. No credit card required to start.'}
           </p>
         </div>
       </section>
@@ -141,10 +156,10 @@ const Pricing = () => {
       {/* ── Questions CTA ── */}
       <section className="section section-alt" style={{ borderTop: '1px solid var(--line)' }}>
         <div className="container" style={{ textAlign: 'center', maxWidth: '700px' }}>
-          <h2>Questions about pricing?</h2>
-          <p style={{ color: 'var(--muted)', marginBottom: '2.5rem' }}>Talk to our team — we'll help you find the right plan for your team size and use case.</p>
-          <Link to="/contact" className="btn-primary" style={{ padding: '1rem 2rem', fontSize: '1.125rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
-            Talk to sales <ArrowRight size={18} aria-hidden="true" />
+          <h2>{cta?.title || 'Questions about pricing?'}</h2>
+          <p style={{ color: 'var(--muted)', marginBottom: '2.5rem' }}>{cta?.description || "Talk to our team — we'll help you find the right plan for your team size and use case."}</p>
+          <Link to={cta?.Button?.url || '/contact'} className="btn-primary" style={{ padding: '1rem 2rem', fontSize: '1.125rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+            {cta?.Button?.text || 'Talk to sales'} <ArrowRight size={18} aria-hidden="true" />
           </Link>
         </div>
       </section>
